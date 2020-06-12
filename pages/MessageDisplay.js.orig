@@ -1,0 +1,116 @@
+import React, { useRef, useState, useEffect } from 'react';
+
+import style from './MessageDisplay.module.css';
+import Twemoji from './../Twemoji.js';
+
+export default class MessageDisplay extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            messageRetriever: {
+                messages: []
+            }
+        }
+        this.emojiText = React.createRef();
+    }
+
+    getAPIurl() {
+        return ( // this.props.APIURL !== undefined ? this.props.APIURL :
+            'https://backend.virtualium.ethernity.live/message/topic'
+        )
+    }
+
+
+    componentDidMount() {
+        this.getMessages();
+        this.messagesInterval = setInterval(() => this.getMessages(), 2000);
+    }
+
+
+    componentWillUnmount() {
+        clearInterval(this.messagesInterval);
+    }
+
+    // this method fetch the messages from the URL
+    async getMessages() {
+        console.log("fetching data...");
+        let response = await fetch('https://backend.virtualium.ethernity.live/message/topic');
+
+        try{
+            let jsonData = await response.json();
+            
+            if(response.ok){
+                this.setState({
+<<<<<<< HEAD
+                    messageRetriever: { messages: jsonData.messages.map((message)=>{ //for each message in the jsonData
+                        let localTime;
+
+                        try{
+                            let GMTTimeString = message.timestamp + " GMT";
+                            let date = new Date(GMTTimeString);
+                            localTime = {
+                                hours: date.getHours(),
+                                minutes: (date.getMinutes().toString().length < 2 ? '0'+date.getMinutes().toString() : date.getMinutes())
+                            }
+                        }catch(error){
+                            console.log("Date couldn't be fetched somehow, from the json (maybe the date wasn't sent), details: ", error);
+                        }
+                        
+
+                        return {
+                            "user_nick": (message.user_nick === undefined ? '': message.user_nick),
+                            "text": message.text === undefined ? '': message.text,
+                            "time": localTime === undefined ? '00:00' : localTime
+                        };
+                    })}
+=======
+                    messageRetriever: jsonData
+>>>>>>> parent of 4cc0bde... timestamp for each message posted, and new build made
+                }); 
+            }else{
+                    
+                this.setState(  {
+                    messageRetriever: {messages:[
+                        {
+                            user_nick: "Server_side",
+                            text:"Error 404",
+                            error: true
+                        }
+                    ]
+                }})
+            }
+            
+        }catch(error){
+            console.log("Error... ", error);
+
+        }
+    }
+
+    render() {
+        return (
+            <div className={style.main_box}>
+                {
+                    this.state.messageRetriever.messages.reverse().map((message, index) => { //for each message received in the fetching
+                        let className = style.message_box + " " + style.text + " "; //first, is going to define the default classes for it
+
+                        return (
+                            <div key={index} className={className}>
+                                <img className={style.user_image} src={message.user_image_URL} />
+<<<<<<< HEAD
+                                <p className={style.user_nick}>at {" "+message.time.hours + ":" + message.time.minutes} {message.user_nick === undefined ? "" : message.user_nick}</p>
+                                <div ref={this.emojiText}className={ message.error !== true ? style.text : style.text_error}><Twemoji>{message.text}</Twemoji></div>
+=======
+                                <p className={style.user_nick}>at {" "+(message.time === undefined ? "00:00" : message.time)} {message.user_nick === undefined ? "" : message.user_nick}</p>
+                                <p className={ message.error !== true ? style.text : style.text_error}>{message.text}</p>
+>>>>>>> parent of 4cc0bde... timestamp for each message posted, and new build made
+                            </div>
+                        ) //returns the message with all the classes
+                        //and content setup.
+
+                    })
+                }
+            </div>
+        )
+    }
+}

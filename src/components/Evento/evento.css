@@ -1,0 +1,38 @@
+.mainContent {
+	padding: 5%;
+	display: grid;
+	grid-gap: 20px;
+	grid-template-columns: 25% 1fr 25%;
+}
+
+.mainContent img {
+	width: 100%;
+}
+
+
+/***********************************
+* Módulo ComprarAcceso
+***********************************/
+.CA .header {
+	background: #666;
+	text-align: center;
+}
+
+.CA .header h2 {
+	margin: 0;
+	color: #fff;
+	font-size: 1.5rem;
+	text-transform: uppercase;
+}
+
+.CA .form,
+.CA .header {
+	padding: 5%;
+}
+
+.CA .form {
+	margin-top: 10px;
+}
+.CA .form .select {
+	margin-bottom: 2rem;
+}
