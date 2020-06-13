@@ -42,7 +42,7 @@ const Header = ({user, evento, mobileActive, logout, triggerOpenLogin, handleOpe
 	const [ openRegister, setOpenRegister ] = useState(false);
 	const [ styleInlineNav, setStyleInlineNav ] = useState({});
 	const [ classNameFixed, setClassNameFixed ] = useState('');
-	const [ logo, setLogo ] = useState('ttde-logo-white.png');
+	const [ logo, setLogo ] = useState('virtualium.png');
 	const [ offsetsNavbar, setOffsetsNavbar ] = useState({
 		paddingTop: '90px'
 	});
@@ -62,8 +62,8 @@ const Header = ({user, evento, mobileActive, logout, triggerOpenLogin, handleOpe
 
 	useEffect(() => {
 		const updateLogo = (scrollActive && !evento.bandaImagenUrl) ? 
-					'ttde-logo-black.png' :
-					'ttde-logo-white.png';
+					'virtualium.png' :
+					'virtualium.png';
 		setLogo(updateLogo);
 	}, [scrollActive, evento]);
 
@@ -203,7 +203,7 @@ const Header = ({user, evento, mobileActive, logout, triggerOpenLogin, handleOpe
 		)
 	}
 
-	const renderIconTicketera = () => {
+	const __renderIconTicketera = () => {
 		return(
 			<span
 					className={cx(
@@ -221,6 +221,22 @@ const Header = ({user, evento, mobileActive, logout, triggerOpenLogin, handleOpe
 		)
 	}
 
+	const renderIconTicketera = () => {
+		return(
+			<span
+					// className={cx(
+					// 	'trigger-scale'
+					// )}
+					onClick={(e) => handleActionForm(e, 'dashboard')}
+				>
+					<img
+						className={cx(style.iconSvg)}
+						src="/img/icons/icono-mis-compras.svg" alt=""
+					/>
+			</span>
+		)
+	}
+
 	const renderIconBuscador = () => {
 		return(
 			<li className={cx(
@@ -228,9 +244,14 @@ const Header = ({user, evento, mobileActive, logout, triggerOpenLogin, handleOpe
 				{[`${style.mobile}`]: (mobileActive)}
 			)} >
 				<NavItem onClick={(e) => handleActionForm(e, 'buscar')} >
-					<Icon>
+					{/*<Icon>
 						search
-					</Icon>
+					</Icon>*/}
+					<img
+						className={cx(style.iconSvg)}
+						src="/img/icons/icono-buscar.svg"
+						alt=""
+					/>
 				</NavItem>
 			</li>
 		)
@@ -247,9 +268,14 @@ const Header = ({user, evento, mobileActive, logout, triggerOpenLogin, handleOpe
 					{[`${style.black}`]: (!evento.bandaImagenUrl && scrollActive || openSidenav)},
 				)}
 			>
-				<Icon className={cx('trigger-scale', style.iconLogin)} >
+				{/*<Icon className={cx('trigger-scale', style.iconLogin)} >
 					account_circle
-				</Icon>
+				</Icon>*/}
+				<img
+					className={cx(style.iconSvg)}
+					src="/img/icons/icono-perfil.svg"
+					alt=""
+				/>
 			</li>
 		)
 	}
@@ -287,9 +313,17 @@ const Header = ({user, evento, mobileActive, logout, triggerOpenLogin, handleOpe
 		<Fragment>
 			<Navbar
 				ref={_navbar}
-				brand={<a onClick={
-					() => history.push('/')
-				} ><img src={`/img/${logo}`} alt=""/></a>}
+				brand={
+					<a
+						className={cx(
+							style.logo,
+							{ [`${style.small}`]: scrollActive }
+						)}
+						onClick={() => history.push('/')}
+					>
+						<img src={`/img/${logo}`} alt=""/>
+					</a>
+				}
 				fixed
 				sidenav={<Sidenav/>}
 				classNameFixed={classNameFixed}

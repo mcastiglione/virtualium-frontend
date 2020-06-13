@@ -1,9 +1,9 @@
 .contentRedesSociales {
-	/*width: 50px;*/
 	display: grid;
 	grid-gap: 10px;
 	overflow: hidden;
 	transition: all .3s;
+	padding: 20px 10px 10px;
 	grid-template-columns: repeat(3, max-content);
 }
 
@@ -14,11 +14,17 @@
 .boxIcon {
 	width: 50px;
 	height: 50px;
-	border-radius: 50%;
 	display: flex;
+	border-radius: 50%;
+	transition: all .3s;
+	align-items: center;
 	border: 2px solid #fff;
 	justify-content: center;
-	align-items: center;
+}
+
+.contentRedesSociales.scrollActive .boxIcon {
+	width: 40px;
+	height: 40px;
 }
 
 .boxIcon img {
@@ -27,7 +33,12 @@
 
 @media only screen and (min-width: 993px) {
 	.contentRedesSociales {
-		width: 50px;
+		width: 70px;
 		margin-left: 50px; 
+	}
+
+	.contentRedesSociales.scrollActive {
+		width: 55px;
+		padding: 10px;
 	}
 }

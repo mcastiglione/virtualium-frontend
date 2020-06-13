@@ -49,7 +49,12 @@ const RedesSociales = (props) => {
 
 	return(
 		<li >
-			<div className={cx(style.contentRedesSociales)} >
+			<div
+				className={cx(
+					style.contentRedesSociales,
+					{ [`${style.scrollActive}`]:scrollActive },
+				)}
+			>
 				<a target='_blank' href='https://twitter.com/tuticketdeentra' className={style.boxIcon} >
 					<img src={`/img/icons/${socialIcons[colorIcons].twitter}`} alt=""/>
 				</a>
