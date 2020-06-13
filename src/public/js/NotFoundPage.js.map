@@ -1,1 +1,0 @@
-{"version":3,"sources":["webpack:///./src/components/NotFoundPage/NotFoundPage.js"],"names":["NotFoundPage"],"mappings":"yFAAA,2BAOeA,UALM,IAEnB","file":"js/NotFoundPage.js","sourcesContent":["import React from 'react';\r\n\r\nconst NotFoundPage = () => {\r\n\treturn(\r\n\t\t<h1>Core del NotFoundPage</h1>\r\n\t);\r\n}\r\nexport default NotFoundPage;"],"sourceRoot":""}

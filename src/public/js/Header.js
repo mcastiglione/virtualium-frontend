@@ -1,2 +1,0 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[2],{62:function(e,n,a){"use strict";a.r(n);var r=a(0),o=a.n(r),s=a(11);n.default=Object(s.a)(e=>({user:e.login.user}),e=>({}))(({user:e})=>o.a.createElement("h1",null,""+(e?"Hola, "+e.name:"Core del Header")))}}]);
-//# sourceMappingURL=Header.js.map

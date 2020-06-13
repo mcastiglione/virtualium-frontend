@@ -1,2 +1,0 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[4],{63:function(e,n,o){"use strict";o.r(n);var a=o(0),t=o.n(a);n.default=()=>t.a.createElement("h1",null,"Core del NotFoundPage")}}]);
-//# sourceMappingURL=NotFoundPage.js.map

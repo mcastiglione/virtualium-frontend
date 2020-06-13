@@ -1,1 +1,0 @@
-{"version":3,"sources":["webpack:///./src/components/Footer/Footer.js"],"names":["Footer"],"mappings":"yFAAA,2BAOeA,UALA,IAEb","file":"js/Footer.js","sourcesContent":["import React from 'react';\r\n\r\nconst Footer = () => {\r\n\treturn(\r\n\t\t<h1>Core del Footer</h1>\r\n\t);\r\n}\r\nexport default Footer;"],"sourceRoot":""}

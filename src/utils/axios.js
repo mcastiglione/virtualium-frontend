@@ -1,7 +1,6 @@
 const axios = require('axios');
 axios.defaults.withCredentials = true;
-// const { URL_API } = require('../config.js');
-const URL_API = '';
+const { URL_API } = require('../config.js');
 const urlBase = URL_API;
 
 // 'Content-Type': 'application/json',
