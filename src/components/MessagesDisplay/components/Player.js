@@ -1,19 +1,38 @@
-import React, {useRef} from 'react';
+import React, {useRef, useState, useEffect} from 'react';
+import style from './Player.module.css';
 
 export function Audio(props, ...rest){
-    let progressBar = useRef();
+    let audioRef = useRef();
+    let [length, setLength] = useState(null);
+    let [progress, setProgress] = useState(null);
 
     let type;
 
-    switch(props.type){
-        case 'mp3': type = 'audio/mpeg';    break;
-        case 'wav': type = 'audio/wav';     break;
-        case 'ogg': type = 'audio/ogg';     break;
+    // Se ejecuta cada vez que se tiene que renderizar.
+    useEffect(()=>{
+        setLength(audioRef.current.duration);
+
+        
+        switch(props.type){
+            case 'mp3': type = 'audio/mpeg';    break;
+            case 'wav': type = 'audio/wav';     break;
+            case 'ogg': type = 'audio/ogg';     break;
+        }
+
+    },[]);
+
+
+    let timeHandler = ()=>{
+        setProgress((audioRef.current.currentTime / length).toString() + "%");
     }
+
+
     return(
-        <div>
-        <div ref = {progressBar} className = {style.bar}></div>
-        <audio>
+        <div className ={style.progressBar_container}>
+        <div className = {style.progressBar}>
+            <div style = {{width: progress}}></div>
+        </div>
+        <audio onTimeUpdate={timeHandler} ref={audioRef}>
             <source src = {props.src} type = {props.src}></source>
         </audio>
         </div>

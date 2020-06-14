@@ -24,3 +24,34 @@
 
 	--background-gradient: linear-gradient(45deg,#f19122,#d00e5a,#7c4d95);
 }
+
+
+
+/*
+ * It defines the style of the scrollbar of the website
+ * */
+/* width */
+::-webkit-scrollbar {
+    right: -3px;
+    position: relative;
+  width: 15px;
+  border-radius: 8px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #fdf8d9; 
+  border-radius: 8px;
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: var(--secondary-color);
+  border: 2px var(--primary-color) solid;    
+  border-radius: 8px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: var(--third-color); 
+}

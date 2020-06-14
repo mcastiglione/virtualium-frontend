@@ -99,11 +99,9 @@ export default class MessageDisplay extends React.Component {
 
             console.log(this.state.messageRetriever.messages);
             return (
-                <div>
-                    <Player>
-                        <Audio src="https://backend.virtualium.ethernity.live/get_sound" type="mp3"/>
-                        {/* <ButtonPlayer/> */}
-                    </Player>
+                <div> {/* <Player> */}
+                    <Audio src="https://backend.virtualium.ethernity.live/get_sound" type="mp3"/> {/* <ButtonPlayer/> */}
+                    {/* </Player> */}
                     <audio autoPlay>
                         <source src="https://backend.virtualium.ethernity.live/get_sound" type="audio/wav"></source>
                     </audio>
