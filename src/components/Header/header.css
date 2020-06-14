@@ -38,11 +38,11 @@
 }
 
 .navbarFixedTtde > nav ul {
-	grid-template-columns: repeat(6, max-content) 1fr repeat(4, max-content);
+	grid-template-columns: max-content 1fr repeat(6, max-content);
 }
 
 .navbarFixedTtde.webShow > nav ul {
-	grid-template-columns: 1fr repeat(5, max-content);
+	grid-template-columns: 1fr repeat(7, max-content);
 }
 
 /* END - Navbar fixed */
@@ -128,8 +128,8 @@
 }
 
 .navMobileForm {
-	/*display: flex;*/
-	display: grid;
+	display: none;
+	/*display: grid;*/
 	padding: 0 5%;
 	grid-gap: 15px;
 	position: relative;
@@ -265,4 +265,14 @@
 
 .logo.small img {
  max-width: 120px !important;
+}
+
+.btnArtista,
+.btnSalaVirtual {
+	color: #fff;
+	line-height: 2;
+	cursor: pointer;
+	padding: 5px 10px;
+	border: 1px solid;
+	border-radius: 30px;
 }

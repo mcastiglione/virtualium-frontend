@@ -36,3 +36,16 @@
 .CA .form .select {
 	margin-bottom: 2rem;
 }
+
+.btnSalaVirtual {
+	color: #000;
+	margin: auto;
+	display: block;
+	line-height: 2;
+	cursor: pointer;
+	padding: 5px 10px;
+	border: 1px solid;
+	width: max-content;
+	border-radius: 30px;
+	text-transform: uppercase;
+}

@@ -12,33 +12,35 @@
 }
 
 .boxIcon {
-	width: 50px;
+/*	width: 50px;
 	height: 50px;
 	display: flex;
 	border-radius: 50%;
 	transition: all .3s;
 	align-items: center;
 	border: 2px solid #fff;
-	justify-content: center;
+	justify-content: center;*/
 }
 
-.contentRedesSociales.scrollActive .boxIcon {
+/*.contentRedesSociales.scrollActive .boxIcon {
 	width: 40px;
 	height: 40px;
-}
+}*/
 
 .boxIcon img {
-	width: 55%;
+	width: 40px;
+	margin: auto;
+	display: block;
 }
 
 @media only screen and (min-width: 993px) {
 	.contentRedesSociales {
-		width: 70px;
+		/*width: 70px;*/
 		margin-left: 50px; 
 	}
 
 	.contentRedesSociales.scrollActive {
-		width: 55px;
+		/*width: 55px;*/
 		padding: 10px;
 	}
 }

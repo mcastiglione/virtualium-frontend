@@ -159,11 +159,13 @@ const Header = ({user, evento, mobileActive, logout, triggerOpenLogin, handleOpe
 		return(
 			<Fragment>
 				<RedesSociales/>
-				<Categorias/>
+				{/*<Categorias/>*/}
 
 				<div className={style.navMobileForm} >
 					{ mobileActive && renderIconBuscador() }
 					{ (!user || !mobileActive) ? null : renderIconTicketera() }
+					{ (!user || !mobileActive) ? null : renderIconSalaVirtual() }
+					{ (!user || !mobileActive) ? null : renderIconArtista() }
 					{ (openLogin || !mobileActive) ? null : renderIconAccount() }
 					{ (!user || openLogin || !mobileActive) ? null : renderIconLogout() }
 					{ (user || !mobileActive) ? null : renderContentLogin() }
@@ -203,37 +205,35 @@ const Header = ({user, evento, mobileActive, logout, triggerOpenLogin, handleOpe
 		)
 	}
 
-	const __renderIconTicketera = () => {
-		return(
-			<span
-					className={cx(
-						style.iconTicketera,
-						{[`${style.mobile}`]: (openSidenav)},
-						{[`${style.black}`]: (!evento.bandaImagenUrl && scrollActive || openSidenav)},
-						{[`${style.openLogin}`]: openLogin},
-						'trigger-scale'
-					)}
-					onClick={(e) => handleActionForm(e, 'dashboard')}
-				>
-				<span className={style.lineTop} ></span>
-				<span className={style.lineBottom} ></span>
-			</span>
-		)
-	}
-
 	const renderIconTicketera = () => {
 		return(
 			<span
-					// className={cx(
-					// 	'trigger-scale'
-					// )}
-					onClick={(e) => handleActionForm(e, 'dashboard')}
+					onClick={(e) => {}}
 				>
 					<img
 						className={cx(style.iconSvg)}
 						src="/img/icons/icono-mis-compras.svg" alt=""
 					/>
 			</span>
+		)
+	}
+
+	const renderIconArtista = () => {
+		return(
+			<span
+					className={cx(style.btnArtista)}
+					onClick={(e) => handleActionForm(e, 'dashboard')}
+				>
+					ARTISTA
+			</span>
+		)
+	}
+	const renderIconSalaVirtual = () => {
+		return(
+			<NavLink
+				to='/visor'
+				className={cx(style.btnSalaVirtual)}
+			>IR A SALA VIRTUAL</NavLink>
 		)
 	}
 
@@ -365,11 +365,15 @@ const Header = ({user, evento, mobileActive, logout, triggerOpenLogin, handleOpe
 
 			{ (!evento.isEmpty) ? null : <RedesSociales/> }
 
-			{ (!evento.isEmpty) ? null : <Categorias/> }
+			{ /*(!evento.isEmpty) ? null : <Categorias/>*/ }
 
 			{ !mobileActive &&  renderIconBuscador() }
 
 			{ (user && !mobileActive) && renderIconTicketera() }
+
+			{ (user && !mobileActive) && renderIconSalaVirtual() }
+
+			{ (user && !mobileActive) && renderIconArtista() }
 
 			{ !mobileActive &&  renderIconAccount() }
 

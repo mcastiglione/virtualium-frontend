@@ -18,10 +18,6 @@ const Dashboard = () => {
 				</li>
 
 				<li>
-					<Link to='/visor' > visor </Link>
-				</li>
-
-				<li>
 					<Link to='/videos' > videos </Link>
 				</li>
 			</ul>

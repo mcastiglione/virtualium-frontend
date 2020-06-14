@@ -24,9 +24,9 @@ const RedesSociales = (props) => {
 			instagram: 'instagram-black.svg'
 		},
 		white: {
-			facebook: 'facebook-white.svg',
-			twitter: 'twitter-white.svg',
-			instagram: 'instagram-white.svg'
+			facebook: 'icon-facebook.svg',
+			twitter: 'icon-twitter.svg',
+			instagram: 'icon-instagram.svg'
 		}
 	});
 
