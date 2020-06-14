@@ -21,4 +21,6 @@
 	--first-color-alpha_50: black;
 	--second-color-alpha_50: black;
 	--third-color_alpha_50: black;
+
+	--background-gradient: linear-gradient(45deg,#f19122,#d00e5a,#7c4d95);
 }
