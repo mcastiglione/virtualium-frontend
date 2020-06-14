@@ -1,0 +1,24 @@
+/*
+ * Variables used for the project.
+ * In order to call these variables into your css files (or less or scss)
+ *
+ * you use for example:
+ * background-color: var(--first-color);
+ *
+ *
+ * --first-color: the main color of the website, the most common to see.
+ * --second-color: it complements the first color.
+ * --third-color: background colors, or where it shouldn't be used widely.
+ * 			maybe complements buttons or text, who knows. 
+ * 			It should be a darker color.
+ *
+ * */
+:root{
+	--first-color: blue;
+	--second-color: black;
+	--third-color: yellow;
+
+	--first-color-alpha_50: black;
+	--second-color-alpha_50: black;
+	--third-color_alpha_50: black;
+}
