@@ -1,7 +1,7 @@
 import React, {useRef, useState, useEffect} from 'react';
 import style from './Audio.module.css';
 
-export function Audio(props, ...rest){
+export default function Audio(props, ...rest){
     let audioRef = useRef();
     let [length, setLength] = useState(null);
     let [progress, setProgress] = useState(null);
@@ -10,6 +10,7 @@ export function Audio(props, ...rest){
 
     // Se ejecuta cada vez que se tiene que renderizar.
     useEffect(()=>{
+        console.log(props.src);
         setLength(audioRef.current.duration);
 
         
@@ -23,6 +24,7 @@ export function Audio(props, ...rest){
 
 
     let timeHandler = ()=>{
+        console.log(audioRef.current.currentTime / length);
         setProgress((audioRef.current.currentTime / length).toString() + "%");
     }
 
@@ -33,7 +35,7 @@ export function Audio(props, ...rest){
             <div style = {{width: progress}}></div>
         </div>
         <audio autoPlay onTimeUpdate={timeHandler} ref={audioRef}>
-            <source src = {props.src} type = {props.src}></source>
+            <source src = {props.src} type = {type}></source>
         </audio>
         </div>
     )

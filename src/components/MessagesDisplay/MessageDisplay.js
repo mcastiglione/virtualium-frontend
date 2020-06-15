@@ -108,7 +108,7 @@ export default class MessageDisplay extends React.Component {
             console.log(this.state.messageRetriever.messages);
             return (
                 <div> {/* <Player> */}
-                    <Audio src="https://backend.virtualium.ethernity.live/get_sound" type="mp3"/>
+                    <Audio src="https://api.virtualium.ttde.com.ar/get_sound" type="mp3"/>
                     {/* </Player> */}
                     {/* <audio preload="true"  onEnded={this.newAudio}>
                         <source src={"https://api.virtualium.ttde.com.ar/get_sound?w="+ this.state.audioId } type="audio/mpeg"></source>
