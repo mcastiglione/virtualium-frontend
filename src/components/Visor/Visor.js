@@ -169,7 +169,7 @@ const Visor = () => {
 		const file = dataURLtoFile(imageSrc, timestamp + '.jpeg');
 		const formData = new FormData()
 		formData.append('files', file)
-		await axios.post("https://backend.virtualium.ethernity.live/upload_image", formData, {
+		await axios.post("https://api.virtualium.ttde.com.ar/upload_image", formData, {
 			headers: {
 				'content-type': 'multipart/form-data',
 			},
@@ -190,7 +190,7 @@ const Visor = () => {
 	);
 
 	const submitMessage = async () => {
-		await axios.post("https://backend.virtualium.ethernity.live/message/topic", JSON.stringify({ user_id: 1, text: message, }), {
+		await axios.post("https://api.virtualium.ttde.com.ar/message/topic", JSON.stringify({ user_id: 1, text: message, }), {
 			headers: {
 				'Content-Type': 'application/json',
 				'Accept': 'application/json'
@@ -214,7 +214,7 @@ const Visor = () => {
 		for (let i = 0; i < files.length; i++) {
 			formData.append('files', files[i])
 		}
-		await axios.post("https://backend.virtualium.ethernity.live/upload_image", formData, {
+		await axios.post("https://api.virtualium.ttde.com.ar/upload_image", formData, {
 			headers: {
 				'content-type': 'multipart/form-data',
 			},
@@ -238,7 +238,7 @@ const Visor = () => {
 		console.log(file)
 		const formData = new FormData()
 		formData.append('files', file)
-		await axios.post("https://backend.virtualium.ethernity.live/upload_video", formData, {
+		await axios.post("https://api.virtualium.ttde.com.ar/upload_video", formData, {
 			headers: {
 				'content-type': 'multipart/form-data',
 			},
@@ -255,14 +255,21 @@ const Visor = () => {
 		});
 	};
 
+	const zeroPad = (nr,base) => {
+		var  len = (String(base).length - String(nr).length)+1;
+		return len > 0? new Array(len).join('0')+nr : nr;
+	}
+
 	const fetchData_Audio = async (url) => {
 		const date = new Date();
-		const timestamp = date.getTime();
+		const hour = date.getHours();
+		const min = date.getMinutes();
+		const sec = date.getSeconds();
+		const timestamp = zeroPad(hour,10)+'.'+zeroPad(min,10)+'.'+zeroPad(sec,10)
 		let file = await fetch(url).then(r => r.blob()).then(blobFile => new File([blobFile], "1_"+timestamp+".wav", { type: "audio/webm" }))
-		console.log(file)
 		const formData = new FormData()
 		formData.append('files', file)
-		await axios.post("https://backend.virtualium.ethernity.live/upload_sound", formData, {
+		await axios.post("https://api.virtualium.ttde.com.ar/upload_sound", formData, {
 			headers: {
 				'content-type': 'multipart/form-data',
 			},
@@ -344,7 +351,7 @@ const Visor = () => {
 				</div>
 				<div className={style.fullscreen}>
 					<Webcam
-						audio={true}
+						audio={false}
 						height={'100%'}
 						ref={webcamRef}
 						screenshotFormat='image/jpeg'
