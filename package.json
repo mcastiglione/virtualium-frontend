@@ -5,7 +5,7 @@
 	"main": "index.js",
 	"scripts": {
 		"front": "webpack --mode development --watch --config ./webpack.base.config.js --history-api-fallback --env.PLATFORM=local",
-		"dev": "webpack-dev-server --mode development --config ./webpack.base.config.js --hot --open --history-api-fallback --env.PLATFORM=local",
+		"dev": "webpack-dev-server --https --mode development --config ./webpack.base.config.js --hot --open --history-api-fallback --env.PLATFORM=local",
 		"dev:local": "webpack-dev-server --mode development --config ./webpack.base.config.js --hot --open --history-api-fallback --env.PLATFORM=local --env.DOTENV=local",
 		"build": "webpack --mode production --config ./webpack.prod.config.js --env.PLATFORM=production --progress"
 	},

@@ -80,7 +80,9 @@ function App({ user, isLogin, verifySession }) {
 		) : (null);
 	});
 
-	const ROL = ROLES.find((el) => el === user.rol);
+	if(false) {
+	}
+	const ROL = ROLES.find((el) => user && el === user.rol);
 	const _privateRoutes = PrivateRoutes.map((route, index) => {
 		let {
 			path,
@@ -134,7 +136,7 @@ function App({ user, isLogin, verifySession }) {
 }
 
 const mapStateToProps = (store) => ({
-	user: store.login,
+	user: store.login.user,
 	isLogin: store.login.isLogin
 });
 
