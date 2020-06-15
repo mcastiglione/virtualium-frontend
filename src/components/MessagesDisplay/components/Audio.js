@@ -20,19 +20,20 @@ export default function Audio(props, ...rest){
             case 'ogg': type = 'audio/ogg';     break;
         }
 
-    },[]);
+    },[props]);
 
 
     let timeHandler = ()=>{
-        console.log(audioRef.current.currentTime / length);
-        setProgress((audioRef.current.currentTime / length).toString() + "%");
+        setProgress(Math.round((audioRef.current.currentTime / length)*100).toString() + "%");
+        console.log(progress);
     }
 
-
+    let newId = new Date().getTime().toString();
     return(
+        <div>
+
         <div className ={style.progressBar_container}>
-        <div className = {style.progressBar}>
-            <div style = {{width: progress}}></div>
+        <div className = {style.progressBar} style={{width: progress}}></div>
         </div>
         <audio autoPlay onTimeUpdate={timeHandler} ref={audioRef}>
             <source src = {props.src} type = {type}></source>
