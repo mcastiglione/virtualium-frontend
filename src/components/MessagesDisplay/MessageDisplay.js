@@ -1,5 +1,5 @@
 import React, {useRef, useState, useEffect} from 'react';
-
+import Audio from './components/Audio';
 import style from './MessageDisplay.module.css';
 
 export default class MessageDisplay extends React.Component {
@@ -109,11 +109,11 @@ export default class MessageDisplay extends React.Component {
             console.log(this.state.messageRetriever.messages);
             return (
                 <div> {/* <Player> */}
-                    <Audio src="https://backend.virtualium.ethernity.live/get_sound" type="mp3"/> <ButtonPlayer/>
+                    <Audio src="https://backend.virtualium.ethernity.live/get_sound" type="mp3"/>
                     {/* </Player> */}
-                    <audio preload="true"  onEnded={this.newAudio}>
+                    {/* <audio preload="true"  onEnded={this.newAudio}>
                         <source src={"https://api.virtualium.ttde.com.ar/get_sound?w="+ this.state.audioId } type="audio/mpeg"></source>
-                    </audio>
+                    </audio> */}
                     <div className={
                         style.main_box
                     }>
