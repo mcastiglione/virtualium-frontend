@@ -497,7 +497,7 @@ const Visor = () => {
 								<MenuItem value={17}><Link to="/stream?id=17" className={style.black}>Camera-17</Link></MenuItem>
 								<MenuItem value={18}><Link to="/stream?id=18" className={style.black}>Camera-18</Link></MenuItem>
 								<MenuItem value={19}><Link to="/stream?id=19" className={style.black}>Camera-19</Link></MenuItem>
-								<MenuItem value={20}><Link to="/stream?id=9" className={style.black}>Camera-20</Link></MenuItem>
+								<MenuItem value={20}><Link to="/stream?id=20" className={style.black}>Camera-20</Link></MenuItem>
 							</Select>
 						</div>
 
