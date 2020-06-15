@@ -2,6 +2,7 @@ import React, {useRef, useState, useEffect} from 'react';
 import style from './Player.module.css';
 
 export function Audio(props, ...rest){
+    console.log('acaa')
     let audioRef = useRef();
     let [length, setLength] = useState(null);
     let [progress, setProgress] = useState(null);
