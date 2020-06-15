@@ -43,7 +43,7 @@ const Evento = ({ evento, isFetching, resetEvento, setEvento }) => {
 	return(
 		<div className={style.mainContent} >
 			<section>
-				<img src="https://lorempixel.com/700/1000/city/" alt=""/>
+				<img src="http://testing.gallbers.uy/img/2.png" alt=""/>
 			</section>
 			<section>
 				<h3>Descripción</h3>

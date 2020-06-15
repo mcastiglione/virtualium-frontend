@@ -24,9 +24,9 @@ const RedesSociales = (props) => {
 			instagram: 'instagram-black.svg'
 		},
 		white: {
-			facebook: 'facebook-white.svg',
-			twitter: 'twitter-white.svg',
-			instagram: 'instagram-white.svg'
+			facebook: 'icon-facebook.svg',
+			twitter: 'icon-twitter.svg',
+			instagram: 'icon-instagram.svg'
 		}
 	});
 
@@ -49,14 +49,19 @@ const RedesSociales = (props) => {
 
 	return(
 		<li >
-			<div className={cx(style.contentRedesSociales)} >
-				<a target='_blank' href='https://twitter.com/tuticketdeentra' className={style.boxIcon} >
+			<div
+				className={cx(
+					style.contentRedesSociales,
+					{ [`${style.scrollActive}`]:scrollActive },
+				)}
+			>
+				<a target='_blank' href='https://twitter.com/Virtualiumshow1' className={style.boxIcon} >
 					<img src={`/img/icons/${socialIcons[colorIcons].twitter}`} alt=""/>
 				</a>
-				<a target='_blank' href='https://www.facebook.com/TuTicketDeEntradaa' className={cx(style.boxIcon)} >
+				<a target='_blank' href='https://www.facebook.com/virtualiumshowslive.virtualiumshowslive' className={cx(style.boxIcon)} >
 					<img src={`/img/icons/${socialIcons[colorIcons].facebook}`} alt=""/>
 				</a>
-				<a target='_blank' href='https://www.instagram.com/tuticketdeentrada/?hl=es-la' className={cx(style.boxIcon)} >
+				<a target='_blank' href='https://www.instagram.com/virtualiumshowslive/' className={cx(style.boxIcon)} >
 					<img src={`/img/icons/${socialIcons[colorIcons].instagram}`} alt=""/>
 				</a>
 			</div>

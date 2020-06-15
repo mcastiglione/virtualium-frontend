@@ -8,7 +8,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const APP_DIR = path.resolve(__dirname, 'src'); 
 const OUP_DIR = path.resolve(__dirname, 'src', 'public');
-const STATIC_DIR = path.resolve(__dirname, 'src', 'static'); 
+const STATIC_DIR = path.resolve(__dirname, 'src', 'static');
 const HTML_DIR = path.resolve(__dirname, 'src', 'template', 'index.html');
 
 

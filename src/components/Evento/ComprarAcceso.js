@@ -1,6 +1,8 @@
 import React from 'react';
+import { NavLink, Link } from 'react-router-dom';
 
 /* style */
+import cx from 'classnames';
 import style from './evento.css';
 
 /* Components */
@@ -64,6 +66,7 @@ const ComprarAcceso = () => {
 					<option value="MEDIO2">MASTER CARD</option>
 					<option value="MEDIO3">SANTANDER</option>
 				</Select>
+				<Link to='#' className={cx(style.btnSalaVirtual)} > comprar </Link>
 			</section>
 		</div>
 	);

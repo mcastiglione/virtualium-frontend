@@ -2,33 +2,39 @@ import React from 'react';
 import { NavLink, Link } from 'react-router-dom';
 
 /* Style */
-import './footer.scss';
+import cx from 'classnames';
+import style from './footer.css';
 
 const Footer = () => {
-
 	return(
-		<footer>
-		<div className="logo">
-			<Link to='/'>
-				<img src="/img/ttde-logo-black.png" alt=""/>
-			</Link>
-		</div>
-			<div className="links">
-				<NavLink to='/ayuda' > Ayuda </NavLink>
-				<NavLink to='/puntos-de-venta' > · Puntos de venta </NavLink>
-				<NavLink to='/beneficios' > · Beneficios </NavLink>
-				<NavLink to='/productores' > · Productores y recintos </NavLink>
-				<NavLink to='/terminos-condiciones' >· Términos y condiciones </NavLink>
-				<NavLink to='/politicas-privacidad' >· Políticas de privacidad</NavLink>
-				<a href="#" title="Call center 0800-000-0000">· Call center 0800-000-0000</a>
-				<NavLink to='/empresa' > · La compañía </NavLink>
-				<NavLink to="/uso-de-marca">· Uso de marca</NavLink>
-				<NavLink to='/copyright' > · Copyright 2020 </NavLink>
-			</div>
-			<div className="tuticket-link">
-				<a target='_blank' href="#" className="btn">Ir a sala virtual</a>
-			</div>
-		</footer>
+		<section className={style.mainContent}>
+			<footer className={style.footer} >
+				<div className={style.contentLogo} >
+					<Link to='/'>
+						<img src="/img/logo-virtualium-footer.png" alt=""/>
+					</Link>
+				</div>
+
+				<div className={style.contentLinks} >
+					<Link to='/ayuda' >Centro de ayuda</Link>
+					<Link to='/cuenta' >Cuenta</Link>
+					<Link to='/prensa' >Prensa</Link>
+					<Link to='/terminos-condiciones' >Términos de uso</Link>
+					<Link to='/politicas-privacidad' >Privacidad</Link>
+				</div>
+
+				<div className={style.contentLinks} >
+					<Link to='/puntos-de-venta' >Información corporativa</Link>
+					<Link to='/beneficios' >Contáctanos</Link>
+					<Link to='/productores' >Prueba de velocidad</Link>
+					<Link to='/terminos-condiciones' >Avisos legales</Link>
+				</div>
+
+				<div className="tuticket-link">
+					<Link to='/visor' className={cx('btn', style.btnDemo)} >Demostración</Link>
+				</div>
+			</footer>
+		</section>
 	)
 }
 

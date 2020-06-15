@@ -22,9 +22,10 @@
 	left: 0;
 	content: '';
 	width: 100%;
+	opacity: .8;
 	height: 100%;
+	background: #000;
 	position: absolute;
-	background: #1d2561;
 }
 
 .navbarFixedTtde nav .nav-wrapper {
@@ -37,11 +38,11 @@
 }
 
 .navbarFixedTtde > nav ul {
-	grid-template-columns: repeat(6, max-content) 1fr repeat(4, max-content);
+	grid-template-columns: max-content 1fr repeat(6, max-content);
 }
 
 .navbarFixedTtde.webShow > nav ul {
-	grid-template-columns: 1fr repeat(5, max-content);
+	grid-template-columns: 1fr repeat(7, max-content);
 }
 
 /* END - Navbar fixed */
@@ -49,16 +50,14 @@
 /* Navbar fixed scrollActive */
 .navbarFixedTtde.scrollActive nav {
 	opacity: 1;
-	background: #1d2561;
-	/*border-bottom: 1px solid #fff;*/
 	box-shadow: 0 2px 2px 0 rgba(0,0,0,.14),
 							0 3px 1px -2px rgba(0,0,0,.12),
 							0 1px 5px 0 rgba(0,0,0,.2);
 }
 
 .navbarFixedTtde.scrollActive nav:before {
-	display: none;
-	opacity: 0;
+	/*display: none;*/
+	opacity: 1;
 }
 
 .navbarFixedTtde.scrollActive > nav ul a,
@@ -129,8 +128,8 @@
 }
 
 .navMobileForm {
-	/*display: flex;*/
-	display: grid;
+	display: none;
+	/*display: grid;*/
 	padding: 0 5%;
 	grid-gap: 15px;
 	position: relative;
@@ -250,3 +249,30 @@
 	text-transform: uppercase;
 }
 /* END - Evento info */
+
+
+.iconSvg {
+	width: 40px;
+	margin: auto;
+	display: block;
+	cursor: pointer;
+	transition: all .3s;
+}
+
+.logo.small img {
+	transition: all .3s;
+}
+
+.logo.small img {
+ max-width: 120px !important;
+}
+
+.btnArtista,
+.btnSalaVirtual {
+	color: #fff;
+	line-height: 2;
+	cursor: pointer;
+	padding: 5px 10px;
+	border: 1px solid;
+	border-radius: 30px;
+}

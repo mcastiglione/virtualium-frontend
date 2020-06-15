@@ -1,0 +1,46 @@
+.mainContent {
+	background: linear-gradient(45deg, #f19122, #d00e5a, #7c4d95);
+}
+
+.footer {
+	padding: 5%;
+	margin: auto;
+	display: grid;
+	grid-gap: 20px;
+	width: max-content;
+}
+
+.footer > * {
+	display: grid;
+}
+
+.contentLogo img {
+	margin: auto;
+	display: block;
+}
+
+.contentLinks a {
+	color: #fff;
+	text-align: center;
+}
+
+.btnDemo {
+	width: max-content;
+	border: 1px solid #fff;
+	background: transparent;
+}
+
+.btnDemo:hover {
+	background: #d00e5a;
+}
+
+@media only screen and (min-width: 768px) {
+	.footer {
+		width: 100%;
+		grid-template-columns: repeat(4, 1fr);
+	}
+
+	.contentLinks a {
+		text-align: left;
+	}
+}

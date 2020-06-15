@@ -8,6 +8,7 @@ import { Switch, Route, useLocation, useParams } from 'react-router-dom';
 
 /* Style */
 import './materialize/sass/materialize.scss';
+import './app.css';
 
 /* Routes */
 import PublicRoutes from './routes/publicRoutes';
@@ -27,6 +28,9 @@ const NotFoundPage = lazy(() => {
 	return import(/* webpackChunkName: 'NotFoundPage' */'./components/NotFoundPage/NotFoundPage')
 });
 
+/* constants */
+import { ROLES } from './config';
+
 /* context */
 import connect from './context/connect';
 
@@ -39,7 +43,7 @@ import { verifySession } from './actions/loginAction';
 /* CustomHooks */
 import { useMobileDetector } from './components/customHooks/';
 
-function App({ isLogin, verifySession }) {
+function App({ user, isLogin, verifySession }) {
 
 	const params = useParams();
 	const location = useLocation();
@@ -76,22 +80,26 @@ function App({ isLogin, verifySession }) {
 		) : (null);
 	});
 
+	const ROL = ROLES.find((el) => el === user.rol);
 	const _privateRoutes = PrivateRoutes.map((route, index) => {
 		let {
 			path,
 			exact,
 			name,
 			Component,
+			isAuthorized,
 		} = route;
 
 		return (Component) ? (
 			<PrivateRoute
+				rol={ROL}
 				key={index}
 				path={path}
 				name={name}
 				exact={exact}
 				isLogin={isLogin}
 				component={Component}
+				isAuthorized={isAuthorized}
 			/>
 		) : (null);
 	});
@@ -126,6 +134,7 @@ function App({ isLogin, verifySession }) {
 }
 
 const mapStateToProps = (store) => ({
+	user: store.login,
 	isLogin: store.login.isLogin
 });
 

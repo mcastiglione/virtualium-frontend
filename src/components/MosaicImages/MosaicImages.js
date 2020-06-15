@@ -26,7 +26,7 @@ class MosaicImages extends React.Component{
 	//TODO: Animated feature isn't developed yet, please don't use Animated property while declaring this react component
 	componentDidMount(){
 		this.getData();
-		this.imageUpdateInterval = setInterval(()=>this.getData(), 2000);
+		this.imageUpdateInterval = setInterval(()=>this.getData(), 30000);
 	}
 
 	componentWillUnmount(){
@@ -35,7 +35,8 @@ class MosaicImages extends React.Component{
 
 	getData() {
 		console.log("fetching new image...");
-		fetch('https://backend.virtualium.ethernity.live/get_mosaic?w=' + new Date().getTime().toString())
+		// fetch('https://backend.virtualium.ethernity.live/get_mosaic?w=' + new Date().getTime().toString())
+		fetch('https://api.virtualium.ttde.com.ar/get_mosaic?w=' + new Date().getTime().toString())
 		.then(res => res.blob())
 		.then((data)=>{
 			this.setState({Mosaic: URL.createObjectURL(data)}, ()=>{console.log(this.state.Mosaic)});
