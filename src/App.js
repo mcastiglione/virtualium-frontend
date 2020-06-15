@@ -8,6 +8,7 @@ import { Switch, Route, useLocation, useParams } from 'react-router-dom';
 
 /* Style */
 import './materialize/sass/materialize.scss';
+import './app.css';
 
 /* Routes */
 import PublicRoutes from './routes/publicRoutes';

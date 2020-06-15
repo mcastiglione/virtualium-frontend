@@ -1,0 +1,57 @@
+/*
+ * Variables used for the project.
+ * In order to call these variables into your css files (or less or scss)
+ *
+ * you use for example:
+ * background-color: var(--first-color);
+ *
+ *
+ * --first-color: the main color of the website, the most common to see.
+ * --second-color: it complements the first color.
+ * --third-color: background colors, or where it shouldn't be used widely.
+ * 			maybe complements buttons or text, who knows. 
+ * 			It should be a darker color.
+ *
+ * */
+:root{
+	--first-color: blue;
+	--second-color: black;
+	--third-color: yellow;
+
+	--first-color-alpha_50: black;
+	--second-color-alpha_50: black;
+	--third-color_alpha_50: black;
+
+	--background-gradient: linear-gradient(45deg,#f19122,#d00e5a,#7c4d95);
+}
+
+
+
+/*
+ * It defines the style of the scrollbar of the website
+ * */
+/* width */
+::-webkit-scrollbar {
+    right: -3px;
+    position: relative;
+  width: 15px;
+  border-radius: 8px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #fdf8d9; 
+  border-radius: 8px;
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: var(--secondary-color);
+  border: 2px var(--primary-color) solid;    
+  border-radius: 8px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: var(--third-color); 
+}
