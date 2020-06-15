@@ -5,6 +5,7 @@ import { ROLES } from '../config';
 
 /* conponents */
 const Visor = React.lazy(() => import(/* webpackChunkName: 'Visor' */ '../components/Visor/Visor'));
+const Stream = React.lazy(() => import(/* webpackChunkName: 'Dashboard' */ '../components/Stream/Stream'));
 const Dashboard = React.lazy(() => import(/* webpackChunkName: 'Dashboard' */ '../components/Dashboard/Dashboard'));
 const MosaicVideo = React.lazy(() => import(/* webpackChunkName: 'MosaicVideo' */ '../components/MosaicVideo/MosaicVideo'));
 const MosaicImages = React.lazy(() => import(/* webpackChunkName: 'MosaicImages' */ '../components/MosaicImages/MosaicImages'));
@@ -58,6 +59,12 @@ const privateRoutes = [
 		name: 'Visor',
 		path: '/visor',
 		Component: Visor
+	},
+	{
+		exact: true,
+		name: 'Stream',
+		path: '/stream',
+		Component: Stream
 	}
 ];
 

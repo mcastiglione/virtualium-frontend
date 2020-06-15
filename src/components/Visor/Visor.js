@@ -477,7 +477,7 @@ const Visor = () => {
 								input={<BootstrapInput />}
 								IconComponent = {SelectIcon}
 							>
-								<MenuItem value={0}><Link to="/dashboard" className={style.black}>Local CAM</Link></MenuItem>
+								<MenuItem value={0}><Link to="/visor" className={style.black}>Local CAM</Link></MenuItem>
 								<MenuItem value={1}><Link to="/stream?id=1" className={style.black}>Camera-1</Link></MenuItem>
 								<MenuItem value={2}><Link to="/stream?id=2" className={style.black}>Camera-2</Link></MenuItem>
 								<MenuItem value={3}><Link to="/stream?id=3" className={style.black}>Camera-3</Link></MenuItem>
