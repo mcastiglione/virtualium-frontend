@@ -66,7 +66,7 @@ const ComprarAcceso = () => {
 					<option value="MEDIO2">MASTER CARD</option>
 					<option value="MEDIO3">SANTANDER</option>
 				</Select>
-				<Link to='/visor' className={cx(style.btnSalaVirtual)} > ir a sala virtual </Link>
+				<Link to='#' className={cx(style.btnSalaVirtual)} > comprar </Link>
 			</section>
 		</div>
 	);

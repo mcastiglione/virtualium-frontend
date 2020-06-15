@@ -55,13 +55,13 @@ const RedesSociales = (props) => {
 					{ [`${style.scrollActive}`]:scrollActive },
 				)}
 			>
-				<a target='_blank' href='https://twitter.com/tuticketdeentra' className={style.boxIcon} >
+				<a target='_blank' href='https://twitter.com/Virtualiumshow1' className={style.boxIcon} >
 					<img src={`/img/icons/${socialIcons[colorIcons].twitter}`} alt=""/>
 				</a>
-				<a target='_blank' href='https://www.facebook.com/TuTicketDeEntradaa' className={cx(style.boxIcon)} >
+				<a target='_blank' href='https://www.facebook.com/virtualiumshowslive.virtualiumshowslive' className={cx(style.boxIcon)} >
 					<img src={`/img/icons/${socialIcons[colorIcons].facebook}`} alt=""/>
 				</a>
-				<a target='_blank' href='https://www.instagram.com/tuticketdeentrada/?hl=es-la' className={cx(style.boxIcon)} >
+				<a target='_blank' href='https://www.instagram.com/virtualiumshowslive/' className={cx(style.boxIcon)} >
 					<img src={`/img/icons/${socialIcons[colorIcons].instagram}`} alt=""/>
 				</a>
 			</div>
