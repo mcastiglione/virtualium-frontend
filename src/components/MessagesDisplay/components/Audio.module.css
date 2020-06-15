@@ -1,7 +1,9 @@
 .progressBar{
-    background-color: yellow;
+    background-color: red;
+    height: 100%;
 }
 
 .progressBar_container{
+    height: 8px;
     background-color: lightgrey;
 }
