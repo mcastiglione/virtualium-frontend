@@ -86,7 +86,7 @@ function App({ isLogin, verifySession }) {
 		} = route;
 
 		return (Component) ? (
-			<PrivateRoute
+			<PublicRoute
 				key={index}
 				path={path}
 				name={name}
