@@ -170,7 +170,7 @@ const Visor = () => {
 		const formData = new FormData()
 		formData.append('files', file)
 		// await axios.post("https://backend.virtualium.ethernity.live/upload_image", formData, {
-		await axios.post("http://54.159.132.29:5001/upload_image", formData, {
+		await axios.post("https://api.virtualium.ttde.com.ar/upload_image", formData, {
 			headers: {
 				'content-type': 'multipart/form-data',
 			},
@@ -192,7 +192,7 @@ const Visor = () => {
 
 	const submitMessage = async () => {
 		// await axios.post("https://backend.virtualium.ethernity.live/message/topic", JSON.stringify({ user_id: 1, text: message, }), {
-		await axios.post("http://54.159.132.29:5000/message/topic", JSON.stringify({ user_id: 1, text: message, }), {
+		await axios.post("https://api.virtualium.ttde.com.ar/message/topic", JSON.stringify({ user_id: 1, text: message, }), {
 			headers: {
 				'Content-Type': 'application/json',
 				'Accept': 'application/json'
@@ -217,7 +217,7 @@ const Visor = () => {
 			formData.append('files', files[i])
 		}
 		// await axios.post("https://backend.virtualium.ethernity.live/upload_image", formData, {
-		await axios.post("http://54.159.132.29:5001/upload_image", formData, {
+		await axios.post("https://api.virtualium.ttde.com.ar/upload_image", formData, {
 			headers: {
 				'content-type': 'multipart/form-data',
 			},
@@ -241,7 +241,7 @@ const Visor = () => {
 		console.log(file)
 		const formData = new FormData()
 		formData.append('files', file)
-		await axios.post("http://54.159.132.29:5003/upload_video", formData, {
+		await axios.post("https://api.virtualium.ttde.com.ar/upload_video", formData, {
 			headers: {
 				'content-type': 'multipart/form-data',
 			},
@@ -266,7 +266,7 @@ const Visor = () => {
 		const formData = new FormData()
 		formData.append('files', file)
 		// await axios.post("https://backend.virtualium.ethernity.live/upload_sound", formData, {
-		await axios.post("http://54.159.132.29:5002/upload_sound", formData, {
+		await axios.post("https://api.virtualium.ttde.com.ar/upload_sound", formData, {
 			headers: {
 				'content-type': 'multipart/form-data',
 			},

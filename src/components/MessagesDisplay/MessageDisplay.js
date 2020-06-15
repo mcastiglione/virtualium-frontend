@@ -16,7 +16,7 @@ export default class MessageDisplay extends React.Component {
 
     getAPIurl() {
         return ( // this.props.APIURL !== undefined ? this.props.APIURL :
-            'http://54.159.132.29:5000/message/topic'
+            'https://api.virtualium.ttde.com.ar/message/topic'
         )
     }
 
@@ -34,7 +34,7 @@ export default class MessageDisplay extends React.Component {
     // this method fetch the messages from the URL
     async getMessages() {
         console.log("fetching data...");
-        let response = await fetch('http://54.159.132.29:5000/message/topic');
+        let response = await fetch('https://api.virtualium.ttde.com.ar/message/topic');
 
         try{
             let jsonData = await response.json();

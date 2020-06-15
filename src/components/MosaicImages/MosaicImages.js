@@ -36,7 +36,7 @@ class MosaicImages extends React.Component{
 	getData() {
 		console.log("fetching new image...");
 		// fetch('https://backend.virtualium.ethernity.live/get_mosaic?w=' + new Date().getTime().toString())
-		fetch('http://54.159.132.29:5001/get_mosaic?w=' + new Date().getTime().toString())
+		fetch('https://api.virtualium.ttde.com.ar/get_mosaic?w=' + new Date().getTime().toString())
 		.then(res => res.blob())
 		.then((data)=>{
 			this.setState({Mosaic: URL.createObjectURL(data)}, ()=>{console.log(this.state.Mosaic)});
