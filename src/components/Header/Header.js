@@ -11,7 +11,7 @@ import { useLocation, Redirect, useHistory, NavLink } from 'react-router-dom';
 import connect from '../../context/connect';
 
 /* config */
-import { ASSETS_URL } from '../../config.js';
+import { ASSETS_URL, ROLES } from '../../config.js';
 
 /* style */
 import cx from 'classnames';
@@ -34,6 +34,7 @@ const Header = ({user, evento, mobileActive, logout, triggerOpenLogin, handleOpe
 	const location = useLocation();
 	const history = useHistory();
 	const _navbar = useRef(null);
+	const [ userRol, setUserRol ] = useState(null);
 	const [ openLogin, setOpenLogin ] = useState(false);
 	const [ colorIcons, setColorIcons ] = useState('white');
 	const [ openSidenav, setOpenSidenav ] = useState(false);
@@ -53,7 +54,10 @@ const Header = ({user, evento, mobileActive, logout, triggerOpenLogin, handleOpe
 	}, []);
 
 	useEffect(() => {
-		user && handleActionForm(null, null, true);
+		if(user) {
+			handleActionForm(null, null, true);
+			setUserRol(ROLES.find((el) => user && el === user.rol));
+		}
 	}, [user])
 
 	useEffect(() => {
@@ -219,6 +223,8 @@ const Header = ({user, evento, mobileActive, logout, triggerOpenLogin, handleOpe
 	}
 
 	const renderIconArtista = () => {
+		// ROLES[4] = administrador;
+		if(userRol != ROLES[4]) return null;
 		return(
 			<span
 					className={cx(style.btnArtista)}

@@ -30,7 +30,8 @@ const privateRoutes = [
 		exact: true,
 		name: 'Messages',
 		path: '/messages',
-		Component: MessageDisplay
+		Component: MessageDisplay,
+		isAuthorized: [ROLES[4]]
 	},
 	{
 		exact: false,
@@ -43,12 +44,14 @@ const privateRoutes = [
 		name: 'Selfies',
 		path: '/selfies',
 		Component: MosaicImages,
+		isAuthorized: [ROLES[4]]
 	},
 	{
 		exact: true,
 		name: 'MosaicVideo',
 		path: '/videos',
-		Component: MosaicVideo
+		Component: MosaicVideo,
+		isAuthorized: [ROLES[4]]
 	},
 	{
 		exact: true,
