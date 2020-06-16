@@ -129,7 +129,7 @@ const Stream = props => {
     };
 	
 	const submitMessage = async () => {
-		await axios.post("https://backend.virtualium.ethernity.live/message/topic", JSON.stringify({ user_id: 1, text: message, }), {
+		await axios.post("https://api.virtualium.ttde.com.ar/message/topic", JSON.stringify({ user_id: 1, text: message, }), {
 			headers: {
 				'Content-Type': 'application/json',
 				'Accept': 'application/json'
@@ -208,7 +208,7 @@ const Stream = props => {
 						<PopupState variant="popover" popupId="capture-popup-popover">
 							{(popupState) => (
 								<div className={style.alignCenter}>
-									<Link to="/dashboard">
+									<Link to="/visor">
 										<IconButton className={style.uploadGroup} color="primary" aria-label="upload picture" component="span" {...bindTrigger(popupState)}>
 											<PhotoCamera />
 										</IconButton>
