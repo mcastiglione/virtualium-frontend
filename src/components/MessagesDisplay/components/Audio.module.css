@@ -1,5 +1,6 @@
 .progressBar{
     background: var(--background-gradient);
+    width: 0%;
     
     height: 100%;
 }
