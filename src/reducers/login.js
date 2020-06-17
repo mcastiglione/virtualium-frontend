@@ -8,7 +8,7 @@ import {
 } from '../constants';
 
 const init = {
-	user: null,
+	user: {},
 	isLogin: false,
 	errorMsj: null,
 	isLoginLoading: false,
