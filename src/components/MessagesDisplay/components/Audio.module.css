@@ -1,0 +1,10 @@
+.progressBar{
+    background-color: red;
+    height: 100%;
+    width: 0%;          /* Default behaviour */
+}
+
+.progressBar_container{
+    height: 5px;
+    background-color: lightgrey;
+}

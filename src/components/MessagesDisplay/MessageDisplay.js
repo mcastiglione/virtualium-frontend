@@ -1,7 +1,5 @@
 import React, {useRef, useState, useEffect} from 'react';
-
-import {Audio} from './components/Player';
-
+import Audio from './components/Audio';
 import style from './MessageDisplay.module.css';
 
 export default class MessageDisplay extends React.Component {
@@ -11,7 +9,8 @@ export default class MessageDisplay extends React.Component {
         this.state = {
             messageRetriever: {
                 messages: undefined
-            }
+            },
+            audioiD: 1
         }
         this.emojiText = React.createRef();
     }
@@ -23,8 +22,11 @@ export default class MessageDisplay extends React.Component {
 
 
     componentDidMount() {
+        
+        this.newAudio();
         this.getMessages();
         this.messagesInterval = setInterval(() => this.getMessages(), 2000);
+
     }
 
 
@@ -35,7 +37,7 @@ export default class MessageDisplay extends React.Component {
     // this method fetch the messages from the URL
     async getMessages() {
         console.log("fetching data...");
-        let response = await fetch('https://backend.virtualium.ethernity.live/message/topic');
+        let response = await fetch('https://api.virtualium.ttde.com.ar/message/topic');
 
         try {
             let jsonData = await response.json();
@@ -86,6 +88,10 @@ export default class MessageDisplay extends React.Component {
         }
     }
 
+    newAudio = () =>{
+        this.setState({audioId: new Date().getTime().toString()}, ()=>{console.log("new Audio");})
+    }
+
     render() {
         if (this.state.messageRetriever.messages === undefined) {
             return (
@@ -102,11 +108,11 @@ export default class MessageDisplay extends React.Component {
             console.log(this.state.messageRetriever.messages);
             return (
                 <div> {/* <Player> */}
-                    <Audio src="https://backend.virtualium.ethernity.live/get_sound" type="mp3"/> {/* <ButtonPlayer/> */}
+                    <Audio src="https://api.virtualium.ttde.com.ar/get_sound" type="mp3"/>
                     {/* </Player> */}
-                    <audio autoPlay>
-                        <source src="https://backend.virtualium.ethernity.live/get_sound" type="audio/wav"></source>
-                    </audio>
+                    {/* <audio preload="true"  onEnded={this.newAudio}>
+                        <source src={"https://api.virtualium.ttde.com.ar/get_sound?w="+ this.state.audioId } type="audio/mpeg"></source>
+                    </audio> */}
                     <div className={
                         style.main_box
                     }>
