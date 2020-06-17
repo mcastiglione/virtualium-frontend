@@ -173,14 +173,14 @@ const Login = ({
 				<h2>ACCEDER A MI TICKET</h2>
 				{renderInputs()}
 
-				{ (!open) ? null :
-					<ReCAPTCHA
+				{ (!open) ? null : null
+					/*<ReCAPTCHA
 						ref={_recaptcha}
 						className={style.recaptcha}
 						size={(sidenav) ? 'compact' : 'normal'}
 						sitekey={SITE_KEY_RECAPTCHA}
 						onChange={onChangeRecaptcha}
-					/>
+					/>*/
 				}
 				<p
 					onClick={handleRecoverPassword}
