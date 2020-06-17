@@ -42,6 +42,8 @@ import { verifySession } from './actions/loginAction';
 /* CustomHooks */
 import { useMobileDetector } from './components/customHooks/';
 
+import "./app.css";
+
 function App({ user, isLogin, verifySession }) {
 
 	const params = useParams();
