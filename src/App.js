@@ -8,7 +8,6 @@ import { Switch, Route, useLocation, useParams } from 'react-router-dom';
 
 /* Style */
 import './materialize/sass/materialize.scss';
-import './app.css';
 
 /* Routes */
 import PublicRoutes from './routes/publicRoutes';
@@ -86,7 +85,7 @@ function App({ isLogin, verifySession }) {
 		} = route;
 
 		return (Component) ? (
-			<PrivateRoute
+			<PublicRoute
 				key={index}
 				path={path}
 				name={name}
