@@ -220,6 +220,7 @@ const Visor = () => {
 			},
 		})
 			.then(response => {
+				setMessage('');
 				setAlerttype(true);
 				setAlertmeessage("Files are uploaded successfully")
 				setOpenalert(true);
