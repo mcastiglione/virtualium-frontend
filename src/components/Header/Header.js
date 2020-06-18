@@ -22,9 +22,9 @@ import { logout, handleOpenLogin } from '../../actions/loginAction';
 
 /* Components */
 import Icon from '../Icon';
-import Navbar from '../Navbar';
-import NavItem from '../NavItem';
 import Login from '../Login/Login';
+import Navbar from '../Navbar/Navbar';
+import NavItem from '../Navbar/NavItem';
 import Register from '../Register/Register';
 import Buscador from '../Buscador/Buscador';
 import Categorias from './Categorias/Categorias';
