@@ -21,3 +21,7 @@ export const STARTING_PURCHASE = 'STARTING_PURCHASE';
 export const TOGGLE_CATEGORIES = 'TOGGLE_CATEGORIES';
 export const SET_SUCCESS_LOGIN = 'SET_SUCCESS_LOGIN';
 export const RESTART_ERROR_SET_USER = 'RESTART_ERROR_SET_USER';
+
+/* Backend endpoint url */
+export const API_URL = "https://api.virtualium.ttde.com.ar";
+export const CAMERA_URL = "https://d3myw7lup9h3o.cloudfront.net";

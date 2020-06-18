@@ -17,6 +17,7 @@ import Icon from '../Icon';
 import cx from 'classnames';
 import style from './visor.css';
 import { Picker } from 'emoji-mart'
+import {API_URL} from '../../constants'
 
 const videoConstraints = {
 	facingMode: 'user'
@@ -183,7 +184,7 @@ const Visor = () => {
 		const file = dataURLtoFile(imageSrc, timestamp + '.jpeg');
 		const formData = new FormData()
 		formData.append('files', file)
-		await axios.post("https://api.virtualium.ttde.com.ar/upload_image", formData, {
+		await axios.post(API_URL+"/upload_image", formData, {
 			headers: {
 				'content-type': 'multipart/form-data',
 			},
@@ -204,7 +205,7 @@ const Visor = () => {
 	);
 
 	const submitMessage = async () => {
-		await axios.post("https://api.virtualium.ttde.com.ar/message/topic", JSON.stringify({ user_id: 1, text: message, }), {
+		await axios.post(API_URL+"/message/topic", JSON.stringify({ user_id: 1, text: message, }), {
 			headers: {
 				'Content-Type': 'application/json',
 				'Accept': 'application/json'
@@ -228,7 +229,7 @@ const Visor = () => {
 		for (let i = 0; i < files.length; i++) {
 			formData.append('files', files[i])
 		}
-		await axios.post("https://api.virtualium.ttde.com.ar/upload_image", formData, {
+		await axios.post(API_URL+"/upload_image", formData, {
 			headers: {
 				'content-type': 'multipart/form-data',
 			},
@@ -253,7 +254,7 @@ const Visor = () => {
 		console.log(file)
 		const formData = new FormData()
 		formData.append('files', file)
-		await axios.post("https://api.virtualium.ttde.com.ar/upload_video", formData, {
+		await axios.post(API_URL+"/upload_video", formData, {
 			headers: {
 				'content-type': 'multipart/form-data',
 			},
@@ -284,7 +285,7 @@ const Visor = () => {
 		let file = await fetch(url).then(r => r.blob()).then(blobFile => new File([blobFile], "1_"+timestamp+".wav", { type: "audio/webm" }))
 		const formData = new FormData()
 		formData.append('files', file)
-		await axios.post("https://api.virtualium.ttde.com.ar/upload_sound", formData, {
+		await axios.post(API_URL+"/upload_sound", formData, {
 			headers: {
 				'content-type': 'multipart/form-data',
 			},

@@ -18,6 +18,7 @@ import qs from 'querystringify'
 import cx from 'classnames';
 import style from './stream.css';
 import { Picker } from 'emoji-mart'
+import {API_URL, CAMERA_URL} from '../../constants'
 
 const SelectIcon = () => {
 	return (
@@ -62,7 +63,7 @@ const BootstrapInput = withStyles((theme) => ({
 }))(InputBase);
 
 const Stream = props => {
-	const [srcUrl, setSrcurl] = useState('https://d3myw7lup9h3o.cloudfront.net/camera-1/output_1280x720_6500k.m3u8')
+	const [srcUrl, setSrcurl] = useState(CAMERA_URL + '/camera-1/output_1280x720_6500k.m3u8')
 	const [isFull, setFullscreen] = useState(false);
 	const [isRecord, setRecord] = useState(false);
 	const [message, setMessage] = useState('');
@@ -86,16 +87,16 @@ const Stream = props => {
 			setChannel(e.target.value)
 			switch(resolutionType) {
 				case 0:
-					setSrcurl('https://d3myw7lup9h3o.cloudfront.net/camera-'+e.target.value+'/output_1920x1080_8000k.m3u8')
+					setSrcurl(CAMERA_URL + '/camera-'+e.target.value+'/output_1920x1080_8000k.m3u8')
 					break;
 				case 1:
-					setSrcurl('https://d3myw7lup9h3o.cloudfront.net/camera-'+e.target.value+'/output_1280x720_6500k.m3u8')
+					setSrcurl(CAMERA_URL + '/camera-'+e.target.value+'/output_1280x720_6500k.m3u8')
 					break;
 				case 2:
-					setSrcurl('https://d3myw7lup9h3o.cloudfront.net/camera-'+e.target.value+'/output_960x540_2000k.m3u8')
+					setSrcurl(CAMERA_URL + '/camera-'+e.target.value+'/output_960x540_2000k.m3u8')
 					break;
 				case 3:
-					setSrcurl('https://d3myw7lup9h3o.cloudfront.net/camera-'+e.target.value+'/output_768x432_1200k.m3u8')
+					setSrcurl(CAMERA_URL + '/camera-'+e.target.value+'/output_768x432_1200k.m3u8')
 					break;
 			}
 		}
@@ -105,16 +106,16 @@ const Stream = props => {
 		setResolution(e.target.value)
 		switch(e.target.value) {
 			case 0:
-				setSrcurl('https://d3myw7lup9h3o.cloudfront.net/camera-'+channelType+'/output_1920x1080_8000k.m3u8')
+				setSrcurl(CAMERA_URL + '/camera-'+channelType+'/output_1920x1080_8000k.m3u8')
 				break;
 			case 1:
-				setSrcurl('https://d3myw7lup9h3o.cloudfront.net/camera-'+channelType+'/output_1280x720_6500k.m3u8')
+				setSrcurl(CAMERA_URL + '/camera-'+channelType+'/output_1280x720_6500k.m3u8')
 				break;
 			case 2:
-				setSrcurl('https://d3myw7lup9h3o.cloudfront.net/camera-'+channelType+'/output_960x540_2000k.m3u8')
+				setSrcurl(CAMERA_URL + '/camera-'+channelType+'/output_960x540_2000k.m3u8')
 				break;
 			case 3:
-				setSrcurl('https://d3myw7lup9h3o.cloudfront.net/camera-'+channelType+'/output_768x432_1200k.m3u8')
+				setSrcurl(CAMERA_URL + '/camera-'+channelType+'/output_768x432_1200k.m3u8')
 				break;
 		}
 	}
@@ -129,7 +130,7 @@ const Stream = props => {
     };
 	
 	const submitMessage = async () => {
-		await axios.post("https://api.virtualium.ttde.com.ar/message/topic", JSON.stringify({ user_id: 1, text: message, }), {
+		await axios.post(API_URL+"/message/topic", JSON.stringify({ user_id: 1, text: message, }), {
 			headers: {
 				'Content-Type': 'application/json',
 				'Accept': 'application/json'
@@ -159,7 +160,7 @@ const Stream = props => {
 		let values = qs.parse(props.location.search)
 		if(typeof values.id !== 'undefined') {
 			setChannel(values.id)
-			setSrcurl('https://d3myw7lup9h3o.cloudfront.net/camera-'+values.id+'/output_1280x720_6500k.m3u8')
+			setSrcurl(CAMERA_URL + '/camera-'+values.id+'/output_1280x720_6500k.m3u8')
 		}
 	},[]);
 	
