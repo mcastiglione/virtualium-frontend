@@ -148,6 +148,14 @@ const Stream = props => {
 	}
 
 	useEffect(() => {
+		if(alertFlag) {
+			setTimeout(() => {
+				setOpenalert(false);
+			}, 3000);
+		}
+	},[alertFlag]);
+
+	useEffect(() => {
 		let values = qs.parse(props.location.search)
 		if(typeof values.id !== 'undefined') {
 			setChannel(values.id)

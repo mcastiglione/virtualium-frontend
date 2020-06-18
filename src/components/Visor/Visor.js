@@ -288,6 +288,14 @@ const Visor = () => {
 	};
 
 	useEffect(() => {
+		if(alertFlag) {
+			setTimeout(() => {
+				setOpenalert(false);
+			}, 3000);
+		}
+	},[alertFlag]);
+
+	useEffect(() => {
 		if (recordedChunks.length && !capturing) {
 			const blob = new Blob(recordedChunks, {
 			  type: "video/webm;codecs=h264"
