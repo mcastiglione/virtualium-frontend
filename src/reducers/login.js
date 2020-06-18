@@ -8,8 +8,8 @@ import {
 } from '../constants';
 
 const init = {
-	user: {rol: "administrador"},
-	isLogin: true,
+	user: null,
+	isLogin: false,
 	errorMsj: null,
 	isLoginLoading: false,
 };
