@@ -94,7 +94,6 @@ const Visor = () => {
 		let codesArray = []
 		sym.forEach(el => codesArray.push('0x' + el))
 		let emoji = String.fromCodePoint(...codesArray)
-		console.log(emoji)
         setMessage(message + emoji)
     };
 
@@ -212,6 +211,7 @@ const Visor = () => {
 			},
 		})
 			.then(response => {
+				setMessage('');
 				setAlerttype(true);
 				setAlertmeessage("Message submited successfully")
 				setOpenalert(true);
@@ -235,7 +235,6 @@ const Visor = () => {
 			},
 		})
 			.then(response => {
-				setMessage('');
 				setAlerttype(true);
 				setAlertmeessage("Files are uploaded successfully")
 				setOpenalert(true);

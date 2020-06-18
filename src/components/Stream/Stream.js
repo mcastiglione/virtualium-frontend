@@ -125,7 +125,6 @@ const Stream = props => {
 		let codesArray = []
 		sym.forEach(el => codesArray.push('0x' + el))
 		let emoji = String.fromCodePoint(...codesArray)
-		console.log(emoji)
         setMessage(message + emoji)
     };
 	
@@ -137,6 +136,7 @@ const Stream = props => {
 			},
 		})
 			.then(response => {
+				setMessage('');
 				setAlerttype(true);
 				setAlertmeessage("Message submited successfully")
 				setOpenalert(true);
