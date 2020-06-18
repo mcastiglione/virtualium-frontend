@@ -92,8 +92,6 @@ export const setUser = async ({ email, password, socialLogin }, dispatch) => {
 		if (response.data && !response.data.status) {
 			// el usuario no existe en la base de datos, por eso lo registra
 			try {
-
-				console.log('el usaurio no existe', response);
 				const formData = new FormData();
 				formData.append('email', response.data.user.email);
 				formData.append('nombres', response.data.user.nombre);
@@ -105,7 +103,6 @@ export const setUser = async ({ email, password, socialLogin }, dispatch) => {
 
 				const { data } = await httpClient.apiPost('usuarios/registrar', formData);
 
-				console.log('el usaurio no existe 2', data);
 				if(!data.cod == 200) {
 					// ocurrio un error
 					M.toast({

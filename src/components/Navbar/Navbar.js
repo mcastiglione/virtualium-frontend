@@ -1,8 +1,12 @@
 import React, { Component, Fragment, Children } from 'react';
 import PropTypes from 'prop-types';
+import Icon from '../Icon';
+import SearchForm from '../SearchForm';
+
+/* style */
+import './navbar.scss'
 import cx from 'classnames';
-import Icon from './Icon';
-import SearchForm from './SearchForm';
+import styles from './navbar.css'
 
 class Navbar extends Component {
 	componentDidMount() {

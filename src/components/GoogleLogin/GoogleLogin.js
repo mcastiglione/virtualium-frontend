@@ -16,7 +16,6 @@ import { setUser } from '../../actions/loginAction';
 /* Config */
 import { GOOGLE_CLIENT_ID } from '../../config';
 
-
 const GoogleLogin = ({ setUser }) => {
 
 
@@ -43,19 +42,19 @@ const GoogleLogin = ({ setUser }) => {
 
 	return(
 		<Glogin
-		    clientId={GOOGLE_CLIENT_ID}
-		    render={renderProps => (
-		      		<span
+				clientId={GOOGLE_CLIENT_ID}
+				render={renderProps => (
+							<span
 						onClick={renderProps.onClick}
 						className={cx('btn', 'small', style.btnGoogle)}
 					>
 						Google
 					</span>
-		    )}
-		    buttonText="Login"
-		    onSuccess={responseGoogle}
-		    onFailure={responseGoogle}
-		    cookiePolicy={'single_host_origin'}
+				)}
+				buttonText="Login"
+				onSuccess={responseGoogle}
+				onFailure={responseGoogle}
+				cookiePolicy={'single_host_origin'}
 		/>
 	)
 }
