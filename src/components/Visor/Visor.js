@@ -6,7 +6,7 @@ import Fullscreen from 'react-full-screen';
 import PopupState, { bindTrigger, bindPopover } from 'material-ui-popup-state';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import { Slider, IconButton, Box, Popover, TextField, Button, Collapse, Select, MenuItem, InputBase } from '@material-ui/core';
-import { VolumeDown, PhotoCamera, CloudUpload, CenterFocusStrong, ChatBubble, Mic } from '@material-ui/icons';
+import { VolumeDown, PhotoCamera, CloudUpload, CenterFocusStrong, ChatBubble, Mic, Send } from '@material-ui/icons';
 import CloseIcon from '@material-ui/icons/Close';
 import Alert from '@material-ui/lab/Alert';
 import { triggerBase64Download } from 'react-base64-downloader';
@@ -469,9 +469,9 @@ const Visor = () => {
 												onChange={(e) => {setMessage(e.target.value)}}
 											/>
 											<Picker set='google' skin={2} onSelect={addEmoji} />
-											<Button variant="contained" color="primary" className={style.submitButton} onClick={submitMessage}>
-												Submit
-											</Button>
+											<IconButton className={style.submitButton} color="primary" aria-label="record video" component="span" onClick={submitMessage}>
+												<Send />
+											</IconButton>
 										</Box>
 									</Popover>
 								</div>
