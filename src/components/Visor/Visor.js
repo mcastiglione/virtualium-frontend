@@ -98,27 +98,41 @@ const Visor = () => {
     };
 
 	const handleStartCaptureClick = useCallback(() => {
-		setCapturing(true);
-		mediaRecorderRef.current = new MediaRecorder(webcamRef.current.stream, {
-			mimeType: "video/webm;codecs=h264"
-		});
-		mediaRecorderRef.current.addEventListener(
-			"dataavailable",
-			handleDataAvailable
-		);
-		mediaRecorderRef.current.start();
+		try {
+			mediaRecorderRef.current = new MediaRecorder(webcamRef.current.stream, {
+				mimeType: "video/webm;codecs=h264"
+			});
+			mediaRecorderRef.current.addEventListener(
+				"dataavailable",
+				handleDataAvailable
+			);
+			mediaRecorderRef.current.start();
+			setCapturing(true);
+		}
+		catch {
+			setAlerttype(false);
+			setAlertmeessage("There's no camera in your PC")
+			setOpenalert(true);
+		}
 	}, [webcamRef, setCapturing, mediaRecorderRef]);
 
 	const handleStartCaptureClick_Audio = useCallback(() => {
-		setCapturing_Audio(true);
-		mediaRecorderRef_Audio.current = new MediaRecorder(webcamRef.current.stream, {
-			mimeType: "audio/webm"
-		});
-		mediaRecorderRef_Audio.current.addEventListener(
-			"dataavailable",
-			handleDataAvailable_Audio
-		);
-		mediaRecorderRef_Audio.current.start();
+		try {
+			mediaRecorderRef_Audio.current = new MediaRecorder(webcamRef.current.stream, {
+				mimeType: "audio/webm"
+			});
+			mediaRecorderRef_Audio.current.addEventListener(
+				"dataavailable",
+				handleDataAvailable_Audio
+			);
+			mediaRecorderRef_Audio.current.start();
+			setCapturing_Audio(true);
+		}
+		catch {
+			setAlerttype(false);
+			setAlertmeessage("There's no mic in your PC")
+			setOpenalert(true);
+		}
 	}, [webcamRef, setCapturing_Audio, mediaRecorderRef_Audio]);
 
 	const handleDataAvailable = useCallback(({ data }) => {
