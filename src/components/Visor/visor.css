@@ -143,3 +143,6 @@
 	color: white;
 }
 
+.messageBoxOut{
+    max-height: calc(100% - 75px);
+}

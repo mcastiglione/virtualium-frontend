@@ -143,3 +143,7 @@
     font-family: Arial !important;
 }
 
+.messageBoxOut{
+    max-height: calc(100% - 75px);
+}
+

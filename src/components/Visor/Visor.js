@@ -396,6 +396,7 @@ const Visor = () => {
 											vertical: 'bottom',
 											horizontal: 'center',
 										}}
+										className={style.messageBoxOut}
 									>
 										<Box p={2} className={style.uploadButtonGroup}>
 											{

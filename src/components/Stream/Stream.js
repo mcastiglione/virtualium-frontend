@@ -240,6 +240,7 @@ const Stream = props => {
 											vertical: 'bottom',
 											horizontal: 'center',
 										}}
+										className={style.messageBoxOut}
 									>
 										<Box p={2} className={style.messageButtonGroup}>
 											<TextField
