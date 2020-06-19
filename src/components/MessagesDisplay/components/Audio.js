@@ -1,6 +1,9 @@
 import React, { useRef, useState, useEffect } from 'react';
 import style from './Audio.module.css';
 
+/* config */
+import { API_PY } from '../../../config.js';
+
 export default function Audio(props, ...rest) {
     let audioRef = useRef();
     let [length, setLength] = useState(null);
@@ -31,7 +34,7 @@ export default function Audio(props, ...rest) {
     }
 
     let changeSound = async () => {
-        let response = await fetch("https://api.virtualium.ttde.com.ar/get_sounds_count")
+        let response = await fetch(`${API_PY}get_sounds_count`)
         let body = await response.json();
         let fetchCount = body.sounds_count-1
         console.log("quantity sounds", fetchCount);

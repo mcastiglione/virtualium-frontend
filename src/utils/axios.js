@@ -1,7 +1,7 @@
 const axios = require('axios');
 axios.defaults.withCredentials = true;
-const { URL_API } = require('../config.js');
-const urlBase = URL_API;
+const { API_CAKEPHP } = require('../config.js');
+const urlBase = API_CAKEPHP;
 
 // 'Content-Type': 'application/json',
 // 'Content-Type': 'multipart/form-data',
@@ -29,7 +29,7 @@ const get = (url = '', options = {}) => axios.get(readUrl(url), {
 	...options
 });
 
-const apiGet = (url = '', options = {}) => get(`${URL_API}${url}`, options);
+const apiGet = (url = '', options = {}) => get(`${API_CAKEPHP}${url}`, options);
 
 const post = (url = '', body = {}, options = {}) => axios.post(readUrl(url), body, {
 	headers: {
@@ -39,7 +39,7 @@ const post = (url = '', body = {}, options = {}) => axios.post(readUrl(url), bod
 	...options
 })
 
-const apiPost = (url = '', body = {}, options = {}) => post(`${URL_API}${url}`, body, options);
+const apiPost = (url = '', body = {}, options = {}) => post(`${API_CAKEPHP}${url}`, body, options);
 
 const put = (url = '', body = {}, options = {}) => axios.put(readUrl(url), body, {
 	headers: {

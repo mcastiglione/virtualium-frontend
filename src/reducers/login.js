@@ -5,7 +5,7 @@ import {
 	SET_ERROR_LOGIN,
 	SET_SUCCESS_LOGIN,
 	RESTART_ERROR_SET_USER,
-} from '../constants';
+} from '../config.js';
 
 const init = {
 	user: null,
