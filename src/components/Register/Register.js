@@ -237,7 +237,7 @@ const Register = ({handleToggleAccount, sidenav, user, verifySession, ...props})
 					} else {
 						verifySession();
 					}
-					handleToggleAccount(null, null, true);
+					handleToggleAccount(null, true);
 				}
 
 				setDisablebRegistro(false);

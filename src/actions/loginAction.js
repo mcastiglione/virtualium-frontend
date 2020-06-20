@@ -209,6 +209,13 @@ export const logout =  () => {
 	}
 }
 
+/*
+ * Acción para manejar el estado de cerrado o abierto del
+ * formulario del login que se encuentra en el <Header/>
+ * desde cualquer lugar de la App
+ *
+ * @param $store estado global de la App
+*/
 export const handleOpenLogin = (store) => {
 	return {
 		type: HANDLE_LOGIN,

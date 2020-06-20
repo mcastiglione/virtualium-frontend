@@ -23,6 +23,11 @@
 	--third-color_alpha_50: black;
 
 	--background-gradient: linear-gradient(45deg,#f19122,#d00e5a,#7c4d95);
+
+	/* variables of the header */
+	--header-transition: all .5s;
+	--header-width-icon-img-big: 40px;
+	--header-width-icon-img-small: 30px;
 }
 
 
@@ -34,24 +39,24 @@
 ::-webkit-scrollbar {
 		right: -3px;
 		position: relative;
-	width: 15px;
+	width: 10px;
 	border-radius: 8px;
 }
 
 /* Track */
 ::-webkit-scrollbar-track {
-	background: #fdf8d9; 
+	background: #f1f1f1; 
 	border-radius: 8px;
 }
  
 /* Handle */
 ::-webkit-scrollbar-thumb {
-	background: var(--secondary-color);
-	border: 2px var(--primary-color) solid;    
+	background: #c1c1c1;
+	border: 2px var(--primary-color) solid;
 	border-radius: 8px;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-	background: var(--third-color); 
+	background: #666; 
 }

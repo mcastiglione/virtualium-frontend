@@ -3,9 +3,11 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 const NavItem = ({ divider, ...props }) => {
-	if (divider) return <li className="divider" />;
-	return <a {...props} />;
-	// return <Link {...props} >;
+	return(
+		<li>
+			<a {...props} />
+		</li>
+	)
 };
 
 NavItem.propTypes = {

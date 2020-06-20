@@ -1,167 +1,70 @@
-import React, { Component, Fragment, Children } from 'react';
-import PropTypes from 'prop-types';
-import Icon from '../Icon';
-import SearchForm from '../SearchForm';
+import React, { useRef, useState, useEffect, Children } from 'react';
+import { NavLink, useLocation } from 'react-router-dom';
 
 /* style */
-import './navbar.scss'
+import './sidenav.scss';
 import cx from 'classnames';
-import styles from './navbar.css'
+import style from './navbar.css';
 
-class Navbar extends Component {
-	componentDidMount() {
-		const { options } = this.props;
+/* components */
+import Icon from '../Icon';
 
-		if (typeof M !== 'undefined') {
-			this.instance = M.Sidenav.init(this._sidenav, options);
-		}
-	}
+/* utils */
+import idgen from '../../utils/idgen';
 
-	componentWillUnmount() {
-		if (this.instance) {
-			this.instance.destroy();
-		}
-	}
+const Navbar = ({
+	sidenav,
+	options,
+	children,
+	menuIcon,
+	navigation,
+	classnamesUl,
+	classnamesUlMobile
+}) => {
+	const location = useLocation();
+	const sidenavRef = useRef(null);
 
-	render() {
-		const {
-			children,
-			brand,
-			className,
-			extendWith,
-			fixed,
-			classNameFixed,
-			alignLinks,
-			centerLogo,
-			search,
-			menuIcon,
-			sidenav,
-			style
-		} = this.props;
+	useEffect(() => {
+		// Inicializar el sideNav
+		const instance = M.Sidenav.init(sidenavRef.current, options);
+		// Desmontar el sideNav
+		return () => instance && instance.destroy();
+	}, [options, location]);
 
-		const brandClasses = cx({
-			'brand-logo': true,
-			center: centerLogo
-		});
-
-		const navCSS = cx({ 'nav-extended': extendWith }, className);
-
-		const navMobileCSS = cx('hide-on-med-and-down', [alignLinks]);
-
-		const links = Children.map(children, (link, index) => {
+	const sidenavContent = (sidenav) ? sidenav :
+		Children.map(children, (link, index) => {
 			if(!link) return null;
-			if(link.type.name !== 'NavItem') return (link);
-			return(<li key={index}>{link}</li>);
+			const clonedLink = React.cloneElement(link, {
+				...link.props,
+				id: `sidenav-${idgen()}`
+			});
+			return clonedLink;
 		});
 
-		const sidenavLinks = sidenav
-			? sidenav
-			: Children.map(children, (link, index) => {
-					if(!link) return null;
-					const clonedLink =
-						link && link.props && link.props.id
-							? React.cloneElement(link, {
-									...link.props,
-									id: `sidenav-${link.props.id}`
-								})
-							: link;
-					if(clonedLink.type.name !== 'NavItem') return (clonedLink);
-					return <li key={index}>{clonedLink}</li>;
-				});
+	return(
+		<div className={style.navbarContent}>
+			<a href="#!" data-target="mobile-nav" className={cx('sidenav-trigger', style.menuIcon)} >
+				{menuIcon}
+			</a>
+			<ul
+				className={cx(style.listLinks, classnamesUl)}
+				style={{
+					gridTemplateColumns: `repeat(${children.length}, max-content)`,
+				}}
+			>
+				{children}
+			</ul>
 
-		let navbar = (
-			<nav className={navCSS} style={style} >
-				<div className="nav-wrapper">
-					{search ? (
-						<SearchForm />
-					) : (
-						<Fragment>
-							{brand &&
-								React.cloneElement(brand, {
-									className: cx(brand.props.className, brandClasses)
-								})}
-							<a href="#!" data-target="mobile-nav" className="sidenav-trigger">
-								{menuIcon}
-							</a>
-							<ul className={navMobileCSS}>{links}</ul>
-						</Fragment>
-					)}
-				</div>
-				{extendWith && <div className="nav-content">{extendWith}</div>}
-			</nav>
-		);
-
-		if (fixed) {
-			navbar = <div className={cx('navbar-fixed', classNameFixed)}>{navbar}</div>;
-		}
-
-		return (
-			<Fragment>
-				{navbar}
-
-				<ul
-					id="mobile-nav"
-					className={cx('sidenav', [alignLinks])}
-					ref={ul => {
-						this._sidenav = ul;
-					}}
-				>
-					{sidenavLinks}
-				</ul>
-			</Fragment>
-		);
-	}
+			<ul
+				id="mobile-nav"
+				className={cx('sidenav', 'z-depth-1', style.sidenav, classnamesUlMobile)}
+				ref={sidenavRef}
+			>
+				{sidenavContent}
+			</ul>
+		</div>
+	);
 }
-
-Navbar.propTypes = {
-	brand: PropTypes.node,
-	children: PropTypes.node,
-	className: PropTypes.string,
-	extendWith: PropTypes.node,
-	search: PropTypes.bool,
-	/**
-	 * Allows for custom sidenav node, used for mobile view
-	 */
-	sidenav: PropTypes.node,
-	/**
-	 * left makes the navbar links left aligned, right makes them right aligned
-	 */
-	alignLinks: PropTypes.oneOf(['left', 'right']),
-	/**
-	 * The logo will center itself on medium and down screens.
-	 * Specifying centerLogo as a prop the logo will always be centered
-	 */
-	centerLogo: PropTypes.bool,
-	/**
-	 * Makes the navbar fixed
-	 */
-	fixed: PropTypes.bool,
-	/**
-	 * Options hash for the sidenav.
-	 * More info: https://materializecss.com/sidenav.html#options
-	 */
-	options: PropTypes.shape({
-		// Side of screen on which Sidenav appears.
-		edge: PropTypes.oneOf(['left', 'right']),
-		// Allow swipe gestures to open / close Sidenav.
-		draggable: PropTypes.bool,
-		// Length in ms of enter transition.
-		inDuration: PropTypes.number,
-		// Length in ms of exit transition.
-		outDuration: PropTypes.number,
-		// Function called when sidenav starts entering.
-		onOpenStart: PropTypes.func,
-		// Function called when sidenav finishes entering.
-		onOpenEnd: PropTypes.func,
-		// Function called when sidenav starts exiting.
-		onCloseStart: PropTypes.func,
-		// Function called when sidenav finishes exiting.
-		onCloseEnd: PropTypes.func,
-		// Prevent page from scrolling while sidenav is open.
-		preventScrolling: PropTypes.bool
-	}),
-	menuIcon: PropTypes.node.isRequired
-};
 
 Navbar.defaultProps = {
 	options: {
