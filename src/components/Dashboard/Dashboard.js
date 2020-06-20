@@ -13,6 +13,7 @@ import connect from '../../context/connect';
 
 /* Components */
 import Overview from './Overview';
+import Preloader  from '../Preloader';
 import PrivateRoute from '../PrivateRoute';
 import Navigation from './Navigation/Navigation';
 
@@ -53,18 +54,29 @@ const Dashboard = ({ user, isLogin }) => {
 		) : (null);
 	});
 
+	const loading = (
+		<div className={style.loading}>
+			<Preloader
+				active
+				size="big"
+				color="blue"
+			/>
+		</div>
+	);
+
 	return(
 		<div className={style.mainContent} >
-			<Navigation menu={menu} />
-			<Suspense fallback={'cargando...'}>
-			<div>
-				<Switch>
-					{_privateRoutes}
-					<Route path="*">
-						<Overview />
-					</Route>
-				</Switch>
-			</div>
+			<Navigation className={style.sidenavContent} navContent={menu} />
+
+			<Suspense fallback={loading} >
+				<section className={style.panelContent} >
+					<Switch>
+						{_privateRoutes}
+						<Route path="*">
+							<Overview />
+						</Route>
+					</Switch>
+				</section>
 			</Suspense>
 		</div>
 	);

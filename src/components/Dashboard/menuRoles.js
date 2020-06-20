@@ -41,34 +41,73 @@ export default {
 	// ADMINISTRADOR
 	[ROLES[4]]: [
 		{
-			id: 'vision-general',
-			title: 'visión general',
-			type: 'item',
-			url: DASHBOARD_URL_ROOT + DASHBOARD_INDEX,
+			id: 'enlaces-generales',
+			title: 'Enlaces generales',
+			type: 'group',
+			children: [
+				{
+					id: 'vision-general',
+					title: 'visión general',
+					type: 'item',
+					url: DASHBOARD_URL_ROOT + DASHBOARD_INDEX,
+				},
+				{
+					id: 'messages',
+					title: 'messages',
+					type: 'item',
+					url: '/messages',
+				},
+				{
+					id: 'selfies',
+					title: 'selfies',
+					type: 'item',
+					url: '/selfies',
+				},
+				{
+					id: 'videos',
+					title: 'videos',
+					type: 'item',
+					url: '/videos',
+				}
+			]
 		},
 		{
-			id: 'messages',
-			title: 'messages',
-			type: 'item',
-			url: '/messages',
+			id: 'gestor-eventos',
+			title: 'eventos',
+			type: 'group',
+			children: [
+				{
+					id: 'ver-eventos',
+					title: 'Ver todos',
+					type: 'item',
+					url: DASHBOARD_URL_ROOT + 'eventos',
+				},
+				{
+					id: 'agregar-evento',
+					title: 'Agregar',
+					type: 'item',
+					url: DASHBOARD_URL_ROOT + 'eventos/agregar',
+				}
+			]
 		},
 		{
-			id: 'selfies',
-			title: 'selfies',
-			type: 'item',
-			url: '/selfies',
-		},
-		{
-			id: 'videos',
-			title: 'videos',
-			type: 'item',
-			url: '/videos',
-		},
-		{
-			id: 'agregar-evento',
-			title: 'Agregar evento',
-			type: 'item',
-			url: DASHBOARD_URL_ROOT + 'eventos/agregar',
+			id: 'gestor-medios-de-pago',
+			title: 'Medios de pago',
+			type: 'group',
+			children: [
+				{
+					id: 'ver-medios-de-pago',
+					title: 'Ver todos',
+					type: 'item',
+					url: DASHBOARD_URL_ROOT + 'medios-de-pago',
+				},
+				{
+					id: 'agregar-medio-de-pago',
+					title: 'Agregar',
+					type: 'item',
+					url: DASHBOARD_URL_ROOT + 'medios-de-pago/agregar',
+				}
+			]
 		}
 	],
 	// TECNICO MULTICANAL

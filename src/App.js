@@ -120,6 +120,13 @@ function App({ user, isLogin, verifySession }) {
 		}
 	}
 
+	const noRenderFooter = () => {
+		if(location.pathname.includes('dashboard')) {
+			return true
+		}
+		return false;
+	}
+
 	return ((isVerifySession) ? <Loading/> :
 		<Suspense fallback={<Loading/>}>
 			{ (fullscremRequired()) ? null :
@@ -132,7 +139,7 @@ function App({ user, isLogin, verifySession }) {
 				{_privateRoutes}
 				<Route path='*' component={NotFoundPage} />
 			</Switch>
-			{(fullscremRequired()) ? null : <Footer/>}
+			{(fullscremRequired() || noRenderFooter()) ? null : <Footer/>}
 		</Suspense>
 	)
 }

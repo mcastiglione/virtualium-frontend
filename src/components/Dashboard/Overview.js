@@ -5,7 +5,7 @@ import React, { useRef, useState, useEffect } from 'react';
 
 const Overview = () => {
 	return(
-		<h1>Visión general del dashboard</h1>
+		<h1>Resumen del dashboard</h1>
 	);
 }
 export default Overview;
