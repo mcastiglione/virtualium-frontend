@@ -26,8 +26,8 @@ const Buscador = ({ open }) => {
 			const newData = []
 			const tmpArr = []
 			data.forEach((el) => {
-				if (!(el.eventoId in tmpArr)) {
-					tmpArr[el.eventoId] = true
+				if (!(el.id in tmpArr)) {
+					tmpArr[el.id] = true
 					newData.push(el)
 				}
 			})
@@ -40,7 +40,7 @@ const Buscador = ({ open }) => {
 		setEventosFiltrados((prevState) => {
 			return eventos.filter((evento) => {
 				let regexp = new RegExp(busqueda, 'gi');
-				return evento.tituloEvento.match(regexp);
+				return evento.nombre.match(regexp);
 			})
 		})
 	}, [busqueda])
@@ -72,11 +72,11 @@ const Buscador = ({ open }) => {
 							key={evento.id}
 							className={style.collectionItem}
 							onClick={(e) => handleClick(e, {
-								id: evento.eventoId,
-								slug: slugify(evento.tituloEvento)
+								id: evento.id,
+								slug: slugify(evento.nombre)
 							})}
 						>
-							{evento.tituloEvento}
+							{evento.nombre}
 						</span>
 					)
 				})

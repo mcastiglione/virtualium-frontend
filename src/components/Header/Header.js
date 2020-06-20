@@ -46,6 +46,10 @@ const Header = ({ user, evento, mobileActive, logout, triggerOpenLogin, handleOp
 	}, [user])
 
 	useEffect(() => {
+		handleActionForm(null, null, true);
+	}, [location])
+
+	useEffect(() => {
 		if(triggerOpenLogin) {
 			handleActionForm('login');
 			/*
