@@ -5,12 +5,12 @@ import idgen from '../utils/idgen';
 
 const Checkbox = ({
 	id,
-	className,
-	indeterminate,
-	filledIn,
 	label,
 	value,
 	onChange,
+	filledIn,
+	className,
+	indeterminate,
 	...props
 }) => {
 	const [checked, setChecked] = useState(value);

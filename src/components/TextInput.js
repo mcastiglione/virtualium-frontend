@@ -24,6 +24,7 @@ const TextInput = ({
 	disabled,
 	validate,
 	noLayout,
+	inputSolid,
 	placeholder,
 	defaultValue,
 	globalClasses,
@@ -101,7 +102,7 @@ const TextInput = ({
 				<span>{label}</span>
 				<input
 					type="file"
-					className={cx({ validate }, inputClassName)}
+					className={cx({ validate }, inputClassName, { inputSolid })}
 					{...inputProps}
 				/>
 			</div>
@@ -116,7 +117,7 @@ const TextInput = ({
 			{renderIcon()}
 			<input
 				ref={_inputRef}
-				className={cx({ validate }, inputClassName)}
+				className={cx({ validate }, inputClassName, { inputSolid })}
 				{...inputProps}
 			/>
 			{renderLabel()}

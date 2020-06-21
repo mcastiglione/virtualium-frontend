@@ -77,7 +77,7 @@ export const DASHBOARD_INDEX = 'vision-general';
  * - Registra histórico de incidentes en el evento.
  *--------------------------------------------------------------------------
  * NOTAS:
- * - si se hacen cambios en el back-end (modelo de la DB) deberán ajustarses los roles según corresponda
+ * - si se hacen cambios en el back-end (modelo de la DB) deberán ajustarse los roles según corresponda
  * - Respetar el orden en que están declarados los roles, si se cambia el orden puede generar inconsistencias en la app
  */
 export const ROLES = [
@@ -87,4 +87,20 @@ export const ROLES = [
 	'configurador',
 	'administrador',
 	'tecnico multicanal',
+];
+
+/**
+ * Categorias de los eventos
+ *--------------------------------------
+ * NOTAS:
+ * - si se hacen cambios en el back-end (modelo de la DB) deberá ajustarse según corresponda
+ * - Respetar el orden en que están declaradas las categorías
+ * - si se cambia el orden puede generar inconsistencias en la app
+*/
+export const CATEGORIAS_EVENTO = [
+	'Cine',
+	'Música',
+	'Teatro',
+	'Familia',
+	'Especiales',
 ];
