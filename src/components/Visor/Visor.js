@@ -100,7 +100,7 @@ const Visor = () => {
 	const handleStartCaptureClick = useCallback(() => {
 		try {
 			mediaRecorderRef.current = new MediaRecorder(webcamRef.current.stream, {
-				mimeType: "video/webm;codecs=h264"
+				mimeType: "video/webm"
 			});
 			mediaRecorderRef.current.addEventListener(
 				"dataavailable",
@@ -119,7 +119,7 @@ const Visor = () => {
 	const handleStartCaptureClick_Audio = useCallback(() => {
 		try {
 			mediaRecorderRef_Audio.current = new MediaRecorder(webcamRef.current.stream, {
-				mimeType: "audio/webm"
+				mimeType: "video/webm"
 			});
 			mediaRecorderRef_Audio.current.addEventListener(
 				"dataavailable",
@@ -249,7 +249,7 @@ const Visor = () => {
 	const fetchData = async (url) => {
 		const date = new Date();
 		const timestamp = date.getTime();
-		let file = await fetch(url).then(r => r.blob()).then(blobFile => new File([blobFile], timestamp+".h264", { type: "video/webm;codecs=h264" }))
+		let file = await fetch(url).then(r => r.blob()).then(blobFile => new File([blobFile], timestamp+".h264", { type: "video/webm" }))
 		console.log(file)
 		const formData = new FormData()
 		formData.append('files', file)
@@ -281,7 +281,7 @@ const Visor = () => {
 		const min = date.getMinutes();
 		const sec = date.getSeconds();
 		const timestamp = zeroPad(hour,10)+'.'+zeroPad(min,10)+'.'+zeroPad(sec,10)
-		let file = await fetch(url).then(r => r.blob()).then(blobFile => new File([blobFile], "1_"+timestamp+".wav", { type: "audio/webm" }))
+		let file = await fetch(url).then(r => r.blob()).then(blobFile => new File([blobFile], "1_"+timestamp+".wav", { type: "video/webm" }))
 		const formData = new FormData()
 		formData.append('files', file)
 		await axios.post(API_URL+"/upload_sound", formData, {
@@ -312,7 +312,7 @@ const Visor = () => {
 	useEffect(() => {
 		if (recordedChunks.length && !capturing) {
 			const blob = new Blob(recordedChunks, {
-			  type: "video/webm;codecs=h264"
+			  type: "video/webm"
 			});
 			const url = URL.createObjectURL(blob)
 			fetchData(url)
@@ -330,7 +330,7 @@ const Visor = () => {
 	useEffect(() => {
 		if (recordedChunks_Audio.length && !capturing_Audio) {
 			const blob = new Blob(recordedChunks_Audio, {
-			  type: "audio/webm"
+			  type: "video/webm"
 			});
 			const url = URL.createObjectURL(blob)
 			fetchData_Audio(url)
