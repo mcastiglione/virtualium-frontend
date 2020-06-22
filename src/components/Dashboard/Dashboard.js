@@ -3,6 +3,9 @@ import { Redirect, Switch, Route, Link } from 'react-router-dom';
 
 /* style */
 import style from './dashboard.css';
+const clasessGlobales = {
+	panelContent: style.panelContent
+}
 
 /* constants */
 import { ROLES, DASHBOARD_INDEX, DASHBOARD_URL_ROOT } from '../../config';
@@ -31,6 +34,13 @@ const Dashboard = ({ user, isLogin }) => {
 	*/
 	if(ROL === undefined) return <Redirect to="/" />;
 
+	useEffect(() => {
+		document.body.style.background = '#e1e8ef';
+		return () => {
+			document.body.style.background = '';
+		}
+	}, [])
+
 	const menu = menuRoles[ROL];
 
 	const _privateRoutes = dashboardRoutes[ROL].map((route, index) => {
@@ -50,6 +60,9 @@ const Dashboard = ({ user, isLogin }) => {
 				exact={exact}
 				isLogin={isLogin}
 				component={Component}
+				propsComponent={{
+					layaout: clasessGlobales
+				}}
 			/>
 		) : (null);
 	});

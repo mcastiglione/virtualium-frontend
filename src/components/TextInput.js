@@ -6,7 +6,7 @@ import idgen from '../utils/idgen';
 /* constants */
 import { SIZES } from '../config.js';
 
-const TextInput = ({
+const TextInput = React.forwardRef(({
 	s,
 	m,
 	l,
@@ -24,12 +24,13 @@ const TextInput = ({
 	disabled,
 	validate,
 	noLayout,
+	inputSolid,
 	placeholder,
 	defaultValue,
 	globalClasses,
 	inputClassName,
 	...other
-}) => {
+}, ref ) => {
 	const _inputRef = useRef(null);
 	const [ classes, setClasses ] = useState('');
 
@@ -64,13 +65,19 @@ const TextInput = ({
 	const renderLabel = () =>
 		label && (
 			<label
+				data-error={error}
+				data-success={success}
+				ref={(el) => {
+					if(ref) ref.current = {
+						...ref.current,
+						_labelRef: el
+					};
+				}}
+				htmlFor={inputProps.id}
 				className={cx({
 					active: value || placeholder,
 					'label-icon': typeof label !== 'string'
 				})}
-				data-success={success}
-				data-error={error}
-				htmlFor={inputProps.id}
 			>
 				{label}
 			</label>
@@ -101,7 +108,7 @@ const TextInput = ({
 				<span>{label}</span>
 				<input
 					type="file"
-					className={cx({ validate }, inputClassName)}
+					className={cx({ validate }, inputClassName, { inputSolid })}
 					{...inputProps}
 				/>
 			</div>
@@ -115,8 +122,15 @@ const TextInput = ({
 		<div className={classes}>
 			{renderIcon()}
 			<input
-				ref={_inputRef}
-				className={cx({ validate }, inputClassName)}
+				ref={(el) => {
+					if(ref) ref.current = {
+						...ref.current,
+						_inputRef: el
+					};
+					return (_inputRef.current = el);
+				}}
+				// ref={(el) => (ref.current = _inputRef.current = el)}
+				className={cx({ validate }, inputClassName, { inputSolid })}
 				{...inputProps}
 			/>
 			{renderLabel()}
@@ -124,7 +138,7 @@ const TextInput = ({
 			{children}
 		</div>
 	);
-}
+})
 
 TextInput.propTypes = {
 	children: PropTypes.node,

@@ -28,6 +28,7 @@ const Select = ({
 	disabled,
 	validate,
 	children,
+	inputSolid,
 	browserDefault,
 	selectClassName,
 	options = {
@@ -79,7 +80,12 @@ const Select = ({
 			});
 		}
 
-	const wrapperClasses = cx('input-field', responsiveClasses, selectClassName);
+	const wrapperClasses = cx(
+		'input-field',
+		{ inputSolid },
+		selectClassName,
+		responsiveClasses,
+	);
 
 	const selectProps = {
 		type: 'select',
