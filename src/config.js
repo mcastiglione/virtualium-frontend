@@ -44,7 +44,7 @@ export const RESTART_ERROR_SET_USER = 'RESTART_ERROR_SET_USER';
 * Backend endpoint url
 *********************************************************/
 export const API_CAKEPHP = process.env.API_CAKEPHP;
-export const API_PY = 'https://api.virtualium.ethernity.live/';
+export const API_PY = 'api.virtualium.ttde.com.ar';
 export const CAMERA_URL = 'https://d3myw7lup9h3o.cloudfront.net/';
 
 /*********************************************************
