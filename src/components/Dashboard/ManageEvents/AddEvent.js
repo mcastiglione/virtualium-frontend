@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect, Fragment } from 'react';
 
 /* style */
 import cx from 'classnames';
@@ -10,6 +10,7 @@ import Textarea from '../../Textarea';
 import Checkbox from '../../Checkbox';
 import TextInput from '../../TextInput';
 import DatePicker from '../../DatePicker';
+import TimePicker from '../../TimePicker';
 
 /* constantes */
 import { CATEGORIAS_EVENTO } from '../../../config';
@@ -190,25 +191,27 @@ const AddEvent = () => {
 						id='checkbox-programable'
 						label='Evento programable'
 					/>
+					
+					{ (!state.programable) ? null :
+						<Fragment>
+							<DatePicker
+								inputSolid
+								options={{
+									format: 'yy-mm-dd'
+								}}
+								onClose={() => {
+									console.log('close')
+								}}
+								s={12}
+								label='Fecha de activación'
+							/>
 
-					<DatePicker
-						// options={{
-						// 	onClose: () => {
-						// 		setState((prevState) => ({
-						// 			...prevState,
-						// 			expirationDate: _refInputDate.current.inputRef.value.split('/').join('')
-						// 		}))
-						// 	},
-						// 	i18n: {},
-						// 	format: 'yy/mm'
-						// }}
-						// s={12}
-						// icon={'date_range'}
-						// refInput={_refInputDate}
-						// label='Fecha de expiración'
-						// reset={_resetDate}
-						// globalClasses={clasess.inputIcon}
-					/>
+							<TimePicker
+								inputSolid
+								label='Hola de activación'
+							/>
+						</Fragment>
+					}
 				</section>
 			</form>
 		</div>

@@ -1,31 +1,49 @@
 import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
+import cx from 'classnames';
+
+/* components */
 import TextInput from './TextInput';
 
 /* utils */
 import idgen from '../utils/idgen';
 
-
-const DatePicker = ({ options, onChange, ...rest }) => {
-	const dateEl = useRef(null);
+const DatePicker = ({ options, onClose, onSelect, inputSolid, className, ...props }) => {
+	const dateEl = React.createRef();
 
 	useEffect(() => {
-		const _options = onChange ? { ...options, onSelect: onChange } : options;
-		const instance = M.Datepicker.init(dateEl.current.inputRef, _options);
+		const handlers = {
+			onClose: handleOnClose,
+			onSelect: handleOnSelect
+		};
+		const _options = Object.assign({}, DatePicker.defaultProps.options, options, handlers);
+		const instance = M.Datepicker.init(dateEl.current._inputRef, _options);
 
 		return () => {
 			instance && instance.destroy();
 		};
-	}, [options, onChange]);
+	}, [options]);
 
-	return <TextInput ref={dateEl} inputClassName="datepicker" {...rest} />;
+	const handleOnSelect = () => {
+		onSelect();
+		dateEl.current._labelRef.classList.add('active');
+	}
+
+	const handleOnClose = () => {
+		onClose();
+	}
+
+	return(
+		<TextInput
+			{...props}
+			ref={dateEl}
+			inputSolid={inputSolid}
+			inputClassName={cx('datepicker', className)}
+		/>
+	)
 };
 
 DatePicker.propTypes = {
-	/**
-	 * Event called when Time has been selected
-	 */
-	onChange: PropTypes.func,
 	/**
 	 * id passed to datepicker, also used for init method
 	 * @default idgen()
@@ -137,26 +155,26 @@ DatePicker.propTypes = {
 		 */
 		events: PropTypes.arrayOf(PropTypes.string),
 		/**
-		 * Callback function when date is selected, first parameter is the newly selected date.
-		 * @default null
-		 */
-		onSelect: PropTypes.func,
-		/**
 		 * Callback function when Datepicker is opened.
 		 * @default null
 		 */
 		onOpen: PropTypes.func,
 		/**
-		 * Callback function when Datepicker is closed.
-		 * @default null
-		 */
-		onClose: PropTypes.func,
-		/**
 		 * Callback function when Datepicker HTML is refreshed.
 		 * @default null
 		 */
-		onDraw: PropTypes.func
-	})
+		onDraw: PropTypes.func,
+	}),
+	/**
+	 * Callback function when Datepicker is closed.
+	 * @default null
+	 */
+	onClose: PropTypes.func,
+	/**
+	 * Callback function when date is selected, first parameter is the newly selected date.
+	 * @default null
+	 */
+	onSelect: PropTypes.func,
 };
 
 DatePicker.defaultProps = {
@@ -179,57 +197,57 @@ DatePicker.defaultProps = {
 		container: null,
 		showClearBtn: false,
 		i18n: {
-			cancel: 'Cancel',
+			cancel: 'Cancelar',
 			clear: 'Clear',
 			done: 'Ok',
 			previousMonth: '‹',
 			nextMonth: '›',
 			months: [
-				'January',
-				'February',
-				'March',
-				'April',
-				'May',
-				'June',
-				'July',
-				'August',
-				'September',
-				'October',
-				'November',
-				'December'
+				'Enero',
+				'Febrero',
+				'Marzo',
+				'Abril',
+				'Mayo',
+				'Junio',
+				'Julio',
+				'Agosto',
+				'Septiembre',
+				'Octubre',
+				'Noviembre',
+				'Diciembre'
 			],
 			monthsShort: [
-				'Jan',
+				'Ene',
 				'Feb',
 				'Mar',
-				'Apr',
+				'Abr',
 				'May',
 				'Jun',
 				'Jul',
-				'Aug',
+				'Ago',
 				'Sep',
 				'Oct',
 				'Nov',
-				'Dec'
+				'Dic'
 			],
 			weekdays: [
-				'Sunday',
-				'Monday',
-				'Tuesday',
-				'Wednesday',
-				'Thursday',
-				'Friday',
-				'Saturday'
+				'Lunes',
+				'Martes',
+				'Miércoles',
+				'Jueves',
+				'Viernes',
+				'Sábado',
+				'Domingo'
 			],
-			weekdaysShort: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
-			weekdaysAbbrev: ['S', 'M', 'T', 'W', 'T', 'F', 'S']
+			weekdaysShort: ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'],
+			weekdaysAbbrev: ['D', 'L', 'M', 'M', 'J', 'V', 'S']
 		},
 		events: [],
-		onSelect: null,
-		onOpen: null,
-		onClose: null,
-		onDraw: null
-	}
+		onOpen: () => {},
+		onDraw: () => {},
+	},
+	onClose: () => {},
+	onSelect: () => {},
 };
 
 export default DatePicker;
