@@ -16,13 +16,20 @@
 /*************************************
 * addEvent
 *************************************/
-.addEvent {
-	padding: 5%;
-}
-
 .addEvent h3 {
 	text-align: center;
 	text-transform: uppercase;
+}
+
+.botonera h4 {
+	grid-column: 1 / -1;
+}
+
+.botonera {
+	display: grid;
+	grid-gap: 10px;
+	margin: 20px 0;
+	grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
 }
 
 .wrapperInputs {}

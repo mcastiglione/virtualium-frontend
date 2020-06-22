@@ -28,7 +28,7 @@ const initialState = {
 	nombre_recinto: '',
 }
 
-const AddEvent = () => {
+const AddEvent = ({ layaout }) => {
 	const _form = useRef(null);
 	const [ state, setState ] = useState(initialState);
 
@@ -54,7 +54,7 @@ const AddEvent = () => {
 	}
 
 	return(
-		<div className={style.addEvent} >
+		<div className={cx(style.addEvent, layaout.panelContent)} >
 			<h3>Crear un nuevo evento</h3>
 			<form ref={_form} onSubmit={handleSubmit} >
 				<section className={cx(style.gridC2, style.grid, style.gridInputs)} >
@@ -214,6 +214,29 @@ const AddEvent = () => {
 					}
 				</section>
 			</form>
+
+			<section className={style.botonera} >
+				<h4>Más opciones para el evento</h4>
+				<span className='btn' >
+					Agregar funciones
+				</span>
+
+				<span className='btn' >
+					Agregar artistas
+				</span>
+
+				<span className='btn' >
+					Agregar medios de pago
+				</span>
+
+				<span className='btn' >
+					Agregar publicidad
+				</span>
+
+				<span className='btn' >
+					Agregar banners en el portal web
+				</span>
+			</section>
 		</div>
 	);
 }
