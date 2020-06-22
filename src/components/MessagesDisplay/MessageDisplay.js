@@ -2,6 +2,9 @@ import React, {useRef, useState, useEffect} from 'react';
 import Audio from './components/Audio';
 import style from './MessageDisplay.module.css';
 
+/* config */
+import { API_PY } from '../../config.js';
+
 export default class MessageDisplay extends React.Component {
     constructor(props) {
         super(props);
@@ -17,7 +20,7 @@ export default class MessageDisplay extends React.Component {
 
     getAPIurl() {
         return ( // this.props.APIURL !== undefined ? this.props.APIURL :
-            'https://api.virtualium.ttde.com.ar/message/topic'
+            `${API_PY}message/topic`
         )
     }
 
@@ -38,7 +41,7 @@ export default class MessageDisplay extends React.Component {
     // this method fetch the messages from the URL
     async getMessages() {
         console.log("fetching data...");
-        let response = await fetch('https://api.virtualium.ttde.com.ar/message/topic');
+        let response = await fetch(`${API_PY}message/topic`);
 
         try{
             let jsonData = await response.json();
@@ -109,7 +112,7 @@ export default class MessageDisplay extends React.Component {
             console.log(this.state.messageRetriever.messages);
             return (
                 <div> {/* <Player> */}
-                    <Audio src="https://api.virtualium.ttde.com.ar/get_sound" type="mp3"/>
+                    <Audio src={API_PY + 'get_sound'} type="mp3"/>
                     {/* </Player> */}
                     {/* <audio preload="true"  onEnded={this.newAudio}>
                         <source src={"https://api.virtualium.ttde.com.ar/get_sound?w="+ this.state.audioId } type="audio/mpeg"></source>

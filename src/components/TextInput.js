@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import idgen from '../utils/idgen';
 
 /* constants */
-import { SIZES } from '../constants';
+import { SIZES } from '../config.js';
 
 const TextInput = ({
 	s,

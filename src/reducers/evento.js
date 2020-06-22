@@ -4,7 +4,7 @@ import {
 	SET_EVENTO,
 	RESET_EVENTO,
 	STARTING_PURCHASE,
-} from '../constants';
+} from '../config.js';
 
 const init = {
 	isEmpty: true,

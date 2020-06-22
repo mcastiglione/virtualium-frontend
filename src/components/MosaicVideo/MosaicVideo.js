@@ -1,5 +1,8 @@
 import React, { useRef, useState, useEffect } from 'react';
 
+/* config */
+import { API_PY } from '../../config.js';
+
 /* style */
 import style from './mosaic-video.css';
 /*
@@ -36,7 +39,7 @@ class MosaicImages extends React.Component{
 	getData() {
 		console.log("fetching new image...");
 		// fetch('https://backend.virtualium.ethernity.live/get_video?w='+new Date().getTime().toString())
-		fetch('https://api.virtualium.ttde.com.ar/get_video?w='+new Date().getTime().toString())
+		fetch(`${API_PY}get_video?w=${new Date().getTime().toString()}`)
 		.then(res => res.blob())
 		.then((data)=>{
 			this.setState({Mosaic: URL.createObjectURL(data)}, ()=>{console.log(this.state.Mosaic)});

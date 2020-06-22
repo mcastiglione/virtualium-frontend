@@ -17,7 +17,7 @@ import Icon from '../Icon';
 import cx from 'classnames';
 import style from './visor.css';
 import { Picker } from 'emoji-mart'
-import {API_URL} from '../../constants'
+import { API_PY } from '../../config.js'
 
 const videoConstraints = {
 	facingMode: 'user'
@@ -183,7 +183,7 @@ const Visor = () => {
 		const file = dataURLtoFile(imageSrc, timestamp + '.jpeg');
 		const formData = new FormData()
 		formData.append('files', file)
-		await axios.post(API_URL+"/upload_image", formData, {
+		await axios.post(API_PY+"upload_image", formData, {
 			headers: {
 				'content-type': 'multipart/form-data',
 			},
@@ -204,7 +204,7 @@ const Visor = () => {
 	);
 
 	const submitMessage = async () => {
-		await axios.post(API_URL+"/message/topic", JSON.stringify({ user_id: 1, text: message, }), {
+		await axios.post(API_PY+"message/topic", JSON.stringify({ user_id: 1, text: message, }), {
 			headers: {
 				'Content-Type': 'application/json',
 				'Accept': 'application/json'
@@ -229,7 +229,7 @@ const Visor = () => {
 		for (let i = 0; i < files.length; i++) {
 			formData.append('files', files[i])
 		}
-		await axios.post(API_URL+"/upload_image", formData, {
+		await axios.post(API_PY+"upload_image", formData, {
 			headers: {
 				'content-type': 'multipart/form-data',
 			},
@@ -253,7 +253,7 @@ const Visor = () => {
 		console.log(file)
 		const formData = new FormData()
 		formData.append('files', file)
-		await axios.post(API_URL+"/upload_video", formData, {
+		await axios.post(API_PY+"upload_video", formData, {
 			headers: {
 				'content-type': 'multipart/form-data',
 			},
@@ -284,7 +284,7 @@ const Visor = () => {
 		let file = await fetch(url).then(r => r.blob()).then(blobFile => new File([blobFile], "1_"+timestamp+".wav", { type: "video/webm" }))
 		const formData = new FormData()
 		formData.append('files', file)
-		await axios.post(API_URL+"/upload_sound", formData, {
+		await axios.post(API_PY+"upload_sound", formData, {
 			headers: {
 				'content-type': 'multipart/form-data',
 			},

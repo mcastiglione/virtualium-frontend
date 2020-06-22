@@ -3,7 +3,7 @@ import cx from 'classnames';
 import PropTypes from 'prop-types';
 
 /* constants */
-import { PLACEMENTS, ICON_SIZES } from '../constants';
+import { PLACEMENTS, ICON_SIZES } from '../config.js';
 
 const Icon = props => {
 	const classes = {

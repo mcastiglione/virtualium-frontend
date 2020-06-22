@@ -1,62 +1,47 @@
-import React, {
-	useRef,
-	useState,
-	Fragment,
-	useEffect,
-} from 'react';
-import slugify from 'slugify';
-import { useLocation, Redirect, useHistory, NavLink } from 'react-router-dom';
-
-/* context */
-import connect from '../../context/connect';
-
-/* config */
-import { ASSETS_URL, ROLES } from '../../config.js';
+import React, { useRef, useState, useEffect } from 'react';
+import { useLocation, Redirect, useHistory, NavLink, Link } from 'react-router-dom';
 
 /* style */
 import cx from 'classnames';
 import style from './header.css';
 
-/* Actions */
-import { logout, handleOpenLogin } from '../../actions/loginAction';
+/* constants */
+import { ROLES, DASHBOARD_URL_ROOT } from '../../config';
 
-/* Components */
+/* context */
+import connect from '../../context/connect';
+
+/* components */
 import Icon from '../Icon';
 import Login from '../Login/Login';
 import Navbar from '../Navbar/Navbar';
 import NavItem from '../Navbar/NavItem';
-import Register from '../Register/Register';
 import Buscador from '../Buscador/Buscador';
-import Categorias from './Categorias/Categorias';
+import Register from '../Register/Register';
 import RedesSociales from './RedesSociales/RedesSociales';
 
-const Header = ({user, evento, mobileActive, logout, triggerOpenLogin, handleOpenLogin, ...props}) => {
-	const location = useLocation();
+/* Actions */
+import { logout, handleOpenLogin } from '../../actions/loginAction';
+
+const Header = ({ user, evento, mobileActive, logout, triggerOpenLogin, handleOpenLogin, ...props }) => {
+	const _navbar = useRef({});
 	const history = useHistory();
-	const _navbar = useRef(null);
-	const [ userRol, setUserRol ] = useState(null);
-	const [ openLogin, setOpenLogin ] = useState(false);
-	const [ colorIcons, setColorIcons ] = useState('white');
-	const [ openSidenav, setOpenSidenav ] = useState(false);
-	const [ openBuscador, setOpenBuscador ] = useState(false);
+	const location = useLocation();
 	const [ scrollActive, setScrollActive ] = useState(false);
+
+	/* Estados de los contenedores de furmularios */
+	const [ openLogin, setOpenLogin ] = useState(false);
+	const [ openSidenav, setOpenSidenav ] = useState(false);
 	const [ openRegister, setOpenRegister ] = useState(false);
-	const [ styleInlineNav, setStyleInlineNav ] = useState({});
-	const [ classNameFixed, setClassNameFixed ] = useState('');
-	const [ logo, setLogo ] = useState('virtualium.png');
-	const [ offsetsNavbar, setOffsetsNavbar ] = useState({
-		paddingTop: '90px'
-	});
-	
-	useEffect(() => {
-		window.addEventListener("scroll", handleScroll);
-		return () => window.removeEventListener("scroll", handleScroll);
-	}, []);
+	const [ openBuscador, setOpenBuscador ] = useState(false);
 
 	useEffect(() => {
 		if(user) {
-			handleActionForm(null, null, true);
-			setUserRol(ROLES.find((el) => user && el === user.rol));
+			/*
+			 * Asegurar el cierre de todos los formularios cuando
+			 * el usuario inicia sesión correctamente
+			*/
+			handleActionForm(null, true);
 		}
 	}, [user])
 
@@ -65,21 +50,21 @@ const Header = ({user, evento, mobileActive, logout, triggerOpenLogin, handleOpe
 	}, [location])
 
 	useEffect(() => {
-		const updateLogo = (scrollActive && !evento.bandaImagenUrl) ? 
-					'virtualium.png' :
-					'virtualium.png';
-		setLogo(updateLogo);
-	}, [scrollActive, evento]);
-
-	useEffect(() => {
-		setColorIcons((scrollActive || mobileActive) ? 'black' : 'white');
-	}, [scrollActive, mobileActive]);
-
-	useEffect(() => {
 		if(triggerOpenLogin) {
-			handleActionForm(null, 'login');
+			handleActionForm('login');
+			/*
+			 * una vez abierto el login cambiar el estado del triggerOpenLogin
+			 * nuevamente a cerrado (false) para asegurar que si es llamado
+			 * nuevamente permita abrir el login
+			*/
+			handleOpenLogin();
 		}
 	}, [triggerOpenLogin]);
+
+	useEffect(() => {
+		window.addEventListener("scroll", handleScroll);
+		return () => window.removeEventListener("scroll", handleScroll);
+	}, []);
 
 	const handleScroll = () => {
 		setScrollActive(window.scrollY > 100);
@@ -88,60 +73,21 @@ const Header = ({user, evento, mobileActive, logout, triggerOpenLogin, handleOpe
 		setOpenBuscador(false);
 	}
 
-	useEffect(() => {
-		if(evento.bandaImagenUrl) {
-			setStyleInlineNav({
-				backgroundImage: `url(${ASSETS_URL+evento.bandaImagenUrl})`
-			})
-		} else {
-			setStyleInlineNav({})
-		}
-	}, [evento])
-
-	useEffect(() => {
-		setClassNameFixed((prevState) => {
-			return(`${cx(
-				{scrollActive}, // clase sass ref => _navbar.scss
-				style.navbarFixedTtde,
-				{[`${style.webShow}`]: !evento.isEmpty},
-				{[`${style.noHome}`]: location.pathname !== '/'},
-				{[`${style.navBgEvento}`]: evento.bandaImagenUrl},
-				{[`${style.scrollActive}`]: scrollActive && !evento.bandaImagenUrl},
-			)}`)
-		})
-	}, [evento, location, scrollActive])
-
-	useEffect(() => {
-		updateOffsetsNavbar();
-	})
-
-	useEffect(() => {
-		updateOffsetsNavbar();
-	})
-
-	function updateOffsetsNavbar() {
-		setOffsetsNavbar((prevState) => {
-			const height = document.querySelector('.nav-wrapper').clientHeight;
-			let paddingTop = `${(height < 90) ? 90 : height}px`;
-			return (paddingTop != prevState.paddingTop) ? { paddingTop } : prevState;
-		})
-	}
-
 	/**
-	 * Controla las acciones que abren o cierran los formularios
-	 * de login y registro.
+	 * Controla las acciones que abren o cierran los contenedores del
+	 * buscador, login y registro.
 	 * @param {Event} $e Objeto del evento
-	 * @param {Boolean} $forceClose fuerza a cerrar el formulario que esté abierto
+	 * @param {Boolean} $forceClose fuerza el cerrar del contenedor abierto
 	 * @param {String} $action acción que se desea realizar
 	 * las acciones permitidas son:
-	 *
+	 * --------------------------------------------------------------------------
 	 * - dasboard: redirige a un usuario logeado a su panel de administración
 	 * - logout: cierra la sesión de un usuario logueado
 	 * - [register, login, buscar]: cambia al estado opuesto (abierto o cerrado)
-	 * 
+	 * --------------------------------------------------------------------------
 	 * Post condición: nunca estarán abiertos ambos formularios al mismo tiempo
 	 */
-	const handleActionForm = (e, action, forceClose = false) => {
+	const handleActionForm = (action, forceClose = false) => {
 		if(forceClose) {
 			setOpenRegister(false);
 			setOpenLogin(false);
@@ -149,9 +95,12 @@ const Header = ({user, evento, mobileActive, logout, triggerOpenLogin, handleOpe
 			return;
 		}
 
-		if(triggerOpenLogin) handleOpenLogin();
+		/*
+		 * Cambiar el estado del triggerOpenLogin cuando
+		 * es abierto desde otro lugar diferente al <Header/>
+		*/
+		// if(triggerOpenLogin) handleOpenLogin();
 
-		e && e.stopPropagation();
 		if(action == 'dashboard') return history.push("/dashboard");
 		if(action == 'logout') return logout();
 		setOpenRegister((prevState) => action === 'register' && !prevState)
@@ -159,28 +108,196 @@ const Header = ({user, evento, mobileActive, logout, triggerOpenLogin, handleOpe
 		setOpenBuscador((prevState) => action === 'buscar' && !prevState)
 	}
 
-	const Sidenav = () => {
-		return(
-			<Fragment>
-				<RedesSociales/>
-				{/*<Categorias/>*/}
+	/*
+	 * Construir la navegación correspondiente para el usuario actual
+	*/
+	var navigation = [];
+	var sidenavNavigation = [];
 
-				<div className={style.navMobileForm} >
-					{ mobileActive && renderIconBuscador() }
-					{ (!user || !mobileActive) ? null : renderIconTicketera() }
-					{ (!user || !mobileActive) ? null : renderIconSalaVirtual() }
-					{ (!user || !mobileActive) ? null : renderIconArtista() }
-					{ (openLogin || !mobileActive) ? null : renderIconAccount() }
-					{ (!user || openLogin || !mobileActive) ? null : renderIconLogout() }
-					{ (user || !mobileActive) ? null : renderContentLogin() }
-					{ (!mobileActive) ? null : renderRegister() }
-					{ (!mobileActive) ? null : renderBuscador() }
-				</div>
-			</Fragment>
+	const navItemBuscador = {
+		title: 'Buscador',
+		iconImg: '/img/icons/icono-buscar.svg',
+		action: () => handleActionForm('buscar'),
+	}
+
+	const navItemProfile = {
+		title: 'Perfil',
+		iconImg: '/img/icons/icono-perfil.svg',
+		action: () => handleActionForm((user) ? 'register' : 'login', openRegister),
+	}
+
+	const navItemLogout = {
+		title: 'Logout',
+		icon: 'exit_to_app',
+		action: () => handleActionForm('logout'),
+	}
+
+	const classnamesBotonDefault = cx(
+		style.navItemBotonDefault,
+		{ [`${style.scrollActive}`]: scrollActive },
+		{ [`${style.mobileActive}`]: mobileActive }
+	);
+
+	const navItemDashboad = {
+		title: 'Dashboard',
+		className: classnamesBotonDefault,
+		action: () => history.push(DASHBOARD_URL_ROOT),
+	}
+
+	const navItemVisor = {
+		title: 'Ir a sala virtual',
+		className: classnamesBotonDefault,
+		action: () => history.push('/visor'),
+	}
+
+	const navItemTicketera = {
+		title: 'Ticketera',
+		iconImg: '/img/icons/icono-mis-compras.svg',
+		action: () => {},
+	}
+
+	const contentFormsSidenav = {
+		node: (
+			<div className={style.contentFormsSidenav} >
+				{mobileActive && renderRegister()}
+				{mobileActive && renderBuscador()}
+				{mobileActive && renderContentLogin()}
+			</div>
 		)
 	}
 
-	const renderRegister = () => {
+	sidenavNavigation.push(
+		{
+			node: <RedesSociales />,
+			className: style.sidenavRedesSociales,
+		}
+	);
+
+	/*
+	 * Si el usuario está logueado se Agrega los items correspondientes a su rol.
+	 * En caso contrario se muestra la navegación por defecto
+	 */
+	if(user) {
+		const ROL = ROLES.find((el) => user && el === user.rol);
+		const navItemUser = {
+			node: (
+				<span>
+					{user.nombres}
+				</span>
+			),
+			className: cx(style.noPointer, style.username)
+		};
+
+		navigation.push(navItemBuscador);
+		navigation.push(navItemTicketera);
+		navigation.push(navItemVisor);
+
+		sidenavNavigation.push(navItemTicketera);
+		sidenavNavigation.push(navItemVisor);
+
+		if(ROL === ROLES[4]) {
+			navigation.push(navItemDashboad);
+			sidenavNavigation.push(navItemDashboad);
+		}
+
+		navigation.push(navItemProfile);
+		navigation.push(navItemLogout);
+		navigation.push(navItemUser);
+	} else {
+		navigation = [
+			navItemBuscador,
+			navItemProfile,
+		];
+	}
+	
+	sidenavNavigation.push(
+		navItemBuscador,
+		navItemProfile,
+		navItemLogout,
+		contentFormsSidenav,
+	);
+
+	const menu = navigation.map(prepareNavigation);
+	const sidenavMenu = sidenavNavigation.map(prepareNavigation);
+
+	function prepareNavigation(el, key) {
+		var label;
+		const { url, title, action, iconImg, icon, node, className } = el;
+
+		if(node) {
+			return(
+				<li key={key} className={className} >
+					{node}
+				</li>
+			)
+		}
+
+		if(iconImg) {
+			label =(
+				<img
+					alt={title}
+					src={iconImg}
+					className={cx(
+						style.iconImg,
+						{ [`${style.scrollActive}`]: scrollActive },
+					)}
+				/>
+			)
+		} else if(icon) {
+			label = <Icon >{ icon }</Icon>;
+		} else {
+			label = title;
+		}
+
+		return(
+			<NavItem
+				key={key}
+				title={title}
+				onClick={action}
+				className={cx(
+					className,
+					style.link,
+					{ [`${style.scrollActive}`]: scrollActive })
+				}
+			>
+				{ label }
+			</NavItem>
+		);
+	}
+
+	function renderBuscador() {
+		return(
+			<div className={cx(
+				style.buscadorContent,
+				{ [`${style.open}`]: openBuscador },
+				{ [`${style.mobileActive}`]: mobileActive },
+				'z-depth-3'
+			)}>
+				<Buscador open={openBuscador} />
+			</div>
+		)
+	}
+
+	function renderContentLogin() {
+		return(
+			<div
+				className={cx(
+					style.tuTicketeraContent,
+					{ [`${style.open}`]: openLogin },
+					{ [`${style.mobileActive}`]: mobileActive },
+					'z-depth-3'
+				)}
+			>
+				<Login
+					open={openLogin}
+					handleCreateAccount={handleActionForm}
+					recaptchaSize={(mobileActive) ? 'compact' : 'normal'}
+				/>
+			</div>
+		)
+	}
+
+	function renderRegister() {
 		return(
 			<Register
 				open={openRegister}
@@ -191,218 +308,46 @@ const Header = ({user, evento, mobileActive, logout, triggerOpenLogin, handleOpe
 		)
 	}
 
-	const renderContentLogin = () => {
-		return(
-			<div
-				className={cx(
-					style.tuTicketeraContent,
-					{'scale-1': openLogin},
-					'z-depth-3'
-				)}
-			>
-				<Login
-					open={openLogin}
-					sidenav={mobileActive}
-					handleCreateAccount={handleActionForm}
-				/>
-			</div>
-		)
-	}
-
-	const renderIconTicketera = () => {
-		return(
-			<span
-					onClick={(e) => {}}
-				>
-					<img
-						className={cx(style.iconSvg)}
-						src="/img/icons/icono-mis-compras.svg" alt=""
-					/>
-			</span>
-		)
-	}
-
-	const renderIconArtista = () => {
-		// ROLES[4] = administrador;
-		if(userRol != ROLES[4]) return null;
-		return(
-			<span
-					className={cx(style.btnArtista)}
-					onClick={(e) => handleActionForm(e, 'dashboard')}
-				>
-					ARTISTA
-			</span>
-		)
-	}
-	const renderIconSalaVirtual = () => {
-		return(
-			<NavLink
-				to='/visor'
-				className={cx(style.btnSalaVirtual)}
-			>IR A SALA VIRTUAL</NavLink>
-		)
-	}
-
-	const renderIconBuscador = () => {
-		return(
-			<li className={cx(
-				style.iconBuscador,
-				{[`${style.mobile}`]: (mobileActive)}
-			)} >
-				<NavItem onClick={(e) => handleActionForm(e, 'buscar')} >
-					{/*<Icon>
-						search
-					</Icon>*/}
-					<img
-						className={cx(style.iconSvg)}
-						src="/img/icons/icono-buscar.svg"
-						alt=""
-					/>
-				</NavItem>
-			</li>
-		)
-	}
-
-	const renderIconAccount = () => {
-		const action = (user) ? 'register' : 'login';
-		return(
-			<li
-				onClick={(e) => handleActionForm(e, action, openRegister)}
-				className={cx(
-					style.navItemLogin,
-					{[`${style.mobile}`]: (openSidenav)},
-					{[`${style.black}`]: (!evento.bandaImagenUrl && scrollActive || openSidenav)},
-				)}
-			>
-				{/*<Icon className={cx('trigger-scale', style.iconLogin)} >
-					account_circle
-				</Icon>*/}
-				<img
-					className={cx(style.iconSvg)}
-					src="/img/icons/icono-perfil.svg"
-					alt=""
-				/>
-			</li>
-		)
-	}
-
-	const renderIconLogout = () => {
-		return(
-			<li
-				onClick={(e) => handleActionForm(e, 'logout')}
-				className={cx(
-					style.navItemLogout,
-					{[`${style.mobile}`]: (openSidenav)},
-					{[`${style.black}`]: (!evento.bandaImagenUrl && scrollActive || openSidenav)},
-				)}
-			>
-				<Icon className={cx('trigger-scale', style.iconLogout)} >
-					exit_to_app
-				</Icon>
-			</li>
-		)
-	}
-
-	const renderBuscador = () => {
-		return(
-			<div className={cx(
-				style.buscadorContent,
-				{'scale-1': openBuscador},
-				'z-depth-3'
-			)}>
-				<Buscador open={openBuscador} />
-			</div>
-		)
-	}
-
 	return(
-		<Fragment>
-			<Navbar
+		<div
+			className={cx(
+				style.contentFixed,
+				{ [`${style.scrollActive}`]: scrollActive },
+				{ [`${style.home}`]: location.pathname === '/' }
+			)}
+		>
+			<header
 				ref={_navbar}
-				brand={
-					<a
-						className={cx(
-							style.logo,
-							{ [`${style.small}`]: scrollActive }
-						)}
-						onClick={() => history.push('/')}
-					>
-						<img src={`/img/${logo}`} alt=""/>
-					</a>
-				}
-				fixed
-				sidenav={<Sidenav/>}
-				classNameFixed={classNameFixed}
-				options={{
-					onOpenStart: () => setOpenSidenav(true),
-					onCloseStart: () => setOpenSidenav(false)
-				}}
-				style={styleInlineNav}
+				className={cx(
+					style.navbar,
+					{ [`${style.scrollActive}`]: scrollActive },
+				)}
 			>
-			{ (evento.isEmpty) ? null :
-				<li className={cx(
-							style.navEvento,
-							{[`${style.scrollActive}`]: scrollActive},
-							{[`${style.black}`]: scrollActive && !evento.bandaImagenUrl}
-						)} >
-					<div
-						className={style.infoBanda}
-						onClick={() => {
-							history.push(`/evento/${evento.id}/${slugify(evento.tituloEvento)}`);
-						}}
-						>
-						<p>{ evento.nombre }</p>
-						<p>{ evento.nombre_recinto }</p>
-					</div>
-				{ (!evento.fechaSeleccionada) ? null :
-					<div className={cx(style.fechaSeleccionada)} >
-						<span className={style.diaTexto} >{evento.fechaSeleccionada.diaTexto}</span>
-						<span className={style.diaNumero} >{evento.fechaSeleccionada.diaNumero}</span>
-						<span className={style.mesHora} >
-							<span>{evento.fechaSeleccionada.mesTextoCorto}</span>
-							{' - '}
-							{evento.fechaSeleccionada.hora}{'hs'}
-						</span>
-					</div>
-				}
-				</li>
-			}
+				<section className={style.contentLogo} >
+					<Link to='/'>
+						<img
+							src={`/img/virtualium.png`}
+							alt="Logo oficial VIRTUALIUM"
+							className={cx({ [`${style.scrollActive}`]: scrollActive }, style.logo)}
+						/>
+					</Link>
+				</section>
 
+				<section className={style.contentRedesSociales} >
+					{ !mobileActive && <RedesSociales scrollActive={scrollActive} /> }
+				</section>
 
-			{ (!evento.isEmpty) ? null : <RedesSociales/> }
-
-			{ /*(!evento.isEmpty) ? null : <Categorias/>*/ }
-
-			{ !mobileActive &&  renderIconBuscador() }
-
-			{ (user && !mobileActive) && renderIconTicketera() }
-
-			{ (user && !mobileActive) && renderIconSalaVirtual() }
-
-			{ (user && !mobileActive) && renderIconArtista() }
-
-			{ !mobileActive &&  renderIconAccount() }
-
-			{ (user && !mobileActive) ? renderIconLogout() : null }
-
-			{ (user) ?
-				<li className='nav-username' >
-					<p>{ user.nombres }</p>
-				</li> : null
-			}
-
-			{ (user || mobileActive) ? null : renderContentLogin() }
-
-			{ (mobileActive) ? null : renderRegister() }
-
-			{ (mobileActive) ? null : renderBuscador() }
-			</Navbar>
-			{ (location.pathname == '/') ? null :
-				// offsets-navbar
-				<div style={offsetsNavbar} ></div>
-			}
-		</Fragment>
-	)
+				<section>
+					<Navbar sidenav={sidenavMenu} >
+						{menu}
+					</Navbar>
+					{!mobileActive && renderBuscador()}
+					{!mobileActive && renderRegister()}
+					{!mobileActive && renderContentLogin()}
+				</section>
+			</header>
+		</div>
+	);
 }
 
 const mapStateToProps = (store) => ({

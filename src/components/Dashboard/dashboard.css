@@ -1,8 +1,22 @@
 .mainContent {
-	width: 90%;
-	margin: 50px auto;
+	padding-left: 270px;
 }
 
 .mainContent h4 {
 	text-align: center;
+}
+
+.sidenavContent {
+	width: 250px;
+}
+
+.panelContent {
+
+}
+
+.loading {
+	height: 50vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }

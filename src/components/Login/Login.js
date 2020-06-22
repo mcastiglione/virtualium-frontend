@@ -28,12 +28,12 @@ import cx from 'classnames';
 
 const Login = ({
 	open,
-	sidenav,
 	setUser,
 	errorMsj,
 	isLoginLoading,
 	restartErrorLogin,
 	handleCreateAccount,
+	recaptchaSize = 'normal',
 }) => {
 	const _recaptcha = useRef(null);
 	const [recaptchaValue, setRecaptchaValue] = useState(null);
@@ -176,8 +176,8 @@ const Login = ({
 				{ (!open) ? null :
 					<ReCAPTCHA
 						ref={_recaptcha}
+						size={recaptchaSize}
 						className={style.recaptcha}
-						size={(sidenav) ? 'compact' : 'normal'}
 						sitekey={SITE_KEY_RECAPTCHA}
 						onChange={onChangeRecaptcha}
 					/>
@@ -216,10 +216,10 @@ const Login = ({
 					<h4>¿Aún no estas registrado?</h4>
 					<button
 						className={cx('trigger-scale', 'center', 'btn', style.btnCreate)}
-						onClick={(e) => handleCreateAccount(e, 'register')}
+						onClick={() => handleCreateAccount('register')}
 					>CREA TU CUENTA</button>
 
-					<p onClick={(e) => handleCreateAccount(e, 'Login')} className={cx('trigger-scale', style.cancelar)} >CANCELAR</p>
+					<p onClick={() => handleCreateAccount(null, true)} className={cx('trigger-scale', style.cancelar)} >CANCELAR</p>
 				</Fragment>
 			}
 

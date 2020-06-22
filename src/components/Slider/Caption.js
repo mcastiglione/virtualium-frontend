@@ -6,7 +6,7 @@ import cx from 'classnames';
 import style from './slider.css';
 
 /* constants */
-import { PLACEMENTS } from '../../constants';
+import { PLACEMENTS } from '../../config.js';
 
 const Caption = ({ className, placement, children, ...props }) => {
 	return (

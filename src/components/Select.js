@@ -10,7 +10,7 @@ import cx from 'classnames';
 
 /* utils */
 import idgen from '../utils/idgen';
-import { SIZES } from '../constants/';
+import { SIZES } from '../config.js';
 
 const Select = ({
 	s,

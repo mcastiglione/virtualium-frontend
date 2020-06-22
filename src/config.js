@@ -1,9 +1,51 @@
-export const URL_API = process.env.URL_API;
-export const ASSETS_URL = process.env.ASSETS_URL;
+/*********************************************************
+* API_KEYS
+*********************************************************/
 export const FACEBOOK_APP_ID = process.env.FACEBOOK_APP_ID;
 export const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
 export const FACEBOOK_CLIENT_ID = process.env.FACEBOOK_CLIENT_ID;
 export const SITE_KEY_RECAPTCHA = process.env.SITE_KEY_RECAPTCHA;
+
+
+/*********************************************************
+* Constantes generales
+*********************************************************/
+export const ASSETS_URL = process.env.ASSETS_URL;
+
+/*********************************************************
+* Materialize
+*********************************************************/
+export const SCALES = ['big', 'small'];
+export const SIZES = ['s', 'm', 'l', 'xl'];
+export const PLACEMENTS = ['left', 'center', 'right'];
+export const STYLES = ['large', 'small', 'floating', 'flat'];
+export const ICON_SIZES = ['tiny', 'small', 'medium', 'large'];
+export const WAVES = ['light', 'red', 'yellow', 'orange', 'purple', 'green', 'teal'];
+
+/*********************************************************
+* Reducers - Actions
+*********************************************************/
+export const LOGOUT = 'LOGOUT';
+export const BUYING = 'BUYING';
+export const SET_USER = 'SET_USER';
+export const GET_EVENTO = 'GET_EVENTO';
+export const SET_EVENTO = 'SET_EVENTO';
+export const SET_MESSAGE = 'SET_MESSAGE';
+export const START_LOGIN = 'START_LOGIN';
+export const RESET_EVENTO = 'RESET_EVENTO';
+export const HANDLE_LOGIN = 'HANDLE_LOGIN';
+export const SET_ERROR_LOGIN = 'SET_ERROR_LOGIN';
+export const STARTING_PURCHASE = 'STARTING_PURCHASE';
+export const TOGGLE_CATEGORIES = 'TOGGLE_CATEGORIES';
+export const SET_SUCCESS_LOGIN = 'SET_SUCCESS_LOGIN';
+export const RESTART_ERROR_SET_USER = 'RESTART_ERROR_SET_USER';
+
+/*********************************************************
+* Backend endpoint url
+*********************************************************/
+export const API_CAKEPHP = process.env.API_CAKEPHP;
+export const API_PY = 'https://api.virtualium.ethernity.live/';
+export const CAMERA_URL = 'https://d3myw7lup9h3o.cloudfront.net/';
 
 /*********************************************************
 * Constantes y configuraciones del dashboard
