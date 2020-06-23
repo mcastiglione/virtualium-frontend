@@ -49,3 +49,23 @@
 	border-radius: 30px;
 	text-transform: uppercase;
 }
+
+/******************************
+* Botonera
+******************************/
+.botonera {
+	display: grid;
+	grid-gap: 10px;
+	grid-template-columns: 1fr 170px;
+}
+
+.botonera div:nth-child(1),
+.botonera div:nth-child(2) {
+	display: grid;
+	grid-gap: 20px;
+	align-items: center;
+}
+
+.botonera div:nth-child(1) {
+	grid-template-columns: repeat(2, max-content);
+}

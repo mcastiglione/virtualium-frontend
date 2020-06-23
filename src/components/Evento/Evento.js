@@ -6,7 +6,7 @@ import React, {
 	useRef,
 	Fragment
 } from 'react';
-import { useParams, useHistory, useLocation } from 'react-router-dom';
+import { useParams, useHistory, useLocation, Link } from 'react-router-dom';
 
 /* Components */
 import ComprarAcceso from './ComprarAcceso';
@@ -49,6 +49,18 @@ const Evento = ({ evento, isFetching, resetEvento, setEvento }) => {
 				<h3>Descripción</h3>
 				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magnam impedit earum labore in repellendus laboriosam voluptate cupiditate beatae, doloremque suscipit soluta iure expedita officiis magni minus quam pariatur nemo cum?</p>
 				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magnam impedit earum labore in repellendus laboriosam voluptate cupiditate beatae, doloremque suscipit soluta iure expedita officiis magni minus quam pariatur nemo cum?</p>
+
+				<div className={style.botonera} >
+					<div>
+						<Link target='_blank' to='/selfies' className={cx('btn')} >Fotos</Link>
+						<Link target='_blank' to='/videos' className={cx('btn')} >videos</Link>
+						<Link target='_blank' to='/messages' className={cx('btn')} >sonido</Link>
+						<Link target='_blank' to='/messages' className={cx('btn')} >mensajes</Link>
+					</div>
+					<div>
+						<Link target='_blank' to='/visor' className={cx('btn', 'orange', 'darken-2')} >Ir a sala virtual</Link>
+					</div>
+				</div>
 			</section>
 			<section>
 				<ComprarAcceso/>
