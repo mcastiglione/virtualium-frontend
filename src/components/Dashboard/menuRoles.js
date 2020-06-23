@@ -58,6 +58,12 @@ export default {
 					url: '/messages',
 				},
 				{
+					id: 'logs',
+					title: 'logs',
+					type: 'item',
+					url: '/logs',
+				},
+				{
 					id: 'selfies',
 					title: 'selfies',
 					type: 'item',

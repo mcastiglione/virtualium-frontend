@@ -6,6 +6,7 @@ import { ROLES } from '../config';
 /* conponents */
 const Stream = React.lazy(() => import(/* webpackChunkName: 'Dashboard' */ '../components/Stream/Stream'));
 const Dashboard = React.lazy(() => import(/* webpackChunkName: 'Dashboard' */ '../components/Dashboard/Dashboard'));
+const ProcessLogs = React.lazy(() => import(/* webpackChunkName: 'ProcessLogs' */ '../components/ProcessLogs/ProcessLogs'));
 
 /*
  * Routes para ser renderizados con <PrivateRoute/> lo que evita que los componentes
@@ -34,7 +35,14 @@ const privateRoutes = [
 		name: 'Stream',
 		path: '/stream',
 		Component: Stream
-	}
+	},
+	{
+		exact: true,
+		name: 'logs',
+		path: '/logs',
+		Component: ProcessLogs,
+		isAuthorized: [ROLES[4]]
+	},
 ];
 
 export default privateRoutes;

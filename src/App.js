@@ -114,6 +114,7 @@ function App({ user, isLogin, verifySession }) {
 			case '/selfies':
 			case '/messages':
 			case '/stream':
+			case '/logs':
 				return true;
 			default:
 				return false;
