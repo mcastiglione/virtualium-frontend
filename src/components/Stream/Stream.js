@@ -10,7 +10,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import Alert from '@material-ui/lab/Alert';
 import Loading from '../Loading/Loading';
 import Icon from '../Icon';
-import ReactHLS from 'react-hls';
+import ReactPlayer from 'react-player'
 import useWindowDimensions from '../Dimensions/useWindowDimensions';
 import qs from 'querystringify'
 
@@ -192,15 +192,14 @@ const Stream = props => {
 					</Collapse>
 				</div>
 				<div className={style.fullscreen}>
-					<ReactHLS 
+					<ReactPlayer 
 						url={srcUrl} 
-						autoplay="true" 
+						playing={true}
 						width={width + 'px'} 
 						height={height + 'px'} 
-						videoProps = {{
-							controls : null,
-							muted : !muteFlag,
-						}}
+						volume={volumeVal/100}
+						muted = {!muteFlag}
+						controls = {false}
 					/>
 					<div className={style.bottombar}>
 						<span>Nombre evento...</span>

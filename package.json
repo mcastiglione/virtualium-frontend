@@ -63,6 +63,7 @@
 		"react-google-recaptcha": "^2.1.0",
 		"react-google-recaptcha-v3": "^1.4.1",
 		"react-hls": "0.0.8",
+		"react-player": "^2.3.1",
 		"react-router-dom": "^5.1.2",
 		"react-webcam": "^5.1.0",
 		"slugify": "^1.4.0",
