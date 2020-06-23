@@ -199,6 +199,7 @@ const Stream = props => {
 						height={height + 'px'} 
 						videoProps = {{
 							controls : null,
+							muted : !muteFlag,
 						}}
 					/>
 					<div className={style.bottombar}>
