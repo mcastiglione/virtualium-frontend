@@ -277,27 +277,27 @@ const Stream = props => {
 								onChange={channelChange}
 								IconComponent = {SelectIcon}
 							>
-								<MenuItem value={0}><Link to="/visor">Local CAM</Link></MenuItem>
-								<MenuItem value={1}><Link to="/stream?id=1">Camera-1</Link></MenuItem>
-								<MenuItem value={2}><Link to="/stream?id=2">Camera-2</Link></MenuItem>
-								<MenuItem value={3}><Link to="/stream?id=3">Camera-3</Link></MenuItem>
-								<MenuItem value={4}><Link to="/stream?id=4">Camera-4</Link></MenuItem>
-								<MenuItem value={5}><Link to="/stream?id=5">Camera-5</Link></MenuItem>
-								<MenuItem value={6}><Link to="/stream?id=6">Camera-6</Link></MenuItem>
-								<MenuItem value={7}><Link to="/stream?id=7">Camera-7</Link></MenuItem>
-								<MenuItem value={8}><Link to="/stream?id=8">Camera-8</Link></MenuItem>
-								<MenuItem value={9}><Link to="/stream?id=9">Camera-9</Link></MenuItem>
-								<MenuItem value={10}><Link to="/stream?id=9">Camera-10</Link></MenuItem>
-								<MenuItem value={11}><Link to="/stream?id=11">Camera-11</Link></MenuItem>
-								<MenuItem value={12}><Link to="/stream?id=12">Camera-12</Link></MenuItem>
-								<MenuItem value={13}><Link to="/stream?id=13">Camera-13</Link></MenuItem>
-								<MenuItem value={14}><Link to="/stream?id=14">Camera-14</Link></MenuItem>
-								<MenuItem value={15}><Link to="/stream?id=15">Camera-15</Link></MenuItem>
-								<MenuItem value={16}><Link to="/stream?id=16">Camera-16</Link></MenuItem>
-								<MenuItem value={17}><Link to="/stream?id=17">Camera-17</Link></MenuItem>
-								<MenuItem value={18}><Link to="/stream?id=18">Camera-18</Link></MenuItem>
-								<MenuItem value={19}><Link to="/stream?id=19">Camera-19</Link></MenuItem>
-								<MenuItem value={20}><Link to="/stream?id=9">Camera-20</Link></MenuItem>
+								<MenuItem value={0}><Link to="/dashboard" className={style.black}>Local CAM</Link></MenuItem>
+								<MenuItem value={1}>Camera-1</MenuItem>
+								<MenuItem value={2}>Camera-2</MenuItem>
+								<MenuItem value={3}>Camera-3</MenuItem>
+								<MenuItem value={4}>Camera-4</MenuItem>
+								<MenuItem value={5}>Camera-5</MenuItem>
+								<MenuItem value={6}>Camera-6</MenuItem>
+								<MenuItem value={7}>Camera-7</MenuItem>
+								<MenuItem value={8}>Camera-8</MenuItem>
+								<MenuItem value={9}>Camera-9</MenuItem>
+								<MenuItem value={10}>Camera-10</MenuItem>
+								<MenuItem value={11}>Camera-11</MenuItem>
+								<MenuItem value={12}>Camera-12</MenuItem>
+								<MenuItem value={13}>Camera-13</MenuItem>
+								<MenuItem value={14}>Camera-14</MenuItem>
+								<MenuItem value={15}>Camera-15</MenuItem>
+								<MenuItem value={16}>Camera-16</MenuItem>
+								<MenuItem value={17}>Camera-17</MenuItem>
+								<MenuItem value={18}>Camera-18</MenuItem>
+								<MenuItem value={19}>Camera-19</MenuItem>
+								<MenuItem value={20}>Camera-20</MenuItem>
 							</Select>
 						</div>
 						<div className={style.volumeMute}>
