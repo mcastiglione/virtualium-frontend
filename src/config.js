@@ -45,7 +45,7 @@ export const RESTART_ERROR_SET_USER = 'RESTART_ERROR_SET_USER';
 *********************************************************/
 export const API_PY = process.env.API_PY;
 export const API_CAKEPHP = process.env.API_CAKEPHP;
-export const CAMERA_URL = 'https://d3myw7lup9h3o.cloudfront.net/';
+export const CAMERA_URL = 'https://d3qvy04m8g7aow.cloudfront.net/';
 
 /*********************************************************
 * Constantes y configuraciones del dashboard
