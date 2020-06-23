@@ -16,7 +16,9 @@ module.exports = env => {
 	const { PLATFORM, VERSION, DOTENV } = env;
 	if (DOTENV === 'local') {
 		require('dotenv').config({path: path.resolve(__dirname, '.env.local')});
-	}  else {
+	} else if (DOTENV === 'beta') {
+		require('dotenv').config({path: path.resolve(__dirname, '.env.beta')});
+	} else {
 		require('dotenv').config();
 	}
 
