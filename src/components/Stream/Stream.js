@@ -277,7 +277,7 @@ const Stream = props => {
 								onChange={channelChange}
 								IconComponent = {SelectIcon}
 							>
-								<MenuItem value={0}><Link to="/dashboard" className={style.black}>Local CAM</Link></MenuItem>
+								<MenuItem value={0}><Link to="/visor" className={style.black}>Local CAM</Link></MenuItem>
 								<MenuItem value={1}>Camera-1</MenuItem>
 								<MenuItem value={2}>Camera-2</MenuItem>
 								<MenuItem value={3}>Camera-3</MenuItem>
