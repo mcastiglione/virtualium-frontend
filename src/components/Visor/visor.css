@@ -146,3 +146,9 @@
 .messageBoxOut{
     max-height: calc(100% - 75px);
 }
+
+.messageButtonGroupEmoji {
+    background-color: white;
+    display: grid;
+    width: 400px;
+}

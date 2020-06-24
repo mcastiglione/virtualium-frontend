@@ -16,7 +16,7 @@ import Icon from '../Icon';
 /* style */
 import cx from 'classnames';
 import style from './visor.css';
-import { Picker } from 'emoji-mart'
+import InputEmoji from 'react-input-emoji'
 import { API_PY } from '../../config.js'
 
 const videoConstraints = {
@@ -468,22 +468,14 @@ const Visor = () => {
 										}}
 										className={style.messageBoxOut}
 									>
-										<Box p={2} className={style.messageButtonGroup}>
-											<TextField
-												id="outlined-multiline-static"
-												label="Message Content"
-												multiline
-												rows={4}
+										<Box p={2} className={style.messageButtonGroupEmoji}>
+											<InputEmoji
 												value={message}
-												variant="outlined"
-												InputProps={{
-													classes: {
-													  input: style.messageBox,
-													},
-												}}
-												onChange={(e) => {setMessage(e.target.value)}}
+												onChange={setMessage}
+												onEnter={submitMessage}
+												placeholder="Type a message"
+												className={style.customEmoji}
 											/>
-											<Picker set='google' skin={2} onSelect={addEmoji} />
 											<IconButton className={style.submitButton} color="primary" aria-label="record video" component="span" onClick={submitMessage}>
 												<Send />
 											</IconButton>
