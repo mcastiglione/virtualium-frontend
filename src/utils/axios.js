@@ -1,5 +1,5 @@
 const axios = require('axios');
-axios.defaults.withCredentials = true;
+// axios.defaults.withCredentials = true;
 const { API_CAKEPHP } = require('../config.js');
 const urlBase = API_CAKEPHP;
 

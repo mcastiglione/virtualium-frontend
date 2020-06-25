@@ -1,5 +1,4 @@
 import React, {useRef, useState, useEffect} from 'react';
-import Audio from './components/Audio';
 import style from './MessageDisplay.module.css';
 
 /* config */
@@ -26,11 +25,8 @@ export default class MessageDisplay extends React.Component {
 
 
 	componentDidMount() {
-		
-		this.newAudio();
 		this.getMessages();
 		this.messagesInterval = setInterval(() => this.getMessages(), 2000);
-
 	}
 
 
@@ -77,10 +73,6 @@ export default class MessageDisplay extends React.Component {
 			console.log("Error... ", error);
 
 		}
-	}
-
-	newAudio = () =>{
-		this.setState({audioId: new Date().getTime().toString()}, ()=>{console.log("new Audio");})
 	}
 
 	render() {

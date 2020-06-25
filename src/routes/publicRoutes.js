@@ -3,10 +3,10 @@ import React, { lazy } from 'react';
 const Portal = lazy(() => import(/* webpackChunkName: 'Portal' */ '../components/Portal/Portal'));
 const Evento = lazy(() => import(/* webpackChunkName: 'Evento' */ '../components/Evento/Evento'));
 const Visor = React.lazy(() => import(/* webpackChunkName: 'Visor' */ '../components/Visor/Visor'));
+const Messages = React.lazy(() => import(/* webpackChunkName: 'Messages' */ '../views/Messages/Messages'));
 const ConfirmEmail = lazy(() => import(/* webpackChunkName: 'ConfirmEmail' */ '../components/ConfirmEmail'));
 const MosaicVideo = React.lazy(() => import(/* webpackChunkName: 'MosaicVideo' */ '../components/MosaicVideo/MosaicVideo'));
 const MosaicImages = React.lazy(() => import(/* webpackChunkName: 'MosaicImages' */ '../components/MosaicImages/MosaicImages'));
-const MessageDisplay = React.lazy(() => import(/* webpackChunkName: 'MessageDisplay' */ '../components/MessagesDisplay/MessageDisplay'));
 
 const PublicRoutes = [
 	{
@@ -34,7 +34,7 @@ const PublicRoutes = [
 		exact: true,
 		name: 'Messages',
 		path: '/messages',
-		Component: MessageDisplay,
+		Component: Messages,
 	},
 	{
 		exact: true,

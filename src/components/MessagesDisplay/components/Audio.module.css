@@ -9,3 +9,10 @@
     height: 5px;
     background-color: lightgrey;
 }
+
+.controls {
+	width: 30px;
+	margin: 5px;
+	display: block;
+	cursor: pointer;
+}
