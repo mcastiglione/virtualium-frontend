@@ -66,7 +66,6 @@ class MessageDisplay extends React.Component {
 
 	render() {
 		const { alert } = this.props;
-		// console.log(this.state.messageRetriever.messages);
 		return (
 			<div>
 				<div className={style.main_box}>

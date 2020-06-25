@@ -4,9 +4,9 @@ import React from 'react';
 import { ROLES } from '../config';
 
 /* conponents */
+const Logs = React.lazy(() => import(/* webpackChunkName: 'Logs' */ '../views/Logs/Logs'));
 const Stream = React.lazy(() => import(/* webpackChunkName: 'Dashboard' */ '../components/Stream/Stream'));
 const Dashboard = React.lazy(() => import(/* webpackChunkName: 'Dashboard' */ '../components/Dashboard/Dashboard'));
-const ProcessLogs = React.lazy(() => import(/* webpackChunkName: 'ProcessLogs' */ '../components/ProcessLogs/ProcessLogs'));
 
 /*
  * Routes para ser renderizados con <PrivateRoute/> lo que evita que los componentes
@@ -40,7 +40,7 @@ const privateRoutes = [
 		exact: true,
 		name: 'logs',
 		path: '/logs',
-		Component: ProcessLogs,
+		Component: Logs,
 		isAuthorized: [ROLES[4]]
 	},
 ];
