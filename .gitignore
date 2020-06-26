@@ -79,6 +79,7 @@ web_modules/
 .env.test
 *.env
 *.env.local
+*.env.beta
 *.dev
 .DS_Store
 
