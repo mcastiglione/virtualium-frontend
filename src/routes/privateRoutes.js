@@ -5,7 +5,6 @@ import { ROLES } from '../config';
 
 /* conponents */
 const Logs = React.lazy(() => import(/* webpackChunkName: 'Logs' */ '../views/Logs/Logs'));
-const Stream = React.lazy(() => import(/* webpackChunkName: 'Dashboard' */ '../components/Stream/Stream'));
 const Dashboard = React.lazy(() => import(/* webpackChunkName: 'Dashboard' */ '../components/Dashboard/Dashboard'));
 
 /*
@@ -29,12 +28,6 @@ const privateRoutes = [
 		name: 'Dashboard',
 		path: '/dashboard*',
 		Component: Dashboard
-	},
-	{
-		exact: true,
-		name: 'Stream',
-		path: '/stream',
-		Component: Stream
 	},
 	{
 		exact: true,

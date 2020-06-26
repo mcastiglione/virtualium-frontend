@@ -190,10 +190,10 @@ const Header = ({ user, evento, mobileActive, logout, triggerOpenLogin, handleOp
 
 		navigation.push(navItemBuscador);
 		navigation.push(navItemTicketera);
-		// navigation.push(navItemVisor);
+		navigation.push(navItemVisor);
 
 		sidenavNavigation.push(navItemTicketera);
-		// sidenavNavigation.push(navItemVisor);
+		sidenavNavigation.push(navItemVisor);
 
 		if(ROL === ROLES[4]) {
 			navigation.push(navItemDashboad);

@@ -14,6 +14,10 @@
 	display: grid;
 }
 
+.botonera {
+	grid-gap: 20px;
+}
+
 .contentLogo img {
 	margin: auto;
 	display: block;
@@ -25,6 +29,7 @@
 }
 
 .btnDemo {
+	margin: auto;
 	width: max-content;
 	border: 1px solid #fff;
 	background: transparent;

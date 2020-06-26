@@ -50,7 +50,7 @@ const Evento = ({ evento, isFetching, resetEvento, setEvento }) => {
 				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magnam impedit earum labore in repellendus laboriosam voluptate cupiditate beatae, doloremque suscipit soluta iure expedita officiis magni minus quam pariatur nemo cum?</p>
 				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magnam impedit earum labore in repellendus laboriosam voluptate cupiditate beatae, doloremque suscipit soluta iure expedita officiis magni minus quam pariatur nemo cum?</p>
 
-				<div className={style.botonera} >
+				{/*<div className={style.botonera} >
 					<div>
 						<Link target='_blank' to='/selfies' className={cx('btn')} >Fotos</Link>
 						<Link target='_blank' to='/videos' className={cx('btn')} >videos</Link>
@@ -60,7 +60,7 @@ const Evento = ({ evento, isFetching, resetEvento, setEvento }) => {
 					<div>
 						<Link target='_blank' to='/visor' className={cx('btn', 'orange', 'darken-2')} >Ir a sala virtual</Link>
 					</div>
-				</div>
+				</div>*/}
 			</section>
 			<section>
 				<ComprarAcceso/>

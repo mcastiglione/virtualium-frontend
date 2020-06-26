@@ -5,7 +5,14 @@ import { NavLink, Link } from 'react-router-dom';
 import cx from 'classnames';
 import style from './footer.css';
 
-const Footer = () => {
+/* context */
+import connect from '../../context/connect';
+
+/* Actions */
+import { handleOpenLogin } from '../../actions/loginAction';
+
+
+const Footer = ({ handleOpenLogin }) => {
 	return(
 		<section className={style.mainContent}>
 			<footer className={style.footer} >
@@ -30,12 +37,21 @@ const Footer = () => {
 					<Link to='/terminos-condiciones' >Avisos legales</Link>
 				</div>
 
-				<div className="tuticket-link">
-					<Link to='/visor' className={cx('btn', style.btnDemo)} >Demostración</Link>
+				<div className={style.botonera} >
+					<span onClick={handleOpenLogin} className={cx('btn', style.btnDemo)} >Login</span>
+					<Link to='/dashboard' className={cx('btn', style.btnDemo)} >Dashboard</Link>
+					<Link to='/visor' className={cx('btn', style.btnDemo)} >Ir a sala virtual</Link>
 				</div>
 			</footer>
 		</section>
 	)
 }
 
-export default Footer;
+
+const mapStateToProps = (store) => ({});
+
+const mapDispathToProps = (dispath, store) => ({
+	handleOpenLogin: () => dispath(handleOpenLogin(store)),
+});
+
+export default connect(mapStateToProps, mapDispathToProps)(Footer);

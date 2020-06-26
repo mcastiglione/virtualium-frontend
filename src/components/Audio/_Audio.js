@@ -56,7 +56,7 @@ const Audio = ({ type }) => {
 		if(audioList) {
 			setUrlList((prevState) => {
 				if(prevState) {
-					return audioList.map((elNew) => {
+					let newState = audioList.map((elNew) => {
 						// buscar si el nuevo audio 'elNew' existe en la lista vieja
 						let audioOld = prevState.find((elOld) => elOld.audio_name == elNew.audio_name);
 
@@ -71,6 +71,14 @@ const Audio = ({ type }) => {
 							isReproduced: false
 						}
 					})
+					console.log('#################');
+					console.log({
+						newState,
+						prevState,
+						audioList,
+					})
+					console.log('#################');
+					return newState;
 				} else {
 					return audioList.map((el) => {
 						return {
@@ -129,7 +137,11 @@ const Audio = ({ type }) => {
 				 * Buscar el siguiente audio que aún no ha sido reproducido
 				 * si no existe retorna undefined y se detiene la reproducción
 				*/
-				return urlList.find((el) => (!el.isReproduced && el.blob));
+				console.log('$$$$$$$$$$$$$$$$$$$$$$$$$');
+				let newData = urlList.find((el) => (!el.isReproduced && el.blob));
+				console.log({urlList, newData});
+				console.log('$$$$$$$$$$$$$$$$$$$$$$$$$');
+				return newData;
 			})
 		}
 		return () => {}
@@ -138,6 +150,7 @@ const Audio = ({ type }) => {
 	const getAudioList = () => {
 		httpClient.get(`${API_PY}get_audios`)
 		.then(({ data }) => {
+			console.log(`data.audios: ${data.audios.length}`, data.audios)
 			setAudioList(data.audios);
 		})
 	}
@@ -193,17 +206,23 @@ const Audio = ({ type }) => {
 			<div className={style.progressBar_container}>
 				<div className={style.progressBar} style={{ width: progress }}></div>
 			</div>
-				<img
-					className={style.controls}
-					onClick={handleStatusAudio}
-					src={`/img/icons/${(!statusAudio) ? 'play' : 'pause'}.svg`}
-				/>
-				<audio
-					src={url && url.blob}
-					ref={audioRef}
-					onTimeUpdate={timeHandler}
-					onEnded={handledUpdateAudio}
-				/>
+			{ /*(!url) ? null :*/
+				<Fragment>
+					<img
+						className={style.controls}
+						onClick={handleStatusAudio}
+						src={`/img/icons/${(!statusAudio) ? 'play' : 'pause'}.svg`}
+					/>
+					<audio
+						// autoPlay
+						// src={url.blob}
+						src={url && url.blob}
+						ref={audioRef}
+						onTimeUpdate={timeHandler}
+						onEnded={handledUpdateAudio}
+					/>
+				</Fragment>
+			}
 		</div>
 	)
 }
