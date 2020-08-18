@@ -29,7 +29,7 @@ class MosaicImages extends React.Component{
 	//TODO: Animated feature isn't developed yet, please don't use Animated property while declaring this react component
 	componentDidMount(){
 		this.getData();
-		this.imageUpdateInterval = setInterval(()=>this.getData(), 30000);
+		this.imageUpdateInterval = setInterval(()=>this.getData(), 5000);
 	}
 
 	componentWillUnmount(){

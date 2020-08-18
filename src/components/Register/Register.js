@@ -10,6 +10,7 @@ import ReCAPTCHA from 'react-google-recaptcha';
 /* Components */
 import Select from '../Select';
 import Checkbox from '../Checkbox';
+import Modal from '../Modal/Modal';
 import TextInput from '../TextInput';
 
 /* Style */
@@ -27,47 +28,49 @@ import validate from './validate';
 import paises from '../../utils/paises';
 import httpClient from '../../utils/axios';
 import serealizeData from './serealizeData';
-import { SITE_KEY_RECAPTCHA } from '../../config';
+import { SITE_KEY_RECAPTCHA, ASSETS_URL } from '../../config';
+
 
 /* Actions */
 import { verifySession } from '../../actions/loginAction';
 
 const initialState = {
 	email: '',
-	nombres: '',
-	apellidos: '',
-	email_confirmado: '',
-	nro_documento: '',
-	password: '',
-	passwordConfirmado: '',
 	genero: '',
-	telefono: '',
-	fecha_nacimiento: '',
 	nacDia: '',
 	nacMes: '',
 	nacAnho: '',
-	cod_pais: 'ARG',
-	domProvincia: '',
-	codProvincia: '',
-	codLocalidad: '',
-	domLocalidad: '',
+	nombres: '',
+	telefono: '',
+	password: '',
+	cod_pais: '',
+	apellidos: '',
 	domicilio: '',
 	direccion: '',
-	codigo_postal: '',
-	acepta_noticias: 1,
-	aceptoTerminos: 0,
+	provincia: '',
 	recaptcha: null,
-	estado: 'ACTIVO'
+	localidad: '',
+	image_file: '',
+	imagen_perfil: '',
+	codigo_postal: '',
+	aceptoTerminos: 0,
+	nro_documento: '',
+	acepta_noticias: 1,
+	fecha_nacimiento: '',
+	email_confirmado: '',
+	passwordConfirmado: '',
 }
 
 const Register = ({handleToggleAccount, sidenav, user, verifySession, ...props}) => {
-	const _recaptcha = useRef(null);
 	const _form = useRef(null);
-	const [ provincias, setProvincias ] = useState([]);
+	const _recaptcha = useRef(null);
+	const _imageFileRef = useRef(null);
+	const modalInstanceRef = useRef(null);
+	const _wrapperRegister = useRef(null);
+	const [ avatars, setAvatars ] = useState([]);
 	const [ state, setState ] = useState(initialState);
-	const [ localidades, setLocalidades ] = useState([]);
+	const [ profileImg, setProfileImg ] = useState(null);
 	const [ disablebRegistro, setDisablebRegistro ] = useState(true);
-	const [ localidadSelectValue, setLocalidadSelectValue ] = useState('');
 	const [ requiredCompletedCount, setRequiredCompletedCount ] = useState(0);
 	const [ requiredCompletedTotal, setRequiredCompletedTotal ] = useState(6);
 	const [ fieldRequired, setFieldRequired ] = useState({
@@ -80,6 +83,13 @@ const Register = ({handleToggleAccount, sidenav, user, verifySession, ...props})
 	});
 
 	useEffect(() => {
+		httpClient.apiGet('avatars')
+		.then(({ data }) => {
+			setAvatars(data);
+		})
+	}, [])
+
+	useEffect(() => {
 		let count = 0;
 		for(const field in fieldRequired) {
 			if(fieldRequired[field]) count++;
@@ -90,15 +100,8 @@ const Register = ({handleToggleAccount, sidenav, user, verifySession, ...props})
 	}, [fieldRequired])
 
 	useEffect(() => {
-		// httpClient.apiGet('provincias')
-		// .then(({ data }) => {
-		// 	setProvincias((data) ? data : []);
-		// })
-	}, [])
-
-	useEffect(() => {
 		setState((prevState) => {
-			let newState = { ...prevState };
+			let newState = { ...initialState };
 			if(user) {
 				for(const field in user) {
 					if(user[field] && newState.hasOwnProperty(field)) {
@@ -106,8 +109,6 @@ const Register = ({handleToggleAccount, sidenav, user, verifySession, ...props})
 					}
 				}
 				newState.genero = `${newState.genero}`;
-				newState.codProvincia = `${newState.codProvincia}`;
-				newState.codLocalidad = `${newState.codLocalidad}`;
 				newState.email_confirmado = newState.email;
 				if(newState.fecha_nacimiento) {
 					const [ anho, mes, dia ] = newState.fecha_nacimiento.split('-');
@@ -121,24 +122,6 @@ const Register = ({handleToggleAccount, sidenav, user, verifySession, ...props})
 			return newState;
 		})
 	}, [user]);
-
-	useEffect(() => {
-		setLocalidades([]);
-		setState((prevState) => ({...prevState, codLocalidad: ''}));
-		if(state.codProvincia) {
-			httpClient.apiGet('localidades', {
-				params: { provinciaCod: state.codProvincia }
-			})
-			.then(({ data }) => {
-				setState((prevState) => (data && data[0]) ?
-					({
-						...prevState,
-						codLocalidad: data[0].localidad
-					}) : prevState);
-				setLocalidades((data) ? data : []);
-			})
-		}
-	}, [state.codProvincia])
 
 	const onChangeRecaptcha = (e) => {
 		setFieldRequired((prevState) => {
@@ -156,11 +139,26 @@ const Register = ({handleToggleAccount, sidenav, user, verifySession, ...props})
 	}
 
 	const handleInput = (e) => {
+		var newState = {};
 		const nameInput = e.target.name;
-		let valueInput = e.target.type !== 'checkbox' ? e.target.value : 
-					e.target.checked ? 1 : 0;
+		let valueInput = e.target.value;
+		switch(e.target.type) {
+			case 'file':
+				valueInput = e.target.files[0];
+				if(valueInput) {
+					_wrapperRegister.current.scrollTop = 0;
+					setProfileImg(URL.createObjectURL(valueInput));
+					newState.imagen_perfil = '';
+				} else {
+					setProfileImg(null);
+				}
+				break;
+			case 'checkbox':
+				valueInput = e.target.checked ? 1 : 0;
+				break;
+		}
 
-		switch (nameInput) {
+		switch(nameInput) {
 			case 'email':
 			case 'nacDia':
 			case 'nacMes':
@@ -178,9 +176,13 @@ const Register = ({handleToggleAccount, sidenav, user, verifySession, ...props})
 			case 'aceptoTerminos':
 				setDisablebRegistro(requiredCompletedCount < requiredCompletedTotal || !valueInput)
 				break;
+			case 'imagen_perfil':
+				newState.image_file = null;
+				setProfileImg(ASSETS_URL+valueInput);
+				break;
 		}
 		setState((prevState) => {
-			const newState = { ...prevState };
+			newState = { ...prevState, ...newState };
 			newState[nameInput] = valueInput
 			return newState;
 		});
@@ -200,18 +202,9 @@ const Register = ({handleToggleAccount, sidenav, user, verifySession, ...props})
 		const [totalErrors, errors] = validate(state, update);
 
 		if(!totalErrors) {
-			const sendData = { ...state };
 			try {
-				if(sendData.cod_pais === 'ARG') {
-					sendData.domProvincia = '';
-					sendData.domLocalidad = '';
-				} else {
-					sendData.codProvincia = '';
-					sendData.codLocalidad = '';
-				}
-
 				const URI = (update) ? 'actualizar/'+user.id : 'registrar';
-				const { data } = await httpClient.apiPost(`usuarios/${URI}`, serealizeData(sendData, update));
+				const { data } = await httpClient.apiPost(`clientes/${URI}`, serealizeData(state, update));
 
 				if(data.cod == 400) {
 					for(const field in data.errors) {
@@ -224,6 +217,8 @@ const Register = ({handleToggleAccount, sidenav, user, verifySession, ...props})
 					}
 				} else if(data.cod == 200) {
 					setState(initialState);
+					setProfileImg(null);
+					_imageFileRef.current.value = null;
 					M.toast({
 						html: `${(update) ? 'Actualización exitosa' : 'Registro exitoso'}`,
 						classes:`black-text green`
@@ -242,6 +237,7 @@ const Register = ({handleToggleAccount, sidenav, user, verifySession, ...props})
 
 				setDisablebRegistro(false);
 			} catch(err) {
+				console.error(err);
 				M.toast({
 						html: 'Ocurrió un error. Por favor intente nuevamente',
 						classes:'red black-text'
@@ -294,21 +290,93 @@ const Register = ({handleToggleAccount, sidenav, user, verifySession, ...props})
 		/>
 	);
 
+	const renderAvatarsSelect = () => {
+		return( (avatars.length) ?
+			<Select
+				s={12}
+				name='imagen_perfil'
+				onChange={handleInput}
+				value={state.imagen_perfil}
+				selectClassName={style.selectM}
+			>
+			<option disabled value="" > Elegir un Avatar</option>
+			{
+				avatars.map((el) => (
+					<option
+						key={el.id}
+						value={el.avatar_url}
+						data-icon={ASSETS_URL+el.avatar_url}
+					> { el.nombre } </option>
+				))
+			}
+			</Select>
+			: null
+		)
+	}
+
 	return(
 		<div
+			ref={_wrapperRegister}
 			className={cx(
+				'z-depth-3',
 				props.className, 
 				style.wrapperRegister,
 				{[`${style.mobile}`]: sidenav},
-				'z-depth-3'
-		)} >
-			<div className="row">
-				<div className="col s12">
+			)}
+		>
+			<div className={style.header} >
+				<div className={cx(style.profileImg)} >
+					<Modal
+						className={style.modalUpload}
+						modalInstanceRef={modalInstanceRef}
+						trigger={ (profileImg) ?
+							<span
+								className={style.previewImg}
+								style={{backgroundImage: `url(${profileImg})`}}
+							></span>
+							: (user && user.imagen_perfil) ? // else if
+							<span
+								className={style.previewImg}
+								style={{backgroundImage: `url(${ASSETS_URL+user.imagen_perfil})`}}
+							></span>
+							: // else
+							<span className={style.uploadAvatar} ><img src="/img/icons/camera.svg" alt=""/></span>
+						}
+					>
+					{ renderAvatarsSelect() }
+					<span
+						className={cx('btn', style.btnUpload)}
+						onClick={() => { _imageFileRef.current.click() }}
+					>
+						subir unir foto
+					</span>
+
+					<button
+						className={cx('btn', 'red', style.btnUpload)}
+						onClick={() => {
+							setProfileImg(null);
+							setState((prevState) => ({...prevState, imagen_perfil: '', image_file: ''}));
+						}}
+					>
+						borrar
+					</button>
+					</Modal>
+				</div>
+
+				<div className={style.title} >
 					<h2>
 						{(user) ? 'Actualizar mi perfil' : 'Ingresa tus datos'}
 					</h2>
 					<div className={style.lineTitle} ></div>
 				</div>
+				<input
+					type="file"
+					accept='image/*'
+					name='image_file'
+					ref={_imageFileRef}
+					onChange={handleInput}
+					style={{ display: "none" }}
+				/>
 			</div>
 
 			<form ref={_form} onSubmit={handleSubmit} >
@@ -406,9 +474,9 @@ const Register = ({handleToggleAccount, sidenav, user, verifySession, ...props})
 							<option disabled value="" >
 								Genero
 							</option>
-							<option value="1">Masculino</option>
-							<option value="2">Femenino</option>
-							<option value="3">Otro</option>
+							<option value="masculino">Masculino</option>
+							<option value="femenino">Femenino</option>
+							<option value="otro">Otro</option>
 						</Select>
 					</div>
 
@@ -498,72 +566,25 @@ const Register = ({handleToggleAccount, sidenav, user, verifySession, ...props})
 						}
 						</Select>
 
-						{ (false && state.cod_pais == 'ARG') ?
-							<Fragment>
-								<Select
-									selectClassName={style.selectM}
-									s={12}
-									name='codProvincia'
-									onChange={handleInput}
-									value={state.codProvincia}
-								>
-								<option disabled value="" >
-									provincias
-								</option>
-								{
-									provincias.map((el) => (
-										<option key={el.provinciaCod} value={el.provinciaCod}>
-											{el.provincia}
-										</option>
-									))
-								}
-								</Select>
+						<TextInput
+							s={12}
+							name='provincia'
+							value={state.provincia}
+							globalClasses={style.inputBottom}
+							type='text'
+							onChange={handleInput}
+							label='Provincia'
+						/>
 
-								<Select
-									selectClassName={style.selectM}
-									label='Localidades'
-									s={12}
-									name='codLocalidad'
-									onChange={handleInput}
-									value={state.codLocalidad}
-								>
-								{ (state.codProvincia) ? null :
-									<option disabled value="" >
-										Debes selecionar una Provincia
-									</option>
-								}
-								{
-									localidades.map((el) => (
-										<option key={el.localidadCod} value={el.localidadCod}>
-											{el.nombre}
-										</option>
-									))
-								}
-								</Select>
-							</Fragment>
-							:
-							<Fragment>
-								<TextInput
-									s={12}
-									name='domProvincia'
-									value={state.domProvincia}
-									globalClasses={style.inputBottom}
-									type='text'
-									onChange={handleInput}
-									label='Provincia'
-								/>
-
-								<TextInput
-									s={12}
-									name='domLocalidad'
-									value={state.domLocalidad}
-									globalClasses={style.inputBottom}
-									type='text'
-									onChange={handleInput}
-									label='Localidad'
-								/>
-							</Fragment>
-						}
+						<TextInput
+							s={12}
+							name='localidad'
+							value={state.localidad}
+							globalClasses={style.inputBottom}
+							type='text'
+							onChange={handleInput}
+							label='Localidad'
+						/>
 					</div>
 				</div>
 				

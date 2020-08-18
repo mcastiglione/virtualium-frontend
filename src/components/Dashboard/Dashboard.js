@@ -8,8 +8,8 @@ const clasessGlobales = {
 }
 
 /* constants */
+import MENU_SIDEBAR from './menuSidebar.js';
 import { ROLES, DASHBOARD_INDEX, DASHBOARD_URL_ROOT } from '../../config';
-import menuRoles from './menuRoles.js';
 
 /* context */
 import connect from '../../context/connect';
@@ -25,15 +25,6 @@ import dashboardRoutes from '../../routes/dashboardRoutes';
 
 const Dashboard = ({ user, isLogin }) => {
 
-	const ROL = ROLES.find((el) => el === user.rol);
-	/*
-	 * Si el rol es undefined significa que hay inconsistencia con la DB
-	 * verificar el fichero src/config.js y corroborar que esté
-	 * actualizado con el modelo de la DB (backend CakePHP)
-	 * IMPLEMENTAR UN CORRECTO MENSAJE PARA EL USUARIO EN ESTE CASO BORDE
-	*/
-	if(ROL === undefined) return <Redirect to="/" />;
-
 	useEffect(() => {
 		document.body.style.background = '#e1e8ef';
 		return () => {
@@ -41,19 +32,25 @@ const Dashboard = ({ user, isLogin }) => {
 		}
 	}, [])
 
-	const menu = menuRoles[ROL];
+	/**
+	 * [menu description]
+	 * Items para ser renderizados en el sidebar del dashboard
+	 * van a depender de el rol del usuario logueado actualmente
+	 * @type {Array}
+	 */
+	// FALTA IMPLEMENTAR LA LÓGICA DEL LADO DEL SERVIDOR PARA QUE DEVULVAS LOS ROLES
+	const menu = MENU_SIDEBAR;
 
-	const _privateRoutes = dashboardRoutes[ROL].map((route, index) => {
+	const _privateRoutes = dashboardRoutes.map((route, index) => {
 		let {
 			path,
-			exact,
 			name,
+			exact,
 			Component,
 		} = route;
 
 		return (Component) ? (
 			<PrivateRoute
-				rol={ROL}
 				key={index}
 				path={path}
 				name={name}

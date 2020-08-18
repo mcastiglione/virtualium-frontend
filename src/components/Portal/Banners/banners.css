@@ -12,8 +12,8 @@
 }
 
 .date {
-	color: #9CD1D9;
 	font-size: 25px;
+	color: var(--first-color);
 }
 
 .title {
@@ -26,9 +26,7 @@
 
 .location {
 	margin: 0;
-	padding-bottom: 10px;
 	display: inline-block;
-	border-bottom: 5px solid #9CD1D9;
 }
 
 .btn {
@@ -36,9 +34,9 @@
 	display: block;
 	margin-top: 30px;
 	font-size: 1.5rem;
+	border: 2px solid;
 	padding: 12px 26px;
-	border-radius: 30px;
-	background-color: #1099AF;
+	background-color: #000;
 }
 
 @media only screen and (max-width: 992px) {
@@ -65,7 +63,5 @@
 		height: auto;
 		font-size: 1rem;
 		margin-top: 15px;
-		border-radius: 30px;
-		background-color: #1099AF;
 	}
 }

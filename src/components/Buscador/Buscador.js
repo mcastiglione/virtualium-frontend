@@ -23,16 +23,8 @@ const Buscador = ({ open }) => {
 	useEffect(() => {
 		httpClient.apiGet('eventos')
 		.then(({ data }) => {
-			const newData = []
-			const tmpArr = []
-			data.forEach((el) => {
-				if (!(el.id in tmpArr)) {
-					tmpArr[el.id] = true
-					newData.push(el)
-				}
-			})
-			setEventos(newData);
-			setEventosFiltrados(newData);
+			setEventos(data);
+			setEventosFiltrados(data);
 		})
 	}, [open])
 

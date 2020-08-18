@@ -39,7 +39,7 @@ function Banners({ bannersData }) {
 				bannersData.map((banner) => {
 					return(
 						<Slide
-							key={banner.id}
+							key={banner.clave}
 							image={<img src={ASSETS_URL+banner.imagenUrl} alt=""/>}
 						>
 							<Caption className={style.caption} placement="left">

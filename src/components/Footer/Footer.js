@@ -8,11 +8,14 @@ import style from './footer.css';
 /* context */
 import connect from '../../context/connect';
 
+/* constants */
+import { ROLES, DASHBOARD_URL_ROOT } from '../../config';
+
 /* Actions */
-import { handleOpenLogin } from '../../actions/loginAction';
+import { handleOpenLogin, handleOpenRegister } from '../../actions/loginAction';
 
 
-const Footer = ({ handleOpenLogin }) => {
+const Footer = ({ handleOpenLogin, handleOpenRegister, user }) => {
 	return(
 		<section className={style.mainContent}>
 			<footer className={style.footer} >
@@ -37,21 +40,36 @@ const Footer = ({ handleOpenLogin }) => {
 					<Link to='/terminos-condiciones' >Avisos legales</Link>
 				</div>
 
-				<div className={style.botonera} >
-					<span onClick={handleOpenLogin} className={cx('btn', style.btnDemo)} >Login</span>
-					<Link to='/dashboard' className={cx('btn', style.btnDemo)} >Dashboard</Link>
-					<Link to='/visor' className={cx('btn', style.btnDemo)} >Ir a sala virtual</Link>
-				</div>
+
+				{ (user && user.rol == ROLES[4]) ?
+					<div className={style.botonera} >
+						<span onClick={handleOpenRegister} className={cx('btn', style.btnDemo)} >Mi perfil</span>
+						<Link to='/dashboard' className={cx('btn', style.btnDemo)} >Dashboard</Link>
+						<Link to='/visor' className={cx('btn', style.btnDemo)} >Ir a sala virtual</Link>
+					</div>
+					:
+					<div className={style.botonera} >
+						<span
+							className={cx('btn', style.btnDemo)}
+							onClick={() => (user) ? handleOpenRegister() : handleOpenLogin()}
+						>
+						{(user) ? 'Mi perfil' : 'Login'}
+						</span>
+					</div>
+				}
 			</footer>
 		</section>
 	)
 }
 
 
-const mapStateToProps = (store) => ({});
+const mapStateToProps = (store) => ({
+	user: store.login.user,
+});
 
 const mapDispathToProps = (dispath, store) => ({
 	handleOpenLogin: () => dispath(handleOpenLogin(store)),
+	handleOpenRegister: () => dispath(handleOpenRegister(store)),
 });
 
 export default connect(mapStateToProps, mapDispathToProps)(Footer);

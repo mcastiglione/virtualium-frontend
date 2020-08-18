@@ -18,6 +18,7 @@ const Select = ({
 	l,
 	xl,
 	id,
+	name,
 	value,
 	label,
 	error,
@@ -129,8 +130,9 @@ const Select = ({
 	return(
 		<div className={wrapperClasses}>
 			<select
-				value={valueLocal}
+				name={name}
 				ref={_selectRef}
+				value={valueLocal}
 				onChange={handleChange}
 				className={cx(
 					{
@@ -225,6 +227,7 @@ Select.propTypes = {
 	 */
 	multiple: PropTypes.bool,
 	children: PropTypes.any,
+	name: PropTypes.string,
 	/**
 	 * Options for the select
 	 * <a target="_blank" href="https://materializecss.com/select.html#options">https://materializecss.com/select.html</a>
@@ -252,5 +255,9 @@ Select.propTypes = {
 		})
 	})
 };
+
+Select.defaultProps = {
+	name: '',
+}
 
 export default Select;

@@ -108,12 +108,28 @@ const TextInput = React.forwardRef(({
 				<span>{label}</span>
 				<input
 					type="file"
+					ref={(el) => {
+						if(ref) ref.current = {
+							...ref.current,
+							_inputRef: el
+						};
+						return (_inputRef.current = el);
+					}}
 					className={cx({ validate }, inputClassName, { inputSolid })}
 					{...inputProps}
 				/>
 			</div>
 			<div className="file-path-wrapper">
-				<input className="file-path validate" type="text" />
+				<input
+					ref={(el) => {
+						if(ref) ref.current = {
+							...ref.current,
+							_filePathRef: el
+						}
+					}}
+					className="file-path validate"
+					type={type}
+				/>
 			</div>
 			{renderHelper()}
 			{children}
@@ -224,5 +240,9 @@ TextInput.propTypes = {
 	 */
 	email: PropTypes.bool
 };
+
+TextInput.defaultProps = {
+	type: 'text'
+}
 
 export default TextInput;

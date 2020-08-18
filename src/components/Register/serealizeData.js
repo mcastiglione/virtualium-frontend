@@ -29,7 +29,11 @@ const serealizeData = (data, update) => {
 					}
 					break;
 				default:
-					formData.append(input, data[input]);
+					try {
+							data[input] && formData.append(input, data[input]);
+					} catch(err) {
+						console.error(err)
+					}
 			}
 		}
 	}

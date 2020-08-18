@@ -1,14 +1,18 @@
 import twemoji from 'twemoji';
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
+import style from './Twemoji.module.css';
 
 export default function Twemoji(props) {
-    const textRef = useRef(null)
+    const textRef = useRef();
 
-    useEffect( () => {async ()=>{
-        await twemoji.parse(textRef);
-        }});
+    useEffect( () => {
+        twemoji.parse(textRef.current,
+	{
+		className: style.resize_emoji
+	});
+    },[]);
 
     return (
-        <div ref={textRef}>{props.children}</div>
+        <span ref={textRef}>{props.children}</span>
     )
 }

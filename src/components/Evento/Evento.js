@@ -9,24 +9,23 @@ import React, {
 import { useParams, useHistory, useLocation, Link } from 'react-router-dom';
 
 /* Components */
+import Loading from '../Loading/Loading';
 import ComprarAcceso from './ComprarAcceso';
 
 /* Style */
 import cx from 'classnames';
 import style from './evento.css';
 
-/* utils */
-import httpClient from '../../utils/axios';
-
-/* Actions */
-import { setEvento, resetEvento } from '../../actions/eventoAction';
 /* config | constants */
 import { ASSETS_URL } from '../../config.js';
+
+/* Actions */
+import { setEvento, resetEvento, resetAccessCodeData } from '../../actions/eventoAction';
 
 /* connect */
 import connect from '../../context/connect';
 
-const Evento = ({ evento, isFetching, resetEvento, setEvento }) => {
+const Evento = ({ evento, isFetching, resetEvento, setEvento, resetAccessCodeData }) => {
 	const params = useParams();
 	const history = useHistory();
 	const location = useLocation();
@@ -40,15 +39,33 @@ const Evento = ({ evento, isFetching, resetEvento, setEvento }) => {
 		}
 	}, [location])
 
-	return(
+	useEffect(() => {
+		return () => {
+			resetAccessCodeData();
+		}
+	}, [])
+
+	let descripcionEvento = [];
+	if(evento.descripcion) {
+		descripcionEvento = JSON.parse(evento.descripcion);
+	}
+
+	return( (evento.isEmpty) ? <Loading/> :
 		<div className={style.mainContent} >
 			<section>
-				<img src="http://testing.gallbers.uy/img/2.png" alt=""/>
+				<img src={ASSETS_URL+evento.imagenPrincipal} alt=""/>
 			</section>
-			<section>
-				<h3>Descripción</h3>
-				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magnam impedit earum labore in repellendus laboriosam voluptate cupiditate beatae, doloremque suscipit soluta iure expedita officiis magni minus quam pariatur nemo cum?</p>
-				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magnam impedit earum labore in repellendus laboriosam voluptate cupiditate beatae, doloremque suscipit soluta iure expedita officiis magni minus quam pariatur nemo cum?</p>
+			<section className={style.infoBanda} >
+				{
+					<h3 className={style.titulo} >{ evento.nombre }</h3>
+				}
+				{
+					descripcionEvento.map((text, key) => {
+						return(
+							<p key={key} >{text}</p>
+						)
+					})
+				}
 
 				{/*<div className={style.botonera} >
 					<div>
@@ -63,7 +80,7 @@ const Evento = ({ evento, isFetching, resetEvento, setEvento }) => {
 				</div>*/}
 			</section>
 			<section>
-				<ComprarAcceso/>
+				<ComprarAcceso evento={evento} />
 			</section>
 		</div>
 	);
@@ -76,6 +93,7 @@ const mapStateToProps = (store) => ({
 
 const mapDispatchToProps = (dispatch) => ({
 	resetEvento: () => dispatch(resetEvento()),
+	resetAccessCodeData: () => dispatch(resetAccessCodeData()),
 	setEvento: (param) => dispatch(setEvento(param, dispatch)),
 });
 

@@ -8,14 +8,10 @@ import React, {
 import { NavLink } from 'react-router-dom';
 import slugify from 'slugify';
 
-/* Components */
-import Loading from '../Loading/Loading';
-const Banners = lazy(() => {
-	return import( /*webpackChunkName: 'Banners' */'./Banners/Banners')
-});
-const Carousel = lazy(() => {
-	return import( /*webpackChunkName: 'Carousel' */'../Carousel/Carousel')
-});
+/* Style */
+import './portal.scss';
+import cx from 'classnames';
+import style from './portal.css';
 
 /* utils */
 import httpClient from '../../utils/axios';
@@ -23,9 +19,10 @@ import httpClient from '../../utils/axios';
 /* config */
 import { ASSETS_URL } from '../../config.js';
 
-/* Style */
-import './portal.scss'
-import cx from 'classnames';
+/* Components */
+import Banners from './Banners/Banners';
+import Loading from '../Loading/Loading';
+import Carousel from '../Carousel/Carousel';
 
 function Portal() {
 	const [ banners, setBanners ] = useState([]);
@@ -95,20 +92,17 @@ function Portal() {
 		}
 
 		{ (!destacados.length) ? <h5 className='center'>No hay eventos</h5> :
-			<div className="wrapper-destacados-chicos">
-				<h2 className='title'>Eventos Destacados</h2>
+			<div className={style.destacados} >
+				<h2 className={style.title} >Eventos Destacados</h2>
 					<Carousel
-						childrens={destacados}
-						options={{
-							numVisible: 3,
-							imageLeftTextRight: true
-						}}
+						layout={1}
+						items={destacados}
 					/>
 			</div>
 		}
 
 		{ (!todoeventos.length) ? <h5 className='center'>No hay eventos</h5> :
-			<div className="wrapper-eventos-todos">
+			<div className={cx('wrapper-eventos-todos', style.todos)} >
 			{
 				todoeventos.map((child) => {
 					const imagenUrl = (child.imagenUrl) ?
@@ -116,7 +110,7 @@ function Portal() {
 							'https://via.placeholder.com/300';
 					return(
 						<article
-							key={child.id}
+							key={child.clave}
 							className="box-evento"
 							onMouseEnter={handleHover}
 							onMouseLeave={handleHover}
@@ -134,19 +128,16 @@ function Portal() {
 		}
 
 		{ (!proximamente.length) ? <h5 className='center'>No hay eventos</h5> :
-			<div className="wrapper-proximamente">
-				<h2 className='title'>Próximamente</h2>
+			<div className={style.proximamente} >
+				<h2 className={style.title} >Próximamente</h2>
 				<Carousel
-					childrens={proximamente}
-					options={{
-						numVisible: 5,
-						imageTopTextButtom: true
-					}}
+					layout={2}
+					items={proximamente}
 				/>
 			</div>
 		}
 
-			<div className="wrapper-catalogo">
+			{/*<div className="wrapper-catalogo">
 				<h1>Explora nuestro catálogo de eventos</h1>
 				<div className="catalogo">
 					<article className="flex-item">
@@ -184,7 +175,7 @@ function Portal() {
 						</NavLink>
 					</article>
 				</div>
-			</div>
+			</div>*/}
 		</div>
 	</Suspense>
 	)

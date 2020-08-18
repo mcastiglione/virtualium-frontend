@@ -21,9 +21,19 @@ import Register from '../Register/Register';
 import RedesSociales from './RedesSociales/RedesSociales';
 
 /* Actions */
-import { logout, handleOpenLogin } from '../../actions/loginAction';
+import { logout, handleOpenLogin, handleOpenRegister } from '../../actions/loginAction';
 
-const Header = ({ user, evento, mobileActive, logout, triggerOpenLogin, handleOpenLogin, ...props }) => {
+const Header = ({
+	user,
+	evento,
+	logout,
+	mobileActive,
+	handleOpenLogin,
+	triggerOpenLogin,
+	handleOpenRegister,
+	triggerOpenRegister,
+	...props
+}) => {
 	const _navbar = useRef({});
 	const history = useHistory();
 	const location = useLocation();
@@ -50,16 +60,21 @@ const Header = ({ user, evento, mobileActive, logout, triggerOpenLogin, handleOp
 	}, [location])
 
 	useEffect(() => {
+		/*
+		 * una vez abierto el [login ó register] cambiar el estado de
+		 * [triggerOpenLogin ó triggerOpenLogin] nuevamente a cerrado (false)
+		 * para asegurar que si se llama nuevamente permita abrir los formularios
+		 * [login ó register] según corresponda
+		*/
 		if(triggerOpenLogin) {
 			handleActionForm('login');
-			/*
-			 * una vez abierto el login cambiar el estado del triggerOpenLogin
-			 * nuevamente a cerrado (false) para asegurar que si es llamado
-			 * nuevamente permita abrir el login
-			*/
 			handleOpenLogin();
 		}
-	}, [triggerOpenLogin]);
+		if(triggerOpenRegister) {
+			handleActionForm('register');
+			handleOpenRegister();
+		}
+	}, [triggerOpenLogin, triggerOpenRegister]);
 
 	useEffect(() => {
 		window.addEventListener("scroll", handleScroll);
@@ -189,14 +204,14 @@ const Header = ({ user, evento, mobileActive, logout, triggerOpenLogin, handleOp
 		};
 
 		navigation.push(navItemBuscador);
-		navigation.push(navItemTicketera);
-		navigation.push(navItemVisor);
+		// navigation.push(navItemTicketera);
 
-		sidenavNavigation.push(navItemTicketera);
-		sidenavNavigation.push(navItemVisor);
+		// sidenavNavigation.push(navItemTicketera);
 
 		if(ROL === ROLES[4]) {
+			navigation.push(navItemVisor);
 			navigation.push(navItemDashboad);
+			sidenavNavigation.push(navItemVisor);
 			sidenavNavigation.push(navItemDashboad);
 		}
 
@@ -354,11 +369,13 @@ const mapStateToProps = (store) => ({
 	evento: store.evento,
 	user: store.login.user,
 	triggerOpenLogin: store.login.triggerOpenLogin,
+	triggerOpenRegister: store.login.triggerOpenRegister,
 });
 
 const mapDispathToProps = (dispath, store) => ({
 	logout: () => dispath(logout()),
 	handleOpenLogin: () => dispath(handleOpenLogin(store)),
+	handleOpenRegister: () => dispath(handleOpenRegister(store)),
 });
 
 export default connect(mapStateToProps, mapDispathToProps)(Header);

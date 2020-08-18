@@ -1,5 +1,5 @@
 .mainContent {
-	background: linear-gradient(45deg, #f19122, #d00e5a, #7c4d95);
+	background: var(--background-gradient);
 }
 
 .footer {
@@ -29,14 +29,15 @@
 }
 
 .btnDemo {
-	margin: auto;
+	margin: 0 auto;
+	display: block;
 	width: max-content;
 	border: 1px solid #fff;
 	background: transparent;
 }
 
 .btnDemo:hover {
-	background: #d00e5a;
+	background: var(--second-color);
 }
 
 @media only screen and (min-width: 768px) {

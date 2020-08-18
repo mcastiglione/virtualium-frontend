@@ -12,7 +12,7 @@ const ConfirmEmail = () => {
 	const history = useHistory();
 
 	useEffect(() => {
-		httpClient.apiGet(`usuarios/confirmaremail/${hash}`).then(({data}) => {
+		httpClient.apiGet(`clientes/confirmaremail/${hash}`).then(({data}) => {
 			M.toast({
 				html: 'Confirmando el Email',
 				classes:`black-text blue`

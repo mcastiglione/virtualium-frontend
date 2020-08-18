@@ -74,16 +74,17 @@ const Login = ({
 			errors++;
 		}
 
-		if (!recaptchaValue) {
-			M.toast({html: 'Complete el reto captcha', classes:'red black-text'})
-			errors++;
-		}
+		// SE COMENTARÁ TEMPORALMENTE PARA EVITAR PEDIR RETO CATPCHA EN LAS DEMOS
+		// if (!recaptchaValue) {
+		// 	M.toast({html: 'Complete el reto captcha', classes:'red black-text'})
+		// 	errors++;
+		// }
 
 		if(!errors && recoverPassword) {
 			setIsLoginRecoverPassword(true);
 			const formData = new FormData();
 			formData.append('email', email);
-			httpClient.apiPost('cliente/recover-password', formData)
+			httpClient.apiPost('clientes/recover-password', formData)
 			.then(({ data }) => {
 				setIsLoginRecoverPassword(false);
 				if(data.status == 200) {
@@ -173,14 +174,14 @@ const Login = ({
 				<h2>ACCEDER A MI TICKET</h2>
 				{renderInputs()}
 
-				{ (!open) ? null :
+				{ /*(!open) ? null :
 					<ReCAPTCHA
 						ref={_recaptcha}
 						size={recaptchaSize}
 						className={style.recaptcha}
 						sitekey={SITE_KEY_RECAPTCHA}
 						onChange={onChangeRecaptcha}
-					/>
+					/>*/
 				}
 				<p
 					onClick={handleRecoverPassword}
@@ -214,12 +215,17 @@ const Login = ({
 					<div className={style.lineDivider} ></div>
 
 					<h4>¿Aún no estas registrado?</h4>
-					<button
-						className={cx('trigger-scale', 'center', 'btn', style.btnCreate)}
-						onClick={() => handleCreateAccount('register')}
-					>CREA TU CUENTA</button>
+					<div className={style.createCancelWrapper} >
+						<button
+							className={cx('trigger-scale', 'center', 'btn', style.btnCreate)}
+							onClick={() => handleCreateAccount('register')}
+						>CREA TU CUENTA</button>
 
-					<p onClick={() => handleCreateAccount(null, true)} className={cx('trigger-scale', style.cancelar)} >CANCELAR</p>
+						<span
+							onClick={() => handleCreateAccount(null, true)}
+							className={cx('trigger-scale', 'btn', style.cancelar)}
+						>CANCELAR</span>
+					</div>
 				</Fragment>
 			}
 
