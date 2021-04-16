@@ -1,18 +1,93 @@
 ﻿<!DOCTYPE html>
 <html lang="es">
-	<head>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<meta name="description" content="Tu ticket de entrada - Comprá tus entradas para los eventos favoritos." />
-		<meta name="keywords" content="ticket, entradas, eventos, música, cantantes, teatro, cine">
-		<meta name="theme-color" content="#000000" />
-		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-		<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800|Roboto:300,400,500,700,900&display=swap" rel="stylesheet">
-		<title>Virtualium</title>
-	</head>
-	<body>
-		<noscript>You need to enable JavaScript to run this app.</noscript>
-		<main id="app"></main>
-		<script type="text/javascript" src="/js/materialize.min.js"></script>
-	</body>
+
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<meta name="description" content="Tu ticket de entrada - Comprá tus entradas para los eventos favoritos." />
+	<meta name="keywords" content="ticket, entradas, eventos, música, cantantes, teatro, cine">
+	<meta name="theme-color" content="#000000" />
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link
+		href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800|Roboto:300,400,500,700,900&display=swap"
+		rel="stylesheet">
+	<title>Virtualium</title>
+	<style>
+		.Figure {
+			width: 100%;
+			background-repeat: no-repeat;
+		}
+
+		.Figure:hover img {
+			opacity: 0;
+		}
+
+		.item-add-button {
+			font-size: 1.25rem;
+			font-weight: bold;
+			color: #fff;
+			background-color: #DD354D !important;
+			display: block;
+			width: 50%;
+			font-weight: 500 !important;
+			max-width: 20rem;
+			padding: 0.25rem 0.5rem;
+			margin: 1.5rem auto 0;
+			border: none;
+			border-radius: 0.375rem;
+			/* box-shadow: 0 0.375rem #8d163e; */
+			transition: 0.2s;
+		}
+
+		/* profile avatar image upload start */
+		.img-wrap {
+			position: relative;
+			width: 220px;
+			height: 220px;
+			overflow: hidden;
+			border-radius: 50%;
+		}
+
+		.img-upload:before {
+			content: "Add Photo";
+			font-size: 40px;
+			position: absolute;
+			padding-top: 50px;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			text-align: center;
+			color: #63d3a6;
+			width: 220px;
+			height: 220px;
+			border-radius: 50%;
+			opacity: 0;
+			transition: .5s ease;
+			background-color: #fff;
+		}
+
+		.img-upload:hover:before {
+			opacity: 1;
+		}
+
+		.custom-file-upload {
+			border-radius: 50%;
+			display: inline-block;
+			position: relative;
+			padding: 6px;
+			cursor: pointer;
+			background: linear-gradient(270deg, #3fa1a9, #79f1a4);
+			margin-bottom: 25px;
+		}
+
+		/* profile avatar image upload end */
+	</style>
+</head>
+
+<body>
+	<noscript>You need to enable JavaScript to run this app.</noscript>
+	<main id="app"></main>
+	<script type="text/javascript" src="/js/materialize.min.js"></script>
+</body>
+
 </html>

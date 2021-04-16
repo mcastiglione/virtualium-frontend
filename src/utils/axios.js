@@ -1,7 +1,8 @@
 const axios = require('axios');
 // axios.defaults.withCredentials = true;
-const { API_CAKEPHP } = require('../config.js');
+const { API_CAKEPHP, API_COMPANY } = require('../config.js');
 const urlBase = API_CAKEPHP;
+const urlCompany = API_COMPANY;
 
 // 'Content-Type': 'application/json',
 // 'Content-Type': 'multipart/form-data',
@@ -21,6 +22,13 @@ const headers = {
 	'Content-Type': 'application/json',
 }
 
+const headers1 = {
+	"timeout": 0,
+	"processData": false,
+	"mimeType": "multipart/form-data",
+	"contentType": false,
+}
+
 const get = (url = '', options = {}) => axios.get(readUrl(url), {
 	headers: {
 		...headers,
@@ -30,6 +38,25 @@ const get = (url = '', options = {}) => axios.get(readUrl(url), {
 });
 
 const apiGet = (url = '', options = {}) => get(`${API_CAKEPHP}${url}`, options);
+
+const companyget = (url = '', options = {}) => axios.get(readUrl(url), {
+	headers: {
+		...headers,
+		...options.headers
+	},
+	...options
+});
+
+const apiCompanyGet = (url = '', options = {}) => companyget(`${urlCompany}${url}`, options);
+
+const companypost = (url = '', body = {}, options = {}) => axios.post(readUrl(url), body, {
+	headers: {
+		...headers1
+	},
+	...options
+})
+
+const apiCompanyPost = (url = '', body = {}, options = {}) => companypost(`${urlCompany}${url}`, body, options);
 
 const post = (url = '', body = {}, options = {}) => axios.post(readUrl(url), body, {
 	headers: {
@@ -58,6 +85,8 @@ const del = (url = '', headers = {}) => axios.delete(readUrl(url), {
 })
 
 export default {
+	apiCompanyPost,
+	apiCompanyGet,
 	apiPost,
 	apiGet,
 	get,

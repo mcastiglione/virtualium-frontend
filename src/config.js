@@ -40,11 +40,15 @@ export const TOGGLE_CATEGORIES = 'TOGGLE_CATEGORIES';
 export const SET_SUCCESS_LOGIN = 'SET_SUCCESS_LOGIN';
 export const RESTART_ERROR_SET_USER = 'RESTART_ERROR_SET_USER';
 
+export const HEADER_LOGO_IMG = 'HEADER_LOGO_IMG';
+export const FOOTER_LOGO_IMG = 'FOOTER_LOGO_IMG';
+
 /*********************************************************
 * Backend endpoint url
 *********************************************************/
 export const API_PY = process.env.API_PY;
 export const API_CAKEPHP = process.env.API_CAKEPHP;
+export const API_COMPANY = process.env.API_COMPANY;
 export const CAMERA_URL = 'https://d3qvy04m8g7aow.cloudfront.net/';
 
 /*********************************************************

@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { NavLink, Link } from 'react-router-dom';
 
 /* Style */
 import cx from 'classnames';
 import style from './footer.css';
-
+import '../../global';
 /* context */
 import connect from '../../context/connect';
 
@@ -15,13 +15,13 @@ import { ROLES, DASHBOARD_URL_ROOT } from '../../config';
 import { handleOpenLogin, handleOpenRegister } from '../../actions/loginAction';
 
 
-const Footer = ({ handleOpenLogin, handleOpenRegister, user }) => {
-	return(
+const Footer = ({ handleOpenLogin, handleOpenRegister, user, header_logo_img }) => {
+	return (
 		<section className={style.mainContent}>
 			<footer className={style.footer} >
 				<div className={style.contentLogo} >
 					<Link to='/'>
-						<img src="/img/logo-virtualium-footer.png" alt=""/>
+						<img src={header_logo_img === 'company1' ? "/img/logo-virtualium-footer.png" : "/img/logo-virtualium-footer1.png"} alt="" />
 					</Link>
 				</div>
 
@@ -41,7 +41,7 @@ const Footer = ({ handleOpenLogin, handleOpenRegister, user }) => {
 				</div>
 
 
-				{ (user && user.rol == ROLES[4]) ?
+				{(user && user.rol == ROLES[4]) ?
 					<div className={style.botonera} >
 						<span onClick={handleOpenRegister} className={cx('btn', style.btnDemo)} >Mi perfil</span>
 						<Link to='/dashboard' className={cx('btn', style.btnDemo)} >Dashboard</Link>
@@ -53,7 +53,7 @@ const Footer = ({ handleOpenLogin, handleOpenRegister, user }) => {
 							className={cx('btn', style.btnDemo)}
 							onClick={() => (user) ? handleOpenRegister() : handleOpenLogin()}
 						>
-						{(user) ? 'Mi perfil' : 'Login'}
+							{(user) ? 'Mi perfil' : 'Login'}
 						</span>
 					</div>
 				}
@@ -65,6 +65,7 @@ const Footer = ({ handleOpenLogin, handleOpenRegister, user }) => {
 
 const mapStateToProps = (store) => ({
 	user: store.login.user,
+	header_logo_img: store.login.header_logo_img
 });
 
 const mapDispathToProps = (dispath, store) => ({

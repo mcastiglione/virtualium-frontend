@@ -6,6 +6,7 @@ import {
 	SET_ERROR_LOGIN,
 	SET_SUCCESS_LOGIN,
 	RESTART_ERROR_SET_USER,
+	HEADER_LOGO_IMG
 } from '../config.js';
 
 const init = {
@@ -14,16 +15,18 @@ const init = {
 	errorMsj: null,
 	isLoginLoading: false,
 	triggerOpenLogin: false,
+	header_logo_img: 'company1',
 };
 
 const login = (state = init, action) => {
-	switch(action.type) {
+	switch (action.type) {
 		case SET_USER:
 		case START_LOGIN:
 		case HANDLE_LOGIN:
 		case SET_ERROR_LOGIN:
 		case SET_SUCCESS_LOGIN:
 		case RESTART_ERROR_SET_USER:
+		case HEADER_LOGO_IMG:
 			return { ...state, ...action.payload };
 			break;
 		case LOGOUT:

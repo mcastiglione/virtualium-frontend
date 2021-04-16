@@ -8,6 +8,7 @@ const Stream = React.lazy(() => import(/* webpackChunkName: 'Dashboard' */ '../c
 const ConfirmEmail = lazy(() => import(/* webpackChunkName: 'ConfirmEmail' */ '../components/ConfirmEmail'));
 const MosaicVideo = React.lazy(() => import(/* webpackChunkName: 'MosaicVideo' */ '../components/MosaicVideo/MosaicVideo'));
 const MosaicImages = React.lazy(() => import(/* webpackChunkName: 'MosaicImages' */ '../components/MosaicImages/MosaicImages'));
+const Company = React.lazy(() => import(/* webpackChunkName: 'Company' */ '../components/Company/Company'));
 
 const PublicRoutes = [
 	{
@@ -60,6 +61,13 @@ const PublicRoutes = [
 		name: 'Stream',
 		path: '/stream',
 		Component: Stream
+	},
+
+	{
+		exact: true,
+		name: 'Company',
+		path: '/company',
+		Component: Company
 	},
 ];
 

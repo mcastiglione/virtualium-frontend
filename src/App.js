@@ -1,4 +1,4 @@
-import React, { 
+import React, {
 	lazy,
 	Suspense,
 	useState,
@@ -49,7 +49,7 @@ function App({ user, isLogin, verifySession }) {
 	const params = useParams();
 	const location = useLocation();
 	const mobileActive = useMobileDetector();
-	const [ isVerifySession, setIsVerifySession ] = useState(true);
+	const [isVerifySession, setIsVerifySession] = useState(true);
 
 	useEffect(() => {
 		(async () => {
@@ -81,7 +81,7 @@ function App({ user, isLogin, verifySession }) {
 		) : (null);
 	});
 
-	if(false) {
+	if (false) {
 	}
 	const ROL = ROLES.find((el) => user && el === user.rol);
 	const _privateRoutes = PrivateRoutes.map((route, index) => {
@@ -107,7 +107,7 @@ function App({ user, isLogin, verifySession }) {
 		) : (null);
 	});
 
-	const fullscremRequired = () =>{
+	const fullscremRequired = () => {
 		switch (location.pathname) {
 			case '/visor':
 			case '/videos':
@@ -122,15 +122,15 @@ function App({ user, isLogin, verifySession }) {
 	}
 
 	const noRenderFooter = () => {
-		if(location.pathname.includes('dashboard')) {
+		if (location.pathname.includes('dashboard')) {
 			return true
 		}
 		return false;
 	}
 
-	return ((isVerifySession) ? <Loading/> :
-		<Suspense fallback={<Loading/>}>
-			{ (fullscremRequired()) ? null :
+	return ((isVerifySession) ? <Loading /> :
+		<Suspense fallback={<Loading />}>
+			{(fullscremRequired()) ? null :
 				<Header
 					mobileActive={mobileActive}
 				/>
@@ -140,7 +140,7 @@ function App({ user, isLogin, verifySession }) {
 				{_privateRoutes}
 				<Route path='*' component={NotFoundPage} />
 			</Switch>
-			{(fullscremRequired() || noRenderFooter()) ? null : <Footer/>}
+			{(fullscremRequired() || noRenderFooter()) ? null : <Footer />}
 		</Suspense>
 	)
 }

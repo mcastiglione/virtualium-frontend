@@ -8,6 +8,7 @@ import {
 	SET_ERROR_LOGIN,
 	SET_SUCCESS_LOGIN,
 	RESTART_ERROR_SET_USER,
+	HEADER_LOGO_IMG
 } from '../config.js';
 
 /*
@@ -28,8 +29,8 @@ export const setUser = async ({ email, password, socialLogin }, dispatch) => {
 		message: errorMsjGeneral
 	};
 
-	if(socialLogin) {
-		const {facebook, google } = socialLogin;
+	if (socialLogin) {
+		const { facebook, google } = socialLogin;
 
 		// Verificar si el usuario existe
 
@@ -44,7 +45,7 @@ export const setUser = async ({ email, password, socialLogin }, dispatch) => {
 			console.log("ERROR:", err);
 			M.toast({
 				html: 'Error de la red social',
-				classes:`black-text yellow`
+				classes: `black-text yellow`
 			});
 			dispatch({
 				type: SET_ERROR_LOGIN,
@@ -59,7 +60,7 @@ export const setUser = async ({ email, password, socialLogin }, dispatch) => {
 			// ocurrio un error
 			M.toast({
 				html: 'No se pudo obtener los datos del usuario',
-				classes:`black-text yellow`
+				classes: `black-text yellow`
 			});
 			dispatch({
 				type: SET_ERROR_LOGIN,
@@ -73,7 +74,7 @@ export const setUser = async ({ email, password, socialLogin }, dispatch) => {
 		if (!response.data.user.email) {
 			M.toast({
 				html: 'Debe tener registrado su email en su red social',
-				classes:`black-text yellow`
+				classes: `black-text yellow`
 			});
 			dispatch({
 				type: SET_ERROR_LOGIN,
@@ -98,16 +99,16 @@ export const setUser = async ({ email, password, socialLogin }, dispatch) => {
 				formData.append('estado', 'activo');
 				formData.append('apellidos', response.data.user.apellido);
 				// formData.append('emailConfirmado', 0);
-				if(google) formData.append('google', response.data.user.google);
-				if(facebook) formData.append('facebook', response.data.user.facebook);
+				if (google) formData.append('google', response.data.user.google);
+				if (facebook) formData.append('facebook', response.data.user.facebook);
 
 				const { data } = await httpClient.apiPost('usuarios/registrar', formData);
 
-				if(!data.cod == 200) {
+				if (!data.cod == 200) {
 					// ocurrio un error
 					M.toast({
 						html: data.message,
-						classes:`black-text yellow`
+						classes: `black-text yellow`
 					});
 					dispatch({
 						type: SET_ERROR_LOGIN,
@@ -121,7 +122,7 @@ export const setUser = async ({ email, password, socialLogin }, dispatch) => {
 					password = data.password;
 					email = response.data.user.email
 				}
-			} catch(err) {
+			} catch (err) {
 				console.log("ERROR:", err);
 				dispatch({
 					type: SET_ERROR_LOGIN,
@@ -131,21 +132,21 @@ export const setUser = async ({ email, password, socialLogin }, dispatch) => {
 					}
 				})
 				M.toast({
-					classes:`black-text yellow`
+					classes: `black-text yellow`
 				});
 				return
 			}
 		}
 	}
 
-	if(password) {
+	if (password) {
 		const formData = new FormData();
 		formData.append('email', email);
 		formData.append('password', password);
 		try {
 			let response = await httpClient.apiPost('usuarios/login', formData);
 			Object.assign(dataLogin, response.data);
-		} catch(err) {
+		} catch (err) {
 			toastError();
 		}
 	}
@@ -157,7 +158,7 @@ export const setUser = async ({ email, password, socialLogin }, dispatch) => {
 		}
 	})
 
-	if(!dataLogin.status) {
+	if (!dataLogin.status) {
 		dispatch({
 			type: SET_ERROR_LOGIN,
 			payload: {
@@ -180,7 +181,7 @@ export const setUser = async ({ email, password, socialLogin }, dispatch) => {
 export const verifySession = async (dispatch) => {
 	try {
 		const { data: { user } } = await httpClient.apiGet('usuarios/login');
-		if(user) {
+		if (user) {
 			return dispatch({
 				type: SET_USER,
 				payload: {
@@ -189,7 +190,7 @@ export const verifySession = async (dispatch) => {
 				}
 			})
 		}
-	} catch(e) {}
+	} catch (e) { }
 }
 
 export const restartErrorLogin = () => {
@@ -201,11 +202,20 @@ export const restartErrorLogin = () => {
 	}
 }
 
-export const logout =  () => {
+export const logout = () => {
 	httpClient.apiGet('usuarios/logout');
 	return {
 		type: LOGOUT,
 		payload: {}
+	}
+}
+
+export const handlechangeheaderlogo = (value) => {
+	return {
+		type: HEADER_LOGO_IMG,
+		payload: {
+			header_logo_img: value
+		}
 	}
 }
 
@@ -228,7 +238,7 @@ export const handleOpenLogin = (store) => {
 const toastError = () => {
 	M.toast({
 		html: errorMsjGeneral,
-		classes:`black-text yellow`
+		classes: `black-text yellow`
 	});
 }
 

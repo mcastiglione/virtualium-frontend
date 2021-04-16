@@ -1,5 +1,9 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { useLocation, Redirect, useHistory, NavLink, Link } from 'react-router-dom';
+import { makeStyles, withStyles } from '@material-ui/core/styles';
+import FormControl from '@material-ui/core/FormControl';
+import NativeSelect from '@material-ui/core/NativeSelect';
+import InputBase from '@material-ui/core/InputBase';
 
 /* style */
 import cx from 'classnames';
@@ -17,19 +21,71 @@ import Login from '../Login/Login';
 import Navbar from '../Navbar/Navbar';
 import NavItem from '../Navbar/NavItem';
 import Buscador from '../Buscador/Buscador';
+import Company from '../Company/Company';
 import Register from '../Register/Register';
 import RedesSociales from './RedesSociales/RedesSociales';
 
 /* Actions */
-import { logout, handleOpenLogin, handleOpenRegister } from '../../actions/loginAction';
+import { logout, handleOpenLogin, handleOpenRegister, handlechangeheaderlogo } from '../../actions/loginAction';
+
+
+const BootstrapInput = withStyles((theme) => ({
+	root: {
+		'label + &': {
+			marginTop: theme.spacing(3),
+		},
+	},
+	input: {
+		borderRadius: 4,
+		position: 'relative',
+		backgroundColor: theme.palette.background.paper,
+		border: '1px solid #ced4da',
+		fontSize: 16,
+		padding: '10px 26px 10px 12px',
+		transition: theme.transitions.create(['border-color', 'box-shadow']),
+		// Use the system font instead of the default Roboto font.
+		fontFamily: [
+			'-apple-system',
+			'BlinkMacSystemFont',
+			'"Segoe UI"',
+			'Roboto',
+			'"Helvetica Neue"',
+			'Arial',
+			'sans-serif',
+			'"Apple Color Emoji"',
+			'"Segoe UI Emoji"',
+			'"Segoe UI Symbol"',
+		].join(','),
+		'&:focus': {
+			borderRadius: 4,
+			borderColor: '#80bdff',
+			boxShadow: '0 0 0 0.2rem rgba(0,123,255,.25)',
+			backgroundColor: '#fff'
+		},
+	},
+}))(InputBase);
+
+const useStyles = makeStyles((theme) => ({
+	margin: {
+		margin: theme.spacing(1),
+	},
+	combo_container: {
+		position: 'absolute',
+		top: 20,
+		left: '75%',
+		"@media (max-width: 992px)": { display: 'none' }
+	}
+}));
 
 const Header = ({
 	user,
 	evento,
 	logout,
+	handlechangeheaderlogo,
 	mobileActive,
 	handleOpenLogin,
 	triggerOpenLogin,
+	header_logo_img,
 	handleOpenRegister,
 	triggerOpenRegister,
 	...props
@@ -37,16 +93,29 @@ const Header = ({
 	const _navbar = useRef({});
 	const history = useHistory();
 	const location = useLocation();
-	const [ scrollActive, setScrollActive ] = useState(false);
+	const [scrollActive, setScrollActive] = useState(false);
 
-	/* Estados de los contenedores de furmularios */
-	const [ openLogin, setOpenLogin ] = useState(false);
-	const [ openSidenav, setOpenSidenav ] = useState(false);
-	const [ openRegister, setOpenRegister ] = useState(false);
-	const [ openBuscador, setOpenBuscador ] = useState(false);
+	const [company, setCompany] = React.useState(window.localStorage.getItem('header_logo_img'));
+	const classes = useStyles();
+	const handleChangeCompany = (event) => {
+		setCompany(event.target.value);
+		localStorage.setItem('header_logo_img', event.target.value);
+	};
 
 	useEffect(() => {
-		if(user) {
+		let img = window.localStorage.getItem('header_logo_img');
+		console.log('header page--->', img)
+		handlechangeheaderlogo(company);
+	}, [company])
+
+	/* Estados de los contenedores de furmularios */
+	const [openLogin, setOpenLogin] = useState(false);
+	const [openRegister, setOpenRegister] = useState(false);
+	const [openBuscador, setOpenBuscador] = useState(false);
+	const [openCompany, setOpenCompany] = useState(false);
+
+	useEffect(() => {
+		if (user) {
 			/*
 			 * Asegurar el cierre de todos los formularios cuando
 			 * el usuario inicia sesión correctamente
@@ -66,11 +135,11 @@ const Header = ({
 		 * para asegurar que si se llama nuevamente permita abrir los formularios
 		 * [login ó register] según corresponda
 		*/
-		if(triggerOpenLogin) {
+		if (triggerOpenLogin) {
 			handleActionForm('login');
 			handleOpenLogin();
 		}
-		if(triggerOpenRegister) {
+		if (triggerOpenRegister) {
 			handleActionForm('register');
 			handleOpenRegister();
 		}
@@ -86,6 +155,7 @@ const Header = ({
 		setOpenRegister(false)
 		setOpenLogin(false);
 		setOpenBuscador(false);
+		setOpenCompany(false);
 	}
 
 	/**
@@ -103,10 +173,11 @@ const Header = ({
 	 * Post condición: nunca estarán abiertos ambos formularios al mismo tiempo
 	 */
 	const handleActionForm = (action, forceClose = false) => {
-		if(forceClose) {
+		if (forceClose) {
 			setOpenRegister(false);
 			setOpenLogin(false);
 			setOpenBuscador(false);
+			setOpenCompany(false);
 			return;
 		}
 
@@ -116,11 +187,13 @@ const Header = ({
 		*/
 		// if(triggerOpenLogin) handleOpenLogin();
 
-		if(action == 'dashboard') return history.push("/dashboard");
-		if(action == 'logout') return logout();
+		if (action == 'dashboard') return history.push("/dashboard");
+		if (action == 'logout') return logout();
 		setOpenRegister((prevState) => action === 'register' && !prevState)
 		setOpenLogin((prevState) => action === 'login' && !prevState)
 		setOpenBuscador((prevState) => action === 'buscar' && !prevState)
+		// setOpenCompany((prevState) => action === 'company' && !prevState)
+		if (action === 'company') return history.push("/company");
 	}
 
 	/*
@@ -133,6 +206,12 @@ const Header = ({
 		title: 'Buscador',
 		iconImg: '/img/icons/icono-buscar.svg',
 		action: () => handleActionForm('buscar'),
+	}
+
+	const navItemCompany = {
+		title: 'Company',
+		iconImg: '/img/icons/company.png',
+		action: () => handleActionForm('company'),
 	}
 
 	const navItemProfile = {
@@ -168,7 +247,7 @@ const Header = ({
 	const navItemTicketera = {
 		title: 'Ticketera',
 		iconImg: '/img/icons/icono-mis-compras.svg',
-		action: () => {},
+		action: () => { },
 	}
 
 	const contentFormsSidenav = {
@@ -176,6 +255,7 @@ const Header = ({
 			<div className={style.contentFormsSidenav} >
 				{mobileActive && renderRegister()}
 				{mobileActive && renderBuscador()}
+				{mobileActive && renderComanyPage()}
 				{mobileActive && renderContentLogin()}
 			</div>
 		)
@@ -192,7 +272,7 @@ const Header = ({
 	 * Si el usuario está logueado se Agrega los items correspondientes a su rol.
 	 * En caso contrario se muestra la navegación por defecto
 	 */
-	if(user) {
+	if (user) {
 		const ROL = ROLES.find((el) => user && el === user.rol);
 		const navItemUser = {
 			node: (
@@ -204,11 +284,12 @@ const Header = ({
 		};
 
 		navigation.push(navItemBuscador);
+		navigation.push(navItemCompany);
 		// navigation.push(navItemTicketera);
 
 		// sidenavNavigation.push(navItemTicketera);
 
-		if(ROL === ROLES[4]) {
+		if (ROL === ROLES[4]) {
 			navigation.push(navItemVisor);
 			navigation.push(navItemDashboad);
 			sidenavNavigation.push(navItemVisor);
@@ -220,12 +301,14 @@ const Header = ({
 		navigation.push(navItemUser);
 	} else {
 		navigation = [
+			navItemCompany,
 			navItemBuscador,
-			navItemProfile,
+			navItemProfile
 		];
 	}
-	
+
 	sidenavNavigation.push(
+		navItemCompany,
 		navItemBuscador,
 		navItemProfile,
 		navItemLogout,
@@ -239,16 +322,16 @@ const Header = ({
 		var label;
 		const { url, title, action, iconImg, icon, node, className } = el;
 
-		if(node) {
-			return(
+		if (node) {
+			return (
 				<li key={key} className={className} >
 					{node}
 				</li>
 			)
 		}
 
-		if(iconImg) {
-			label =(
+		if (iconImg) {
+			label = (
 				<img
 					alt={title}
 					src={iconImg}
@@ -258,13 +341,13 @@ const Header = ({
 					)}
 				/>
 			)
-		} else if(icon) {
-			label = <Icon >{ icon }</Icon>;
+		} else if (icon) {
+			label = <Icon >{icon}</Icon>;
 		} else {
 			label = title;
 		}
 
-		return(
+		return (
 			<NavItem
 				key={key}
 				title={title}
@@ -275,13 +358,13 @@ const Header = ({
 					{ [`${style.scrollActive}`]: scrollActive })
 				}
 			>
-				{ label }
+				{label}
 			</NavItem>
 		);
 	}
 
 	function renderBuscador() {
-		return(
+		return (
 			<div className={cx(
 				style.buscadorContent,
 				{ [`${style.open}`]: openBuscador },
@@ -293,8 +376,21 @@ const Header = ({
 		)
 	}
 
+	function renderComanyPage() {
+		return (
+			<div className={cx(
+				style.buscadorContent,
+				{ [`${style.open}`]: openCompany },
+				{ [`${style.mobileActive}`]: mobileActive },
+				'z-depth-3'
+			)}>
+				<Company open={openCompany} />
+			</div>
+		)
+	}
+
 	function renderContentLogin() {
-		return(
+		return (
 			<div
 				className={cx(
 					style.tuTicketeraContent,
@@ -313,17 +409,17 @@ const Header = ({
 	}
 
 	function renderRegister() {
-		return(
+		return (
 			<Register
 				open={openRegister}
 				sidenav={mobileActive}
 				handleToggleAccount={handleActionForm}
-				className={cx({'scale-1': openRegister})}
+				className={cx({ 'scale-1': openRegister })}
 			/>
 		)
 	}
 
-	return(
+	return (
 		<div
 			className={cx(
 				style.contentFixed,
@@ -341,21 +437,34 @@ const Header = ({
 				<section className={style.contentLogo} >
 					<Link to='/'>
 						<img
-							src={`/img/virtualium.png`}
+							src={header_logo_img === 'company1' ? `/img/virtualium.png` : `/img/virtualium1.png`}
 							alt="Logo oficial VIRTUALIUM"
 							className={cx({ [`${style.scrollActive}`]: scrollActive }, style.logo)}
 						/>
 					</Link>
 				</section>
-
 				<section className={style.contentRedesSociales} >
-					{ !mobileActive && <RedesSociales scrollActive={scrollActive} /> }
+					{!mobileActive && <RedesSociales scrollActive={scrollActive} />}
 				</section>
 
 				<section>
 					<Navbar sidenav={sidenavMenu} >
 						{menu}
 					</Navbar>
+					{/* <section className={classes.combo_container}>
+						<FormControl className={classes.margin}>
+							<NativeSelect
+								id="demo-customized-select-native"
+								value={company}
+								onChange={handleChangeCompany}
+								input={<BootstrapInput />}
+							>
+								<option value={'company1'}>Company1</option>
+								<option value={'company2'}>Company2</option>
+							</NativeSelect>
+						</FormControl>
+					</section> */}
+					{!mobileActive && renderComanyPage()}
 					{!mobileActive && renderBuscador()}
 					{!mobileActive && renderRegister()}
 					{!mobileActive && renderContentLogin()}
@@ -370,10 +479,12 @@ const mapStateToProps = (store) => ({
 	user: store.login.user,
 	triggerOpenLogin: store.login.triggerOpenLogin,
 	triggerOpenRegister: store.login.triggerOpenRegister,
+	header_logo_img: store.login.header_logo_img
 });
 
 const mapDispathToProps = (dispath, store) => ({
 	logout: () => dispath(logout()),
+	handlechangeheaderlogo: (param) => dispath(handlechangeheaderlogo(param, dispath)),
 	handleOpenLogin: () => dispath(handleOpenLogin(store)),
 	handleOpenRegister: () => dispath(handleOpenRegister(store)),
 });

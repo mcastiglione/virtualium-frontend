@@ -1,15 +1,9 @@
-import React, { useRef, useState, useEffect, Children } from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
-
-/* style */
+import React, { useRef, useEffect, Children } from 'react';
+import { useLocation } from 'react-router-dom';
 import './sidenav.scss';
 import cx from 'classnames';
 import style from './navbar.css';
-
-/* components */
 import Icon from '../Icon';
-
-/* utils */
 import idgen from '../../utils/idgen';
 
 const Navbar = ({
@@ -19,21 +13,19 @@ const Navbar = ({
 	menuIcon,
 	navigation,
 	classnamesUl,
-	classnamesUlMobile
+	classnamesUlMobile,
 }) => {
 	const location = useLocation();
 	const sidenavRef = useRef(null);
 
 	useEffect(() => {
-		// Inicializar el sideNav
 		const instance = M.Sidenav.init(sidenavRef.current, options);
-		// Desmontar el sideNav
 		return () => instance && instance.destroy();
 	}, [options, location]);
 
 	const sidenavContent = (sidenav) ? sidenav :
 		Children.map(children, (link, index) => {
-			if(!link) return null;
+			if (!link) return null;
 			const clonedLink = React.cloneElement(link, {
 				...link.props,
 				id: `sidenav-${idgen()}`
@@ -41,7 +33,7 @@ const Navbar = ({
 			return clonedLink;
 		});
 
-	return(
+	return (
 		<div className={style.navbarContent}>
 			<a href="#!" data-target="mobile-nav" className={cx('sidenav-trigger', style.menuIcon)} >
 				{menuIcon}
@@ -54,7 +46,6 @@ const Navbar = ({
 			>
 				{children}
 			</ul>
-
 			<ul
 				id="mobile-nav"
 				className={cx('sidenav', 'z-depth-1', style.sidenav, classnamesUlMobile)}
