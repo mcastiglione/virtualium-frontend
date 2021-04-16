@@ -49,6 +49,7 @@ export const FOOTER_LOGO_IMG = 'FOOTER_LOGO_IMG';
 export const API_PY = process.env.API_PY;
 export const API_CAKEPHP = process.env.API_CAKEPHP;
 export const API_COMPANY = process.env.API_COMPANY;
+export const BRAND_ID = process.env.BRAND_ID;
 export const CAMERA_URL = 'https://d3qvy04m8g7aow.cloudfront.net/';
 
 /*********************************************************

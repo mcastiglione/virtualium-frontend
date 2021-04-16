@@ -20,8 +20,14 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
-import PageviewIcon from '@material-ui/icons/Pageview';
 import httpClient from '../../utils/axios';
+import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Form from './Form';
 
 function createData(name, description, logo1, logo2, action) {
     return { name, description, logo1, logo2, action };
@@ -282,15 +288,77 @@ export default function EnhancedTable() {
     useEffect(() => {
         handleGetCompaies();
     }, [handleGetCompaies])
-    
+
     const handleGetCompaies = () => {
         const companies = httpClient.apiCompanyGet('/brands');
         console.log('compaies--->', companies.brands)
         localStorage.setItem('companies', []);
     }
 
+    const [open, setOpen] = React.useState(false);
+    const [delopen, setDelopen] = React.useState(false);
+    const [delid, setDelID] = React.useState('');
+    const [data, setData] = React.useState([]);
+
+    const handleEdit = (id) => {
+        let brand_id = httpClient.apiCompanyGet(`/brand/${id}`);
+        setOpen(true)
+        setData({
+            "id": 2,
+            "brand_name": "Virtualium Shows Live",
+            "brand_description": "the best site in the world",
+            "logo1": "/img/virtualium.png",
+            "logo2": "/img/logo-virtualium-footer.png"
+        })
+    }
+    const handleRemove = () => {
+        httpClient.delete(`/brand/${delid}`);
+        alert(delid)
+    }
+
     return (
         <div className={classes.root}>
+            <div>
+                <Dialog
+                    open={delopen}
+                    onClose={() => { setDelopen(false) }}
+                    aria-labelledby="alert-dialog-title"
+                    aria-describedby="alert-dialog-description"
+                >
+                    <DialogContent>
+                        <DialogContentText id="alert-dialog-description">
+                            Are you sure to delete?
+                        </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={() => { setDelopen(false) }} color="primary" autoFocus>
+                            Disagree
+                        </Button>
+                        <Button onClick={() => { setDelopen(false); handleRemove(); }} color="primary">
+                            Agree
+                        </Button>
+                    </DialogActions>
+                </Dialog>
+            </div>
+            <div>
+                <Dialog
+                    open={open}
+                    onClose={() => { setOpen(false) }}
+                    aria-labelledby="alert-dialog-title"
+                    aria-describedby="alert-dialog-description"
+                >
+                    <DialogContent>
+                        <DialogContentText id="alert-dialog-description">
+                            <Form update data={data} />
+                        </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={() => { setOpen(false) }} color="primary" autoFocus>
+                            Close
+                        </Button>
+                    </DialogActions>
+                </Dialog>
+            </div>
             <Paper className={classes.paper}>
                 <EnhancedTableToolbar numSelected={selected.length} />
                 <TableContainer>
@@ -319,21 +387,26 @@ export default function EnhancedTable() {
                                     return (
                                         <TableRow
                                             hover
-                                            onClick={(event) => handleClick(event, row.name)}
                                             role="checkbox"
                                             aria-checked={isItemSelected}
                                             tabIndex={-1}
                                             key={row.name}
                                             selected={isItemSelected}
                                         >
-                                            <TableCell padding="checkbox">
+                                            <TableCell padding="checkbox"
+                                                onClick={(event) => handleClick(event, row.name)}
+                                            >
                                                 <Checkbox
                                                     checked={isItemSelected}
                                                     inputProps={{ 'aria-labelledby': labelId }}
                                                 />
                                             </TableCell>
-                                            <TableCell align="left">{row.name}</TableCell>
-                                            <TableCell align="center">{row.description}</TableCell>
+                                            <TableCell align="left"
+                                                onClick={(event) => handleClick(event, row.name)}
+                                            >{row.name}</TableCell>
+                                            <TableCell align="center"
+                                                onClick={(event) => handleClick(event, row.name)}
+                                            >{row.description}</TableCell>
                                             <TableCell align="center">
                                                 <img src={row.logo1} alt={row.logo1} />
                                             </TableCell>
@@ -341,9 +414,8 @@ export default function EnhancedTable() {
                                                 <img src={row.logo2} alt={row.logo2} style={{ width: 100 }} />
                                             </TableCell>
                                             <TableCell align="right">
-                                                <PageviewIcon />
-                                                <EditIcon />
-                                                <DeleteForeverIcon />
+                                                <EditIcon style={{ cursor: 'pointer' }} onClick={() => { handleEdit(row.id) }} />
+                                                <DeleteForeverIcon style={{ cursor: 'pointer' }} onClick={() => { setDelID(row.id); setDelopen(true); }} />
                                             </TableCell>
                                         </TableRow>
                                     );

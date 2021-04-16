@@ -23,7 +23,6 @@ const headers = {
 }
 
 const headers1 = {
-	"timeout": 0,
 	"processData": false,
 	"mimeType": "multipart/form-data",
 	"contentType": false,
@@ -76,6 +75,13 @@ const put = (url = '', body = {}, options = {}) => axios.put(readUrl(url), body,
 	...options
 })
 
+const companyput = (url = '', body = {}, options = {}) => axios.put(readUrl(url), body, {
+	headers: {
+		...headers1,
+	},
+	...options
+})
+
 const del = (url = '', headers = {}) => axios.delete(readUrl(url), {
 	headers: {
 		Accept: 'application/json',
@@ -92,5 +98,6 @@ export default {
 	get,
 	post,
 	put,
+	companyput: companyput,
 	delete: del,
 }

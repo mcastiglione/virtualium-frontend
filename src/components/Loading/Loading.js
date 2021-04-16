@@ -6,6 +6,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Preloader from '../Preloader';
 import connect from '../../context/connect';
 import httpClient from '../../utils/axios';
+const { BRAND_ID } = require('../../config');
 
 /* Style */
 import style from './loading.css';
@@ -25,13 +26,14 @@ const Loading = () => {
 	const [compaies, setCompanies] = React.useState([]);
 
 	useEffect(() => {
-		console.log('loading page--->', window.localStorage.getItem('header_logo_img'))
+		console.log('BRAND_ID--->', BRAND_ID)
 		setHeaderLogoImg(window.localStorage.getItem('header_logo_img'));
 		handleGetCompaies();
 	}, [])
 
 	const handleGetCompaies = () => {
-		const companies = httpClient.apiCompanyGet('/brands');
+		let companies = httpClient.apiCompanyGet('/brands');
+		let brand_id = httpClient.apiCompanyGet(`/brand/${BRAND_ID}`);
 		console.log('compaies--->', companies.brands)
 		localStorage.setItem('companies', []);
 	}
